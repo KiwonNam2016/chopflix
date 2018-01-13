@@ -18,13 +18,22 @@ $(document).ready(function() {
         url: queryURL,
         method: "GET"
     }).done(function(response) {
-        var id = response.results[0].id;
-        var title = response.results[0].title;
-        var thumb = response.results[0].poster_path;
-        var allthestuff = [id, title, thumb];
+        $(".nowPlaying").html("");
+        var searchResults = response.results;
 
-        console.log(allthestuff);
-        console.log(response);
+        for (let i = 0; i < searchResults.length; i++) {
+            var nowPlayingBtn = $(`<div class="movie-div" id="${searchResults[i].id}">`);
+            var image = $(`<img class="movie-poster">`)
+            var title = $(`<p class="movie-title">${searchResults[i].title}</p>`);
+            nowPlayingBtn.append(title);
+            image.attr("src", "https://image.tmdb.org/t/p/w500" + searchResults[i].poster_path);
+            image.attr("alt", title);
+            nowPlayingBtn.append(image);
+            $(".nowPlaying").prepend(nowPlayingBtn);
+            console.log("I'm working")    
+        }
+
+        console.log(searchResults);
 
     })
 
