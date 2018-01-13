@@ -1,0 +1,26 @@
+
+
+.movie-div {
+    display: inline-block;
+    margin: 10px;
+    background-color: white;
+    width: 150px;
+}
+
+.movie-div:hover {
+    box-shadow: 0px 0px 5px 1px rgb(110, 110, 110);
+    transform: scale(1.05);
+}
+
+.movie-poster {
+    width: 100%;
+    margin: 0px auto;
+    border-bottom: 1px solid rgb(110, 110, 110);
+}
+
+.movie-title {
+    margin: 5px auto;
+    text-align: center;
+    font-weight: 600;
+    overflow-wrap: break-word;
+}
