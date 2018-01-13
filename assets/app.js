@@ -35,6 +35,11 @@ $(document).ready(function() {
 
         console.log(searchResults);
 
-    })
+    });
+
+
+    $(".nowPlaying").on("click", ".movie-div", function(event) {
+        console.log(this.id);
+    });
 
 });

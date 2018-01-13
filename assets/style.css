@@ -4,7 +4,7 @@
     display: inline-block;
     margin: 10px;
     background-color: white;
-    border: 1px solid rgb(110, 110, 110);
+    width: 150px;
 }
 
 .movie-div:hover {
@@ -13,11 +13,14 @@
 }
 
 .movie-poster {
-    height: 150px;
+    width: 100%;
     margin: 0px auto;
     border-bottom: 1px solid rgb(110, 110, 110);
 }
 
 .movie-title {
-    margin: 3px auto;
+    margin: 5px auto;
+    text-align: center;
+    font-weight: 600;
+    overflow-wrap: break-word;
 }
