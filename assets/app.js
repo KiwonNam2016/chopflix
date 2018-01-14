@@ -57,6 +57,7 @@ $(document).ready(function() {
             console.log(youTubeVidId);
             console.log(searchFromMovie);
         })
+
     });
 
     // similar movies results
