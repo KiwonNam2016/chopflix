@@ -51,8 +51,6 @@ $(document).ready(function() {
         }).done(function(response) {
             var youTubeVidId = response.items[0].id.videoId;
             var vidURL = "src=https://www.youtube.com/embed/" + youTubeVidId;
-            // var thumb = response.results[0].poster_path;
-            // var allthestuff = [id, youTubeVidId, thumb];
             var youTubeVid = $(`<iframe width='420' height='315' ${vidURL}>`);
             $(".youTubeSearch").append(youTubeVid);
             console.log(youTubeVidId);
