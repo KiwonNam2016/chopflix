@@ -56,10 +56,8 @@ $(document).ready(function() {
             $(".youTubeSearch").append(youTubeVid);
             console.log(youTubeVidId);
             console.log(searchFromMovie);
-
-
         })
-    })
+    });
 
     // similar movies results
     $(".nowPlaying").on("click", ".movie-div", function(event) {
