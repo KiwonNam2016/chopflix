@@ -35,22 +35,6 @@ $(document).ready(function() {
 
     });
 
-    // YouTube trailer feature
-    $(".nowPlaying").on("click", ".movie-results", function() {
-        var movieTitle = $(this).attr("value");
-        console.log(movieTitle);
-        var youTubeQueryUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=5&q=${movieTitle}+trailer&key=AIzaSyCQfE0z-4oO65KlRi2bPQ7i2X-CyZ8C_6g`;
-        $(".youTubeSearch").empty();
-        $.ajax({
-            url: youTubeQueryUrl,
-            method: "GET"
-        }).done(function(response) {
-            var vidURL = `src="https://www.youtube.com/embed/${movieTitle}"`;
-            var youTubeVid = $(`<iframe width='420' height='315' ${vidURL}>`);
-            $(".youTubeSearch").append(youTubeVid);
-        })
-
-    });
 
     // similar movies results
     $(".nowPlaying").on("click", ".movie-div", function(event) {
@@ -73,8 +57,25 @@ $(document).ready(function() {
                 searchResultsBtn.attr("value", searchResults[i].title);
                 searchResultsBtn.append(image);
                 $(".nowPlaying").prepend(searchResultsBtn);
-          }
+            }
         });
+    });
+
+    // YouTube trailer feature
+    $(".nowPlaying").on("click", ".movie-results", function() {
+        var movieTitle = $(this).attr("value");
+        console.log(movieTitle);
+        var youTubeQueryUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=5&q=${movieTitle}+trailer&key=AIzaSyCQfE0z-4oO65KlRi2bPQ7i2X-CyZ8C_6g`;
+        $(".youTubeSearch").empty();
+        $.ajax({
+            url: youTubeQueryUrl,
+            method: "GET"
+        }).done(function(response) {
+            var vidURL = `src="https://www.youtube.com/embed/${movieTitle}"`;
+            var youTubeVid = $(`<iframe width='420' height='315' ${vidURL}>`);
+            $(".youTubeSearch").append(youTubeVid);
+        })
+
     });
 
 });
