@@ -28,14 +28,39 @@ $(document).ready(function() {
             nowPlayingBtn.append(title);
             image.attr("src", "https://image.tmdb.org/t/p/w500" + searchResults[i].poster_path);
             image.attr("alt", title);
+            image.attr("value", searchResults[i].title);
             nowPlayingBtn.append(image);
             $(".nowPlaying").prepend(nowPlayingBtn);
-            console.log("I'm working")    
+            console.log("I'm working")
         }
 
         console.log(searchResults);
 
     });
+
+    $(document).on("click", ".movie-poster", function() {
+        var searchFromMovie = $(this).attr("value");
+        var youTubeQueryUrl = "https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=5&q=" + searchFromMovie + "+trailer&key=AIzaSyCQfE0z-4oO65KlRi2bPQ7i2X-CyZ8C_6g";
+
+        $(".youTubeSearch").empty();
+        console.log(searchFromMovie);
+
+        $.ajax({
+            url: youTubeQueryUrl,
+            method: "GET"
+        }).done(function(response) {
+            var youTubeVidId = response.items[0].id.videoId;
+            var vidURL = "src=https://www.youtube.com/embed/" + youTubeVidId;
+            // var thumb = response.results[0].poster_path;
+            // var allthestuff = [id, youTubeVidId, thumb];
+            var youTubeVid = $(`<iframe width='420' height='315' ${vidURL}>`);
+            $(".youTubeSearch").append(youTubeVid);
+            console.log(youTubeVidId);
+            console.log(searchFromMovie);
+
+
+        })
+    })
 
 
     $(".nowPlaying").on("click", ".movie-div", function(event) {
