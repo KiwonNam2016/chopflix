@@ -12,8 +12,8 @@ firebase.initializeApp(config);
 $(document).ready(function() {
     var database = firebase.database();
 
+    // now playing movies
     var queryURL = "https://api.themoviedb.org/3/movie/now_playing?api_key=b300de2804d6ecbfa5435065a4835711&language=en-US";
-
     $.ajax({
         url: queryURL,
         method: "GET"
@@ -38,6 +38,7 @@ $(document).ready(function() {
 
     });
 
+    // YouTube trailer feature
     $(document).on("click", ".movie-poster", function() {
         var searchFromMovie = $(this).attr("value");
         var youTubeQueryUrl = "https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=5&q=" + searchFromMovie + "+trailer&key=AIzaSyCQfE0z-4oO65KlRi2bPQ7i2X-CyZ8C_6g";
@@ -60,9 +61,31 @@ $(document).ready(function() {
         })
     })
 
-
+    // similar movies results
     $(".nowPlaying").on("click", ".movie-div", function(event) {
         console.log(this.id);
+        var searchSimilar = `https://api.themoviedb.org/3/movie/${this.id}/similar?api_key=b300de2804d6ecbfa5435065a4835711&language=en-US&page=1`
+        console.log(searchSimilar);
+        $.ajax({
+            url: searchSimilar,
+            method: "GET"
+        }).done(function(response) {
+            console.log(response.results)
+            $(".nowPlaying").html("");
+            var searchResults = response.results;
+
+            for (let i = 0; i < searchResults.length; i++) {
+                var nowPlayingBtn = $(`<div class="movie-div" id="${searchResults[i].id}">`);
+                var image = $(`<img class="movie-poster">`)
+                var title = $(`<p class="movie-title">${searchResults[i].title}</p>`);
+                nowPlayingBtn.append(title);
+                image.attr("src", "https://image.tmdb.org/t/p/w500" + searchResults[i].poster_path);
+                image.attr("alt", title);
+                nowPlayingBtn.append(image);
+                $(".nowPlaying").prepend(nowPlayingBtn);
+                console.log("I'm working")    
+          }
+        });
     });
 
 });
