@@ -28,7 +28,7 @@ $(document).ready(function() {
             nowPlayingBtn.append(title);
             image.attr("src", "https://image.tmdb.org/t/p/w500" + searchResults[i].poster_path);
             image.attr("alt", title);
-            nowPlayingBtn.attr("value", searchResults[i].title)
+            // nowPlayingBtn.attr("value", searchResults[i].title)
             nowPlayingBtn.append(image);
             $(".nowPlaying").prepend(nowPlayingBtn);
         }
@@ -49,12 +49,12 @@ $(document).ready(function() {
 
             for (let i = 0; i < searchResults.length; i++) {
                 var searchResultsBtn = $(`<div class="movie-div movie-results" id="${searchResults[i].id}">`);
-                var image = $(`<img class="movie-poster">`)
+                var image = $(`<img class="similar-movie">`)
                 var title = $(`<p class="movie-title">${searchResults[i].title}</p>`);
                 searchResultsBtn.append(title);
                 image.attr("src", "https://image.tmdb.org/t/p/w500" + searchResults[i].poster_path);
                 image.attr("alt", title);
-                searchResultsBtn.attr("value", searchResults[i].title);
+                image.attr("value", searchResults[i].title);
                 searchResultsBtn.append(image);
                 $(".nowPlaying").prepend(searchResultsBtn);
             }
@@ -62,19 +62,22 @@ $(document).ready(function() {
     });
 
     // YouTube trailer feature
-    $(".nowPlaying").on("click", ".movie-results", function() {
+
+    $(document).on("click", ".similar-movie", function() {
         var movieTitle = $(this).attr("value");
-        console.log(movieTitle);
         var youTubeQueryUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=5&q=${movieTitle}+trailer&key=AIzaSyCQfE0z-4oO65KlRi2bPQ7i2X-CyZ8C_6g`;
+
         $(".youTubeSearch").empty();
+
         $.ajax({
             url: youTubeQueryUrl,
             method: "GET"
         }).done(function(response) {
-            var vidURL = `src="https://www.youtube.com/embed/${movieTitle}"`;
+            var youTubeVidId = response.items[0].id.videoId;
+            var vidURL = `src="https://www.youtube.com/embed/${youTubeVidId}"`;
             var youTubeVid = $(`<iframe width='420' height='315' ${vidURL}>`);
             $(".youTubeSearch").append(youTubeVid);
-        })
+        });
 
     });
 
