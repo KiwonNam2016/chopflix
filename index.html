@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Scrumptious</title>
+    <!-- Google fonts link -->
+    <link href="https://fonts.googleapis.com/css?family=Bad+Script|Caveat|Coming+Soon" rel="stylesheet">
     <!-- favicon -->
     <!-- link rel="shortcut icon" href="assets/images/favicon.ico" type="image/x-icon" -->
     <!-- google fonts -->
@@ -26,10 +28,23 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="jumbotron">
-                        <h1>Hello World!</h1>
+                        <h1 class="title">Scrumptious</h1>
+                        <img class="img-circle img-responsive icon " src="assets/images/meal1_icon.png" alt="Scrumptious">
+                        <h2></h2>
                     </div>
                 </div>
             </div>
+            <!-- button addons -->
+            <div id="searchEntry"class="row">
+                <div class="col-lg-6">
+                  <div class="input-group">
+                    <span class="input-group-btn">
+                      <button class="btn btn-default go" type="button">Go!</button>
+                    </span>
+                    <input id="food"type="text" class="form-control"  placeholder="I hate onions...">
+                  </div><!-- /input-group -->
+                </div><!-- /.col-lg-6 -->
+              </div><!-- /.row -->
         </div>
 
         <div class="youTubeSearch"></div>
@@ -46,10 +61,16 @@
     <script src="https://www.gstatic.com/firebasejs/4.8.1/firebase.js"></script>
     <!-- jQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <!--CDN links for TweenLite, CSSPlugin, and EasePack-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.2/plugins/CSSPlugin.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.2/easing/EasePack.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.2/TweenLite.min.js"></script>
     <!-- bootstrap -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <!-- javascript -->
     <script src="assets/app.js"></script>
+    <!-- javascript -->
+    <script src="assets/animation.js"></script>
 </body>
 
 </html>
