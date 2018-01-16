@@ -23,3 +23,56 @@
     font-weight: 600;
     overflow-wrap: break-word;
 }
+
+.title{
+    display:inline-block;
+    font-family: 'Caveat', cursive;
+  
+}
+
+#searchEntry{
+    font-family: 'Bad Script', cursive;
+    
+}
+.jumbotron{
+    background-color: white;
+}
+
+.icon{
+    margin-left: 9px;
+    margin-top: -30px;
+    display:inline-block;
+    width:70px;
+    height:auto;
+}
+
+h2{
+    margin-left: 40%;
+    font-family: 'Coming Soon', cursive;
+    font-size: 18px;
+}
+
+#food{
+    border-color: #87CEFA;
+}
+.go{
+    background-color: rgb(94, 180, 94);
+
+}
+.go:hover{
+    text-shadow: 2px 2px 5px green;
+}
+
+.title{
+    color:black;
+    text-decoration: none;
+    text-transform: uppercase;
+    -webkit-mask-image: linear-gradient(-75deg, rgba(0, 0, 0, 0.6) 60%, #000 80%, rgba(0,0,0,.6) 90%);
+    -webkit-mask-size: 200%;
+    animation: shine 2s linear infinite;
+  }
+  
+@keyframes shine {
+    from { -webkit-mask-position: 150%; }
+    to { -webkit-mask-position: -50%; }
+  }
