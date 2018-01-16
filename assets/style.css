@@ -32,14 +32,15 @@
 
 #searchEntry{
     font-family: 'Bad Script', cursive;
-    
+    margin-left: 5%;
+    width: 100%;
 }
 .jumbotron{
     background-color: white;
 }
 
 .icon{
-    margin-left: 9px;
+    margin-left: 12px;
     margin-top: -30px;
     display:inline-block;
     width:70px;
@@ -75,4 +76,8 @@ h2{
 @keyframes shine {
     from { -webkit-mask-position: 150%; }
     to { -webkit-mask-position: -50%; }
+  }
+
+  .input-ground{
+
   }
