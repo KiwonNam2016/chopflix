@@ -21,15 +21,16 @@ $(document).ready(function() {
         $(".nowPlaying").html("");
         var searchResults = response.results;
 
+
         for (let i = 0; i < searchResults.length; i++) {
-            var nowPlayingBtn = $(`<div class="movie-div" id="${searchResults[i].id}">`);
-            var image = $(`<img class="movie-poster">`)
-            var title = $(`<p class="movie-title">${searchResults[i].title}</p>`);
-            nowPlayingBtn.append(title);
+            var nowPlayingBtn = $(`<div class="hvrbox movie-div" id="${searchResults[i].id}">`);
+            var image = $(`<img class="hvrbox-layer_bottom movie-poster">`);
+            var title = searchResults[i].title;
+            var layer = $(`<div class="hvrbox-layer_top hvrbox-layer_slideup"><div class="hvrbox-text">${title}</div></div>`);           
             image.attr("src", "https://image.tmdb.org/t/p/w500" + searchResults[i].poster_path);
             image.attr("alt", title);
-            // nowPlayingBtn.attr("value", searchResults[i].title)
-            nowPlayingBtn.append(image);
+            nowPlayingBtn.prepend(image);
+            nowPlayingBtn.append(layer);
             $(".nowPlaying").prepend(nowPlayingBtn);
         }
 
@@ -46,25 +47,20 @@ $(document).ready(function() {
         }).done(function(response) {
             $(".nowPlaying").html("");
             var searchResults = response.results;
-
-            for (let i = 0; i < searchResults.length; i++) {
-                var searchResultsBtn = $(`<div class="movie-div movie-results" id="${searchResults[i].id}">`);
-                var image = $(`<img class="similar-movie">`)
-                var title = $(`<p class="movie-title">${searchResults[i].title}</p>`);
-                searchResultsBtn.append(title);
-                image.attr("src", "https://image.tmdb.org/t/p/w500" + searchResults[i].poster_path);
-                image.attr("alt", title);
-                image.attr("value", searchResults[i].title);
-                searchResultsBtn.append(image);
-                $(".nowPlaying").prepend(searchResultsBtn);
-            }
+            for(var i = 0 ; i < searchResults.length ; i++) {
+                $(`<div class="item"><img src="https://image.tmdb.org/t/p/w500${searchResults[i].poster_path}" alt="${searchResults[i].title}><div class="carousel-caption"><p class="synopsis">${searchResults[i].overview}</p></div></div>`).appendTo('.carousel-inner');
+                $(`<li data-target="#carousel-movies" data-slide-to="${i}"></li>`).appendTo('.carousel-indicators')
+              }
+              $('.item').first().addClass('active');
+              $('.carousel-indicators > li').first().addClass('active');
+              $('#carousel-example-generic').carousel();
         });
     });
 
     // YouTube trailer feature
 
     $(document).on("click", ".similar-movie", function() {
-        var movieTitle = $(this).attr("value");
+        var movieTitle = $(this).attr("alt");
         var youTubeQueryUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=5&q=${movieTitle}+trailer&key=AIzaSyCQfE0z-4oO65KlRi2bPQ7i2X-CyZ8C_6g`;
 
         $(".youTubeSearch").empty();
