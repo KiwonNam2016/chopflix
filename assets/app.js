@@ -80,8 +80,9 @@ $(document).ready(function() {
      //yummly search
     $(".go").on("click",function(){
     
-        $("#moviesCarousel").addClass("carousel slide");
+        $("#recipesCarousel").addClass("carousel slide");
         $(".carousel-inner").empty();
+        $("#recipe_indicators").empty();
         var food=$("#food").val().trim();
         var yumQuery="http://api.yummly.com/v1/api/recipes?_app_id=74c2c130&_app_key=dbe2b1012a02ca615dbe289501e4ef92&q="+food;
     
@@ -89,24 +90,20 @@ $(document).ready(function() {
             url: yumQuery,
             method: "GET"
         }).done(function(response){
-        
             var result=response.matches
-            var imgDiv1=$("<div class='item active'>").html(`<img id="img1" src=" " alt="Pic" style="width:100%;">
-            <div class="carousel-caption">
-                <p id="recipe_name1"></p>
-            `)
-            $(".carousel-inner").prepend(imgDiv1)
-            $("#img1").attr("src",result[1].imageUrlsBySize["90"])
-            $("#recipe_name1").text(result[1].recipeName)
-            //prepend recipe images
-            for(var z=2; z<result.length; z++){
+            for(var z=1; z<result.length; z++){
                 var id="#img"+z;
                 var recipe="#recipe_name"+z
                 var imgDiv2=$("<div class='item'>").html(`<img id="img${z}" src=" " alt="Pic" style="width:100%;">
                     <div class="carousel-caption">
                         <p id="recipe_name${z}"></p>
                     `)
-                $(".carousel-inner").prepend(imgDiv2)
+                $(`<li data-target="#recipesCarousel" data-slide-to="${z-1}"></li>`).appendTo('#recipe_indicators')
+                $("#inner").prepend(imgDiv2)
+                if(z===1){
+                $('.item').first().addClass('active');
+                $('#recipe_indicators > li').first().addClass('active');
+                }
                 $(id).attr("src",result[z].imageUrlsBySize["90"])
                 $(recipe).text(result[z].recipeName)
             }
