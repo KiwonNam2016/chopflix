@@ -12,6 +12,31 @@ firebase.initializeApp(config);
 $(document).ready(function() {
     var database = firebase.database();
     var tmdb = "b300de2804d6ecbfa5435065a4835711";
+    var uid = JSON.parse(localStorage.getItem("cKDX9B90bvAYTGSiZq3W"));
+
+    // setting date for IE8 and earlier
+    if (!Date.now) {
+        Date.now = function() { return new Date().getTime(); };
+    };
+
+    // ADDING A NEW USER
+    // detecting presence and creating a unique id
+    database.ref(".info/connected").on("value", function(snapshot) {   
+        if (uid === null) {
+            database.ref("users").push("");
+        };
+        // if we need anything removed
+        // database.ref().onDisconnect().remove(); 
+    });
+
+    // saving unique key for new player
+    database.ref("users").once("child_added", function(snapshot) {
+        var id = snapshot.key;
+        if (uid === null) {
+            localStorage.setItem("cKDX9B90bvAYTGSiZq3W", JSON.stringify(id));
+        } 
+        
+    });
 
     // genres for movies
     $("#movie").on("click", function() {
@@ -101,51 +126,6 @@ $(document).ready(function() {
         });
     });
 
-    // now playing movies
-    // var queryURL = `https://api.themoviedb.org/3/movie/now_playing?api_key=${tmdb}&language=en-US`;
-    // $.ajax({
-    //     url: queryURL,
-    //     method: "GET"
-    // }).done(function(response) {
-    //     $(".nowPlaying").html("");
-    //     var searchResults = response.results;
-
-
-    //     for (let i = 0; i < searchResults.length; i++) {
-    //         var nowPlayingBtn = $(`<div class="hvrbox movie-div" id="${searchResults[i].id}">`);
-    //         var image = $(`<img class="hvrbox-layer_bottom movie-poster">`);
-    //         var title = searchResults[i].title;
-    //         var layer = $(`<div class="hvrbox-layer_top hvrbox-layer_slideup"><div class="hvrbox-text">${title}</div></div>`);           
-    //         image.attr("src", "https://image.tmdb.org/t/p/w500" + searchResults[i].poster_path);
-    //         image.attr("alt", title);
-    //         nowPlayingBtn.prepend(image);
-    //         nowPlayingBtn.append(layer);
-    //         $(".nowPlaying").prepend(nowPlayingBtn);
-    //     }
-
-    // });
-
-
-    // similar movies results
-    // $(".nowPlaying").on("click", ".movie-div", function(event) {
-    //     var searchSimilar = `https://api.themoviedb.org/3/movie/${this.id}/similar?api_key=b300de2804d6ecbfa5435065a4835711&language=en-US&page=1`
-
-    //     $.ajax({
-    //         url: searchSimilar,
-    //         method: "GET"
-    //     }).done(function(response) {
-    //         $(".nowPlaying").html("");
-    //         var searchResults = response.results;
-    //         for(var j = 0 ; j < searchResults.length ; j++) {
-    //             $(`<div class="item"><img src="https://image.tmdb.org/t/p/w500${searchResults[i].poster_path}" alt="${searchResults[i].title}><div class="carousel-caption"><p class="synopsis">${searchResults[i].overview}</p></div></div>`).appendTo('.carousel-inner');
-    //             $(`<li data-target="#carousel-movies" data-slide-to="${i}"></li>`).appendTo('.carousel-indicators')
-    //           }
-    //           $('.item').first().addClass('active');
-    //           $('.carousel-indicators > li').first().addClass('active');
-    //           $('#carousel-movies').carousel();
-    //     });
-    // });
-
     // additional details screen
     $(".nowPlaying").on("click", ".movie-div", function() {
         var movieTitle = $(this).attr("alt");
@@ -159,8 +139,12 @@ $(document).ready(function() {
 
 
         $(".showMeDetails").empty();
-        $(".showMeDetails").append(`<h1>${movieTitle}</h1>`).append(overview).append(`<h3>Other Movies You Might Like:</h3>`);
-        $(".showMeDetails").prepend(`<div id="movieJump">`);
+        $(".showMeDetails").append(`
+            <h1 id="fav-click" title="${movieTitle}">${movieTitle}
+                <span id="heart" class="glyphicon glyphicon-heart glyphicon-heart-empty"></span>
+            </h1>
+            `).append(overview).append(`<h3>Other Movies You Might Like:</h3>`);
+        $("#fav-click").attr("favorite", false).attr("db", this.id);
 
         $.ajax({
             url: youTubeQueryUrl,
@@ -201,7 +185,12 @@ $(document).ready(function() {
         var searchRecs = `https://api.themoviedb.org/3/movie/${this.id}/recommendations?api_key=${tmdb}&language=en-US&page=1`
 
         $(".showMeDetails").empty();
-        $(".showMeDetails").append(`<h1>${movieTitle}</h1>`).append(overview).append(`<h3>Other Movies You Might Like:</h3>`);
+        $(".showMeDetails").append(`
+            <h1 id="fav-click" title="${movieTitle}">${movieTitle}
+                <span id="heart" class="glyphicon glyphicon-heart glyphicon-heart-empty"></span>
+            </h1>
+            `).append(overview).append(`<h3>Other Movies You Might Like:</h3>`);
+        $("#fav-click").attr("favorite", false).attr("db", this.id);
 
         $.ajax({
             url: youTubeQueryUrl,
@@ -233,6 +222,21 @@ $(document).ready(function() {
                 $(".showMeDetails").append(resultsBtn);
             };
         });
+    });
+
+    $(".showMeDetails").on("click", "#fav-click", function(event) {
+        var faveTitle = $(this).attr("title");
+        var saved = $(this).attr("favorite");
+        var id = $(this).attr("db");
+        if (saved === "true") {
+            database.ref("users/" + uid + "/TMDB_faves/" + id).remove();
+        } else {
+            database.ref("users/" + uid + "/TMDB_faves/").update({
+                [id]: faveTitle
+            });
+        }
+        $("#heart").toggleClass("glyphicon-heart-empty");
+        $(this).attr("favorite", ($(this).attr("favorite") == "false" ? true : false));
     });
 
     //yummly search
