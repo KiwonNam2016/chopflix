@@ -89,7 +89,7 @@ $(document).ready(function() {
             for(var n = 0 ; n < searchResults.length ; n++) {
                 var resultsBtn = $(`<div class="hvrbox movie-div" id="${searchResults[n].id}">`);
                 var image = $(`<img class="hvrbox-layer_bottom movie-poster">`);
-                var title = searchResults[n].title;
+                var title = searchResults[n].name;
                 var layer = $(`<div class="hvrbox-layer_top hvrbox-layer_slideup"><div class="hvrbox-text">${title}<div class="line"/>Click to See Details</div></div>`);           
                 image.attr("src", "https://image.tmdb.org/t/p/w500" + searchResults[n].poster_path);
                 resultsBtn.prepend(image);
