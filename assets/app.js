@@ -21,7 +21,7 @@ $(document).ready(function() {
 
     // ADDING A NEW USER
     // detecting presence and creating a unique id
-    database.ref(".info/connected").on("value", function(snapshot) {   
+    database.ref(".info/connected").on("value", function(snapshot) {
         if (uid === null) {
             database.ref("users").push("");
         };
@@ -34,8 +34,8 @@ $(document).ready(function() {
         var id = snapshot.key;
         if (uid === null) {
             localStorage.setItem("cKDX9B90bvAYTGSiZq3W", JSON.stringify(id));
-        } 
-        
+        }
+
     });
 
     // genres for movies
@@ -46,11 +46,12 @@ $(document).ready(function() {
             method: "GET"
         }).done(function(response) {
             $("#genres").html("");
-            var genre = response.genres;        
+            var glyph = $(`<span class="glyphicon glyphicon-film" aria-hidden="true"></span>`);
+            var genre = response.genres;
             for (let k = 0; k < genre.length; k++) {
                 var button = $(`<button class="movie-genre">`);
                 button.attr("id", genre[k].id);
-                button.addClass("btn btn-default");
+                button.addClass("btn btn-primary");
                 button.html(genre[k].name);
                 $("#genres").append(button);
             };
@@ -65,11 +66,12 @@ $(document).ready(function() {
             method: "GET"
         }).done(function(response) {
             $("#genres").html("");
-            var genre = response.genres;        
+            var genre = response.genres;
             for (let l = 0; l < genre.length; l++) {
-                var button = $(`<button class="tv-genre">`);
+                var glyph = $(`<span class="glyphicon glyphicon-blackboard" aria-hidden="true">`);
+                var button = $(`<button class="tv-genre"><div>`);
                 button.attr("id", genre[l].id);
-                button.addClass("btn btn-default");
+                button.addClass("btn btn-primary");
                 button.html(genre[l].name);
                 $("#genres").append(button);
             };
@@ -86,11 +88,11 @@ $(document).ready(function() {
         }).done(function(response) {
             $(".nowPlaying").html("");
             var searchResults = response.results;
-            for(var m = 0 ; m < searchResults.length ; m++) {
+            for (var m = 0; m < searchResults.length; m++) {
                 var resultsBtn = $(`<div class="hvrbox movie-div" id="${searchResults[m].id}"><a href="#movieJump">`);
                 var image = $(`<img class="hvrbox-layer_bottom movie-poster">`);
                 var title = searchResults[m].title;
-                var layer = $(`<div class="hvrbox-layer_top hvrbox-layer_slideup"><div class="hvrbox-text">${title}<div class="line"/>Click to See Details</div></div>`);           
+                var layer = $(`<div class="hvrbox-layer_top hvrbox-layer_slideup"><div class="hvrbox-text">${title}<div class="line"/>Click to See Details</div></div>`);
                 image.attr("src", "https://image.tmdb.org/t/p/w500" + searchResults[m].poster_path);
                 resultsBtn.prepend(image);
                 resultsBtn.append(layer);
@@ -111,17 +113,36 @@ $(document).ready(function() {
         }).done(function(response) {
             $(".nowPlaying").html("");
             var searchResults = response.results;
-            for(var n = 0 ; n < searchResults.length ; n++) {
+            for (var n = 0; n < searchResults.length; n++) {
                 var resultsBtn = $(`<div class="hvrbox movie-div" id="${searchResults[n].id}">`);
                 var image = $(`<img class="hvrbox-layer_bottom movie-poster">`);
                 var title = searchResults[n].name;
-                var layer = $(`<div class="hvrbox-layer_top hvrbox-layer_slideup"><div class="hvrbox-text">${title}<div class="line"/>Click to See Details</div></div>`);           
+                var layer = $(`<div class="hvrbox-layer_top hvrbox-layer_slideup"><div class="hvrbox-text">${title}<div class="line"/>Click to See Details</div></div>`);
                 image.attr("src", "https://image.tmdb.org/t/p/w500" + searchResults[n].poster_path);
                 resultsBtn.prepend(image);
                 resultsBtn.append(layer);
                 resultsBtn.attr("id", searchResults[n].id).attr("alt", title).attr("plot", searchResults[n].overview);
                 resultsBtn.attr("src", "https://image.tmdb.org/t/p/w500" + searchResults[n].poster_path);
                 $(".nowPlaying").prepend(resultsBtn);
+
+                $(".vidImages").html("")
+                var vidhtml = `
+                <div class="col-md-4 col-sm-6 portfolio-item">
+                    <a href="#portfolioModal${searchResults[p].id}" class="portfolio-link" data-toggle="modal">
+                        <div class="portfolio-hover">
+                            <div class="portfolio-hover-content">
+                                <i class="fa fa-plus fa-3x"></i>
+                            </div>
+                        </div>
+                        <img src="https://image.tmdb.org/t/p/w500${searchResults[p].poster_path}" class="img-responsive" alt="">
+                    </a>
+                    <div class="portfolio-caption">
+                        <h4>${title}</h4>
+                        <p class="text-muted">TV Shows</p>
+                    </div>
+                </div>`;
+                $(".vidImages").append(vidhtml);
+
             };
         });
     });
@@ -161,7 +182,7 @@ $(document).ready(function() {
             method: "GET"
         }).done(function(response) {
             var searchResults = response.results;
-            for(var o = 0 ; o < searchResults.length ; o++) {
+            for (var o = 0; o < searchResults.length; o++) {
                 var resultsBtn = $(`<div class="hvrbox movie-div otherRecs" id="${searchResults[o].id}">`);
                 var image = $(`<img class="hvrbox-layer_bottom movie-poster">`);
                 var title = searchResults[o].title;
@@ -207,7 +228,7 @@ $(document).ready(function() {
             method: "GET"
         }).done(function(response) {
             var searchResults = response.results;
-            for(var p = 0 ; p < searchResults.length ; p++) {
+            for (var p = 0; p < searchResults.length; p++) {
                 var resultsBtn = $(`<div class="hvrbox movie-div otherRecs" id="${searchResults[p].id}">`);
                 var image = $(`<img class="hvrbox-layer_bottom movie-poster">`);
                 var title = searchResults[p].title;
@@ -220,8 +241,10 @@ $(document).ready(function() {
                 resultsBtn.attr("plot", searchResults[p].overview);
                 resultsBtn.attr("src", "https://image.tmdb.org/t/p/w500" + searchResults[p].poster_path);
                 $(".showMeDetails").append(resultsBtn);
+
             };
         });
+
     });
 
     $(".showMeDetails").on("click", "#fav-click", function(event) {
@@ -240,13 +263,13 @@ $(document).ready(function() {
     });
 
     //yummly search
-    var addedCuisines  = [];
+    var addedCuisines = [];
     var cuisineSearch;
     var state;
     $(".go").on("click", function() {
         console.log(cuisineSearch);
-		cuisineSearch = addedCuisines.join('');
-		console.log(cuisineSearch);
+        cuisineSearch = addedCuisines.join('');
+        console.log(cuisineSearch);
         var food = $("#food").val().trim();
         var yumQuery = "http://api.yummly.com/v1/api/recipes?_app_id=74c2c130&_app_key=dbe2b1012a02ca615dbe289501e4ef92&q=" + food + cuisineSearch;
         console.log(food);
@@ -282,19 +305,19 @@ $(document).ready(function() {
                 recipeDiv.append(p);
                 recipeDiv.append(recipeLink);
 
-                $("#recipe_view").append(recipeDiv);      
-          }
-      });
-  });
+                $("#recipe_view").append(recipeDiv);
+            }
+        });
+    });
 
-  function createButtons() {
+    function createButtons() {
         var cuisines = ["American", "Italian", "Asian", "Mexican", "Southern & Soul Food", "French", "Southwestern", "Barbecue", "Indian", "Chinese", "Cajun & Creole", "English", "Mediterranean", "Greek", "Spanish", "German", "Thai", "Moroccan", "Irish", "Japanese", "Cuban", "Hawaiin", "Swedish", "Hungarian", "Portugese"];
         for (var a = 0; a < cuisines.length; a++) {
             var button = $("<button>");
             button.addClass("cuisines btn btn-primary btn-lg");
-            button.attr({"data-name": cuisines[a], "data-state": "unchecked"});
+            button.attr({ "data-name": cuisines[a], "data-state": "unchecked" });
             button.text(cuisines[a]);
-            
+
             $(".recipeButtons").append(button);
         }
 
@@ -305,7 +328,7 @@ $(document).ready(function() {
         state = this.getAttribute('data-state');
         var cuisineSelected = $(this).attr("data-name");
         var cuisineParameter = "&allowedCuisine[]=cuisine^cuisine-" + cuisineSelected
-        //if image is at still state...url and state are changed to match animated
+            //if image is at still state...url and state are changed to match animated
         if (state === "unchecked") {
             // $(this).removeAttr('style').css("background-color", "red");
             $(this).css("background-color", "#204d74");
