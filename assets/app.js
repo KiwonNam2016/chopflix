@@ -82,6 +82,8 @@ $(document).ready(function() {
     $(".genre-buttons").on("click", ".movie-genre", function(event) {
         var discover = `https://api.themoviedb.org/3/discover/movie?api_key=${tmdb}&language=en-US&sort_by=popularity.desc&certification.lte=pg-13&include_adult=false&include_video=false&page=1&with_genres=${this.id}`
 
+        $(".vidImages").empty()
+
         $.ajax({
             url: discover,
             method: "GET"
@@ -98,7 +100,24 @@ $(document).ready(function() {
                 resultsBtn.append(layer);
                 resultsBtn.attr("id", searchResults[m].id).attr("alt", title).attr("plot", searchResults[m].overview);
                 resultsBtn.attr("src", "https://image.tmdb.org/t/p/w500" + searchResults[m].poster_path);
-                $(".nowPlaying").prepend(resultsBtn);
+                // $(".nowPlaying").prepend(resultsBtn);
+
+                var vidhtml = `
+                <div class="col-md-3 col-sm-6 portfolio-item">
+                    <a href="#portfolioModal${searchResults[m].id}" class="portfolio-link" data-toggle="modal">
+                        <div class="portfolio-hover">
+                            <div class="portfolio-hover-content">
+                                <i class="fa fa-plus fa-3x"></i>
+                            </div>
+                        </div>
+                        <img src="https://image.tmdb.org/t/p/w500${searchResults[m].poster_path}" class="img-responsive" alt="">
+                    </a>
+                    <div class="portfolio-caption">
+                        <h4>${title}</h4>
+                        <p class="text-muted">TV Shows</p>
+                    </div>
+                </div>`;
+                $(".vidImages").append(vidhtml);
             };
         });
     });
@@ -106,6 +125,8 @@ $(document).ready(function() {
     // discover tv
     $(".genre-buttons").on("click", ".tv-genre", function(event) {
         var discover = `https://api.themoviedb.org/3/discover/tv?api_key=${tmdb}&language=en-US&sort_by=popularity.desc&certification.lte=pg-13&include_adult=false&include_video=false&page=1&with_genres=${this.id}`
+
+        $(".vidImages").empty()
 
         $.ajax({
             url: discover,
@@ -123,18 +144,17 @@ $(document).ready(function() {
                 resultsBtn.append(layer);
                 resultsBtn.attr("id", searchResults[n].id).attr("alt", title).attr("plot", searchResults[n].overview);
                 resultsBtn.attr("src", "https://image.tmdb.org/t/p/w500" + searchResults[n].poster_path);
-                $(".nowPlaying").prepend(resultsBtn);
+                // $(".nowPlaying").prepend(resultsBtn);
 
-                $(".vidImages").html("")
                 var vidhtml = `
-                <div class="col-md-4 col-sm-6 portfolio-item">
-                    <a href="#portfolioModal${searchResults[p].id}" class="portfolio-link" data-toggle="modal">
+                <div class="col-md-3 col-sm-6 portfolio-item">
+                    <a href="#portfolioModal${searchResults[n].id}" class="portfolio-link" data-toggle="modal">
                         <div class="portfolio-hover">
                             <div class="portfolio-hover-content">
                                 <i class="fa fa-plus fa-3x"></i>
                             </div>
                         </div>
-                        <img src="https://image.tmdb.org/t/p/w500${searchResults[p].poster_path}" class="img-responsive" alt="">
+                        <img src="https://image.tmdb.org/t/p/w500${searchResults[n].poster_path}" class="img-responsive" alt="">
                     </a>
                     <div class="portfolio-caption">
                         <h4>${title}</h4>
