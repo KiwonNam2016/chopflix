@@ -103,10 +103,8 @@ $(document).ready(function() {
                                 <div class="portfolio-hover-content">
                                     <i class="fa fa-plus fa-3x"></i>
                                 </div>
-                                <div class="poster-image" style="background-image:url(https://image.tmdb.org/t/p/w500${poster}) onerror="this.src='assets/images/default.jpg'" class="img-responsive" alt="${movieTitle}">
-                                </div>
                             </div>
-                            // <img src="https://image.tmdb.org/t/p/w500${poster}" onerror="this.src='assets/images/default.jpg'" class="img-responsive" alt="${movieTitle}">
+                            <img src="https://image.tmdb.org/t/p/w500${poster}" onerror="this.src='assets/images/default.jpg'" class="img-responsive" alt="${movieTitle}">
                         </a>
                         <div class="portfolio-caption">
                             <h4 class="thumbTitle">${movieTitle}</h4>
