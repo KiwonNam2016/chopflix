@@ -385,7 +385,7 @@ $(document).ready(function() {
         // button initial state is unchecked...this status will only change on click
         // when it gets clicked, we change the state and css style
         if (state === "unchecked") {
-            $(this).css({"background-color": "#333", "opacity": "0.9"});
+            $(this).css({"background-color": "#333", "border-color": "#333", "opacity": "0.9"});
             $(this).attr("data-state", "checked");
             addedCuisines.push(cuisineParameter);
             console.log(addedCuisines);
