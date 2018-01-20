@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Chopflix Nightout is IN the house</title>
+    <title>Chopflix</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -56,13 +56,13 @@
                         <a href="#page-top"></a>
                     </li>
                     <li>
-                        <a class="page-scroll  whatchaWatching" href="#services">Whatcha Watchin?</a>
+                        <a class="page-scroll" href="#recipe-search-section">Search Recipes</a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="#portfolio">Search</a>
+                        <a class="page-scroll" href="#show-search-section">Search Shows</a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="#about">About</a>
+                        <a class="page-scroll" href="#about">Our Vision</a>
                     </li>
                     <li>
                         <a class="page-scroll" href="#team">Team</a>
@@ -92,8 +92,25 @@
         </div>
     </header>
 
-    <!-- Services Section -->
-    <section id="services">
+    <!-- Recipe Seach Section -->
+    <section id="recipe-search-section">
+        <div class="row" id="searchEntry">
+            <div class="col-md-6 input-group">
+                <form action="">
+                    <span class="input-group-btn">
+                        <input id="food" type="text" pattern="[A-Za-z]"  class="form-control" placeholder="I hate onions...">
+                        <button class="btn btn-default go" type="submit">Go!</button>
+                        <p id="something"></p>
+                    </span>
+                </form>
+            </div>
+        </div>
+        <div class="recipeButtons"></div>
+        <div class="col-md-12 yummlySearch"></div>
+    </section>
+
+    <!-- Show Seach Section -->
+    <section id="show-search-section" class="bg-light-gray">
         <div class="row phase-one">
             <div class="col-sm-12 dynamic-intro"></div>
         </div>
@@ -110,47 +127,6 @@
                     <input type="radio" name="show-type" id="tv" value="TV Shows"> &nbsp TV Shows <span>  &nbsp  &nbsp </span>
                     <input type="radio" name="show-type" id="movie" value="Movies"> &nbsp Movies
                 </form>
-                <!-- search engine -->
-                <div class="search-giphy">
-                    <h3 class="section-heading">Feeling Indecisive?</h3>
-                    <button type="button" id="submit-button" class="btn btn-default" type="submit">Click Here</button>
-                    <span style="font-size:18px">For a Selection of the Most Popular Titles</span>
-                </div>
-                <span class="glyphicon glyphicon-heart-empty">Hello</span>
-                <div class="row phase-three">
-                    <div class="col-md-12">
-                        <!-- button addons -->
-                        <div class="row" id="searchEntry">
-                            <div class="col-md-6 input-group">
-                                <form action="">
-                                    <span class="input-group-btn">
-                                            <input id="food" type="text" pattern="[A-Za-z]"  class="form-control" placeholder="I hate onions...">
-                                            <button class="btn btn-default go" type="submit">Go!</button>
-                                            <p id="something"></p>
-                                            </span>
-
-                                </form>
-                            </div>
-                            <div class="col-md-6"></div>
-                            <!-- /.input-group -->
-                        </div>
-                        <!-- /#searchEntry -->
-                        <div class="row">
-                            <div class="recipeButtons"></div>
-                        </div>
-                    </div>
-                    <!-- /.recipe -->
-                    <div class="row">
-                        <div class="col-md-12"></div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-12 yummlySearch">
-                    </div>
-                </div>
-
-
                 <!-- genre buttons -->
                 <div class="search-buttons"></div>
                 <div class="showMeDetails"></div>
@@ -159,8 +135,8 @@
         </div>
     </section>
 
-    <!-- Movie Grid Section -->
-    <section id="portfolio" class="bg-light-gray">
+    <!-- Show Results Section -->
+    <section id="portfolio" class="show-results-section">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
@@ -174,8 +150,8 @@
         </div>
     </section>
 
-    <!-- Recipe Grid Section -->
-    <section id="portfolio" class="bg-light-gray">
+    <!-- Recipe Results Section -->
+    <section id="portfolio" class="recipe-results-section" class="bg-light-gray">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
@@ -359,17 +335,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-4">
-                    <span class="copyright">Copyright &copy; Your Website 2016</span>
-                </div>
-                <div class="col-md-4">
-                    <ul class="list-inline social-buttons">
-                        <li><a href="#"><i class="fa fa-twitter"></i></a>
-                        </li>
-                        <li><a href="#"><i class="fa fa-facebook"></i></a>
-                        </li>
-                        <li><a href="#"><i class="fa fa-linkedin"></i></a>
-                        </li>
-                    </ul>
+                    <span class="copyright">Copyright &copy; ChopFlix 2018</span>
                 </div>
                 <div class="col-md-4">
                     <ul class="list-inline quicklinks">
