@@ -145,17 +145,20 @@ $(document).ready(function() {
             console.log(showArray);
                 
             for (let s = 0; s < showArray.length; s++) {
+                var url = `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=5&q=${showArray[s]}+trailer&key=AIzaSyCQfE0z-4oO65KlRi2bPQ7i2X-CyZ8C_6g`;
+
                 $.ajax({
-                    url: `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=5&q=${s}+trailer&key=AIzaSyCQfE0z-4oO65KlRi2bPQ7i2X-CyZ8C_6g`,
-                    method: "GET"
+                    url: url,
+                    method: "GET"               
                 }).done(function(response) {
-                    var youTubeVidId = showArray[s];
+                    var youTubeVidId = response.items[s].id.videoId;
                     var vidURL = `src="https://www.youtube.com/embed/${youTubeVidId}"`;
                     var youTubeVid = $(`<iframe width='420' height='315' ${vidURL}>`);
                     $(`#youTube-${s}`).html(youTubeVid);
                     console.log("movies");
                     console.log(showArray[s]);
-                });   
+                    console.log(url);
+                });
             };         
                 
         }); 
@@ -365,7 +368,7 @@ $(document).ready(function() {
         var cuisines = ["American", "Kid-Friendly", "Italian", "Asian", "Mexican", "Southern", "French", "Southwestern", "Barbecue-bbq", "Indian", "Chinese", "Cajun", "English", "Mediterranean", "Greek", "Spanish", "German", "Thai", "Moroccan", "Irish", "Japanese", "Cuban", "Hawaiin", "Swedish", "Hungarian", "Portugese"];
         for (var a = 0; a < cuisines.length; a++) {
             var button = $(`<button id="button${a}">`);
-            button.addClass("cuisines btn btn-primary btn-lg");
+            button.addClass("cuisines btn btn-primary");
             button.attr({ "data-name": cuisines[a], "data-state": "unchecked" });
             button.text(cuisines[a]);
 
