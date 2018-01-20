@@ -81,12 +81,12 @@
     <header>
         <div class="container">
             <div class="intro-text">
-                <div class="intro-lead-in">ChopFlix
+                <div class="intro-lead-in"><div class="title">ChopFlix</div>
                     <p></p>
                     <p class=intro-lead-p>All the excitement of an extravagant night out from the comfort of your own home </p>
                 </div>
                 <div class="intro-heading">Ready for a wonderful time ...IN?!!!</div>
-                <a href="#services" class="page-scroll btn btn-xl">Start your Search</a>
+                <a href="#services" class="page-scroll btn btn-xl startBtn">Start your Search</a>
             </div>
         </div>
     </header>
@@ -120,10 +120,17 @@
                     <div class="col-md-12">
                         <!-- button addons -->
                         <div class="row" id="searchEntry">
-                            <div class="col-lg-6 input-group">
-                                <button class="btn btn-default go" type="button">Go!</button>
-                                <input id="food" type="text" class="form-control" placeholder="I hate onions...">
+                            <div class="col-md-6 input-group">
+                                    <form action="">
+                                            <span class="input-group-btn">
+                                            <input id="food" type="text" pattern="[A-Za-z]"  class="form-control" placeholder="I hate onions...">
+                                            <button class="btn btn-default go" type="submit">Go!</button>
+                                            <p id="something"></p>
+                                            </span>
+                                           
+                                    </form>
                             </div>
+                            <div class="col-md-6"></div>
                             <!-- /.input-group -->
                         </div>
                         <!-- /#searchEntry -->
@@ -291,7 +298,7 @@
                 <div class="col-sm-3">
                     <div class="team-member">
                         <img src="img/team/EZavatar.png" class="img-responsive img-circle" alt="">
-                        <h4>Eddie Zhou</h4>
+                        <h4>Eddie Zhao</h4>
                         <p class="text-muted">Designer/Developer</p>
                         <ul class="list-inline social-buttons">
                             <li><a href="#"><i class="fa fa-github"></i></a>
@@ -590,6 +597,12 @@
 
     <!-- Plugin JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+    
+    <!--CDN links for TweenLite, CSSPlugin, and EasePack (has to run before script) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.2/plugins/CSSPlugin.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.2/easing/EasePack.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.2/TweenLite.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/gsap/1.11.5/TimelineLite.min.js"></script>
 
     <!-- Contact Form JavaScript -->
     <script src="js/jqBootstrapValidation.js"></script>
