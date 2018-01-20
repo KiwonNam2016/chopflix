@@ -81,7 +81,8 @@
     <header>
         <div class="container">
             <div class="intro-text">
-                <div class="intro-lead-in"><div class="title">ChopFlix</div>
+                <div class="intro-lead-in">
+                    <div class="title">ChopFlix</div>
                     <p></p>
                     <p class=intro-lead-p>All the excitement of an extravagant night out from the comfort of your own home </p>
                 </div>
@@ -121,14 +122,14 @@
                         <!-- button addons -->
                         <div class="row" id="searchEntry">
                             <div class="col-md-6 input-group">
-                                    <form action="">
-                                            <span class="input-group-btn">
+                                <form action="">
+                                    <span class="input-group-btn">
                                             <input id="food" type="text" pattern="[A-Za-z]"  class="form-control" placeholder="I hate onions...">
                                             <button class="btn btn-default go" type="submit">Go!</button>
                                             <p id="something"></p>
                                             </span>
-                                           
-                                    </form>
+
+                                </form>
                             </div>
                             <div class="col-md-6"></div>
                             <!-- /.input-group -->
@@ -330,7 +331,9 @@
                                     <p class="help-block text-danger"></p>
                                 </div>
                                 <div class="form-group">
-                                    <input type="tel" class="form-control" placeholder="Your Phone *" id="phone" required data-validation-required-message="Please enter your phone number.">
+                                  
+                                    <input type="tel" class="form-control" placeholder="Your Phone *" id="phone" placeholder="xxx-xxx-xxxx" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required data-validation-required-message="Please enter your phone number.">
+
                                     <p class="help-block text-danger"></p>
                                 </div>
                             </div>
@@ -383,10 +386,10 @@
     <!-- Movie Modals -->
     <div id="movie-modals"></div>
     <div id="recipe-modals"></div>
-    
+
     <!-- firebase -->
     <script src="https://www.gstatic.com/firebasejs/4.8.1/firebase.js"></script>
-   
+
     <!--CDN links for TweenLite, CSSPlugin, and EasePack (has to run before script) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.2/plugins/CSSPlugin.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.2/easing/EasePack.min.js"></script>
@@ -412,9 +415,10 @@
     <script src="assets/animation.js"></script>
     <!-- javascript app -->
     <script src="assets/app.js"></script>
-    
+
     <!-- Plugin JavaScript external -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+
 </body>
 
 </html>
