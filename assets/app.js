@@ -82,7 +82,6 @@ $(document).ready(function() {
     $(".genre-buttons").on("click", ".movie-genre", function(event) {
         var discover = `https://api.themoviedb.org/3/discover/movie?api_key=${tmdb}&language=en-US&sort_by=popularity.desc&certification.lte=pg-13&include_adult=false&include_video=false&page=1&with_genres=${this.id}`
         var showArray = [];
-        console.log(showArray);
 
         $(".vidImages").empty();
         $("#movie-modals").empty();
@@ -144,7 +143,6 @@ $(document).ready(function() {
                 JSON.stringify(movieTitle);
                 showArray.push(movieTitle);
             };  
-            console.log(showArray);
                 
             for (let s = 0; s < showArray.length; s++) {
                 $.ajax({
@@ -155,8 +153,6 @@ $(document).ready(function() {
                     var vidURL = `src="https://www.youtube.com/embed/${youTubeVidId}"`;
                     var youTubeVid = $(`<iframe width='420' height='315' ${vidURL}>`);
                     $(`#youTube-${s}`).html(youTubeVid);
-                    console.log("movies");
-                    console.log(showArray[s]);
                 });
             };
                 
@@ -168,7 +164,6 @@ $(document).ready(function() {
     $(".genre-buttons").on("click", ".tv-genre", function(event) {
         var discover = `https://api.themoviedb.org/3/discover/tv?api_key=${tmdb}&language=en-US&sort_by=popularity.desc&certification.lte=pg-13&include_adult=false&include_video=false&page=1&with_genres=${this.id}`
         var showArray = [];
-        console.log(showArray);
 
         $(".vidImages").empty();
         $("#movie-modals").empty();
@@ -230,7 +225,6 @@ $(document).ready(function() {
                 JSON.stringify(movieTitle);
                 showArray.push(movieTitle);
             };  
-            console.log(showArray);
                 
             for (let t = 0; t < showArray.length; t++) {
                 $.ajax({
@@ -241,84 +235,12 @@ $(document).ready(function() {
                     var vidURL = `src="https://www.youtube.com/embed/${youTubeVidId}"`;
                     var youTubeVid = $(`<iframe width='420' height='315' ${vidURL}>`);
                     $(`#youTube-${t}`).html(youTubeVid);
-                    console.log("movies");
-                    console.log(showArray[t]);
                 });
             };
                 
         }); 
         
     });
-
-    // additional details screen
-    // $(".vidImages").on("click", ".portfolio-item", function() {
-    //     var movieTitle = $(this).attr("alt");
-    //     var overview = $(this).attr("plot");
-    //     var poster = $(this).attr("poster");
-    //     console.log(movieTitle);
-    //     console.log(overview);
-    //     var youTubeQueryUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=5&q=${movieTitle}+trailer&key=AIzaSyCQfE0z-4oO65KlRi2bPQ7i2X-CyZ8C_6g`;
-    //     var searchRecs = `https://api.themoviedb.org/3/movie/${this.id}/recommendations?api_key=${tmdb}&language=en-US&page=1`
-
-    //     for (var s = 0; s < showArray.length; s++) {
-    //         $.ajax({
-    //             url: `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=5&q=${s}+trailer&key=AIzaSyCQfE0z-4oO65KlRi2bPQ7i2X-CyZ8C_6g`,
-    //             method: "GET"
-    //         }).done(function(response) {
-    //             var youTubeVidId = response.items[0].id.videoId;
-    //             var vidURL = `src="https://www.youtube.com/embed/${youTubeVidId}"`;
-    //             var youTubeVid = $(`<iframe width='420' height='315' ${vidURL}>`);
-    //             $(`#you-tube-${s}`).html(youTubeVid);
-    //         });
-    //     }
-
-
-    //     $.ajax({
-    //         url: searchRecs,
-    //         method: "GET"
-    //     }).done(function(response) {
-    //         var searchResults = response.results;
-    //         for (var o = 0; o < searchResults.length; o++) {
-
-    //             var resultsBtn = $(`<div class="hvrbox movie-div otherRecs" id="${searchResults[o].id}">`);
-    //             var image = $(`<img class="hvrbox-layer_bottom movie-poster">`);
-    //             var title = searchResults[o].title;
-    //             var layer = $(`<div class="hvrbox-layer_top hvrbox-layer_slideup"><div class="hvrbox-text">See More</div>`);           
-    //             image.attr("src", "https://image.tmdb.org/t/p/w500" + searchResults[o].backdrop_path);
-    //             resultsBtn.prepend(image);
-    //             resultsBtn.append(layer);
-    //             resultsBtn.attr("id", searchResults[o].id).attr("alt", title).attr("plot", searchResults[o].overview);
-    //             resultsBtn.attr("src", "https://image.tmdb.org/t/p/w500" + searchResults[o].backdrop_path);
-    //             $("#otherPicks").html(resultsBtn);
-    //         };
-    //     });
-    // });
-
-    // nth degree details screens
-    // $(".showMeDetails").on("click", ".otherRecs", function() {
-    //     var movieTitle = $(this).attr("alt");
-    //     var overview = $(this).attr("plot");
-    //     var poster = $(this).attr("poster");
-    //     var youTubeQueryUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=5&q=${movieTitle}+trailer&key=AIzaSyCQfE0z-4oO65KlRi2bPQ7i2X-CyZ8C_6g`;
-    //     var searchRecs = `https://api.themoviedb.org/3/movie/${this.id}/recommendations?api_key=${tmdb}&language=en-US&page=1`
-
-    //     $(".showMeDetails").empty();
-    //     $(".showMeDetails").append(`
-    //         <h1 id="fav-click" title="${movieTitle}">${movieTitle}&nbsp;
-    //             <span id="heart" class="glyphicon glyphicon-heart glyphicon-heart-empty"></span>
-    //         </h1>
-    //         `).append(overview).append(`<h3>Other Movies You Might Like:</h3>`);
-    //     $("#fav-click").attr("favorite", false).attr("db", this.id);
-
-    //     $.ajax({
-    //         url: youTubeQueryUrl,
-    //         method: "GET"
-    //     }).done(function(response) {
-    //         var youTubeVidId = response.items[0].id.videoId;
-    //         var vidURL = `src="https://www.youtube.com/embed/${youTubeVidId}"`;
-    //         var youTubeVid = $(`<iframe width='420' height='315' ${vidURL}>`);
-    //         $(".showMeDetails").prepend(youTubeVid);
-    //     });
 
     //     $.ajax({
     //         url: searchRecs,
@@ -349,10 +271,25 @@ $(document).ready(function() {
         var saved = $(this).attr("favorite");
         var id = $(this).attr("id");
         if (saved === "true") {
-            database.ref("users/" + uid + "/TMDB_faves/" + id).remove();
+            database.ref("users/" + uid + "/TMDB_faves/" + faveTitle).remove();
         } else {
             database.ref("users/" + uid + "/TMDB_faves/").update({
-                [id]: faveTitle
+                [faveTitle]: Date.now()
+            });
+        }
+        $(this).attr("class", ($(this).attr("class") == "glyphicon glyphicon-heart glyphicon-heart-empty" ? "glyphicon glyphicon-heart" : "glyphicon glyphicon-heart glyphicon-heart-empty"));
+        $(this).attr("favorite", ($(this).attr("favorite") == "false" ? true : false));
+    });
+
+    $("#recipe-modals").on("click", "#heart", function(event) {
+        var faveTitle = $(this).attr("title");
+        var saved = $(this).attr("favorite");
+        var id = $(this).attr("id");
+        if (saved === "true") {
+            database.ref("users/" + uid + "/Yummly_faves/" + faveTitle).remove();
+        } else {
+            database.ref("users/" + uid + "/Yummly_faves/").update({
+                [faveTitle]: Date.now()
             });
         }
         $(this).attr("class", ($(this).attr("class") == "glyphicon glyphicon-heart glyphicon-heart-empty" ? "glyphicon glyphicon-heart" : "glyphicon glyphicon-heart glyphicon-heart-empty"));
