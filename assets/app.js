@@ -1,11 +1,11 @@
 // Initialize Firebase
 var config = {
-    apiKey: "AIzaSyADx_hkxvnPlQRhYD0iTtAW0rSf-a31DUw",
-    authDomain: "project1-f1ba2.firebaseapp.com",
-    databaseURL: "https://project1-f1ba2.firebaseio.com",
-    projectId: "project1-f1ba2",
-    storageBucket: "project1-f1ba2.appspot.com",
-    messagingSenderId: "577191616839"
+    apiKey: "AIzaSyCv396BwTp_pKEasMT6JNHoMcGhUiqtRiw",
+    authDomain: "chopflix-65749.firebaseapp.com",
+    databaseURL: "https://chopflix-65749.firebaseio.com",
+    projectId: "chopflix-65749",
+    storageBucket: "chopflix-65749.appspot.com",
+    messagingSenderId: "583066994313"
 };
 firebase.initializeApp(config);
 
@@ -96,7 +96,7 @@ $(document).ready(function() {
                 var overview = searchResults[m].overview;
                 var poster = searchResults[m].backdrop_path;
                 showArray.push(movieTitle);
- 
+
                 var movieThumb = `
                     <div class="col-md-4 col-sm-6 portfolio-item">
                         <a href="#portfolioModal${m}" class="portfolio-link" data-toggle="modal">
@@ -104,8 +104,10 @@ $(document).ready(function() {
                                 <div class="portfolio-hover-content">
                                     <i class="fa fa-plus fa-3x"></i>
                                 </div>
+                                <div class="poster-image" style="background-image:url(https://image.tmdb.org/t/p/w500${poster}) onerror="this.src='assets/images/default.jpg'" class="img-responsive" alt="${movieTitle}">
+                                </div>
                             </div>
-                            <img src="https://image.tmdb.org/t/p/w500${poster}" onerror="this.src='assets/images/default.jpg'" class="img-responsive" alt="${movieTitle}">
+                            // <img src="https://image.tmdb.org/t/p/w500${poster}" onerror="this.src='assets/images/default.jpg'" class="img-responsive" alt="${movieTitle}">
                         </a>
                         <div class="portfolio-caption">
                             <h4 class="thumbTitle">${movieTitle}</h4>
@@ -141,15 +143,15 @@ $(document).ready(function() {
 
                 $(".vidImages").append(movieThumb);
                 $("#movie-modals").append(movieModal);
-            };  
+            };
             console.log(showArray);
-                
+
             for (let s = 0; s < showArray.length; s++) {
                 var url = `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=5&q=${showArray[s]}+trailer&key=AIzaSyCQfE0z-4oO65KlRi2bPQ7i2X-CyZ8C_6g`;
 
                 $.ajax({
                     url: url,
-                    method: "GET"               
+                    method: "GET"
                 }).done(function(response) {
                     var youTubeVidId = response.items[s].id.videoId;
                     var vidURL = `src="https://www.youtube.com/embed/${youTubeVidId}"`;
@@ -159,10 +161,10 @@ $(document).ready(function() {
                     console.log(showArray[s]);
                     console.log(url);
                 });
-            };         
-                
-        }); 
-        
+            };
+
+        });
+
     });
 
     // discover tv
@@ -310,10 +312,10 @@ $(document).ready(function() {
     var addedCuisines = [];
     var cuisineSearch;
     var state;
-    var go=$(".go");
+    var go = $(".go");
     //button animation
-    var tl=new TimelineLite();
-    tl.to(go, 0.7, {rotationX:-360,transformOrigin:'0% 50%', ease:Power2.easeInOut})
+    var tl = new TimelineLite();
+    tl.to(go, 0.7, { rotationX: -360, transformOrigin: '0% 50%', ease: Power2.easeInOut })
     tl.pause();
     $(".go").on("click", function(event) {
         event.preventDefault();
@@ -385,7 +387,7 @@ $(document).ready(function() {
         // button initial state is unchecked...this status will only change on click
         // when it gets clicked, we change the state and css style
         if (state === "unchecked") {
-            $(this).css({"background-color": "#333", "opacity": "0.9"});
+            $(this).css({ "background-color": "#333", "opacity": "0.9" });
             $(this).attr("data-state", "checked");
             addedCuisines.push(cuisineParameter);
             console.log(addedCuisines);
@@ -399,29 +401,29 @@ $(document).ready(function() {
     }
     createButtons();
     $(document).on("click", ".cuisines", animateBtn);
-   
-    $(".startBtn").on("click",function(){
-    var sec=0.8;
-    for (var x=0; x<25; x++){
-        var b=$(`#button${x}`);
-        var tl2=new TimelineLite();
-        tl2.from(b, 1.5,{x:-15, autoAlpha:0,ease:Power1.ease, delay:sec});
-        tl2.play();
-        tl2.restart();
-        sec=sec+0.05;
+
+    $(".startBtn").on("click", function() {
+        var sec = 0.8;
+        for (var x = 0; x < 25; x++) {
+            var b = $(`#button${x}`);
+            var tl2 = new TimelineLite();
+            tl2.from(b, 1.5, { x: -15, autoAlpha: 0, ease: Power1.ease, delay: sec });
+            tl2.play();
+            tl2.restart();
+            sec = sec + 0.05;
         }
     })
 
-    $(".whatchaWatching").on("click",function(){
-        var sec=0.8;
-        for (var x=0; x<25; x++){
-            var b=$(`#button${x}`);
-            var tl2=new TimelineLite();
-            tl2.from(b, 1.5,{x:-15, autoAlpha:0,ease:Power1.ease, delay:sec});
+    $(".whatchaWatching").on("click", function() {
+        var sec = 0.8;
+        for (var x = 0; x < 25; x++) {
+            var b = $(`#button${x}`);
+            var tl2 = new TimelineLite();
+            tl2.from(b, 1.5, { x: -15, autoAlpha: 0, ease: Power1.ease, delay: sec });
             tl2.play();
             tl2.restart();
-            sec=sec+0.05;
-            }
+            sec = sec + 0.05;
+        }
     })
 
 });
