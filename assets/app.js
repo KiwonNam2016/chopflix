@@ -85,6 +85,7 @@ $(document).ready(function() {
         console.log(showArray);
 
         $(".vidImages").empty();
+        $("#movie-modals").empty();
 
         $.ajax({
             url: discover,
@@ -95,7 +96,6 @@ $(document).ready(function() {
                 var movieTitle = searchResults[m].title;
                 var overview = searchResults[m].overview;
                 var poster = searchResults[m].backdrop_path;
-                showArray.push(movieTitle);
  
                 var movieThumb = `
                     <div class="col-md-4 col-sm-6 portfolio-item">
@@ -141,25 +141,24 @@ $(document).ready(function() {
 
                 $(".vidImages").append(movieThumb);
                 $("#movie-modals").append(movieModal);
+                JSON.stringify(movieTitle);
+                showArray.push(movieTitle);
             };  
             console.log(showArray);
                 
             for (let s = 0; s < showArray.length; s++) {
-                var url = `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=5&q=${showArray[s]}+trailer&key=AIzaSyCQfE0z-4oO65KlRi2bPQ7i2X-CyZ8C_6g`;
-
                 $.ajax({
-                    url: url,
+                    url: `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=5&q=${showArray[s]}+trailer&key=AIzaSyCQfE0z-4oO65KlRi2bPQ7i2X-CyZ8C_6g`,
                     method: "GET"               
                 }).done(function(response) {
-                    var youTubeVidId = response.items[s].id.videoId;
+                    var youTubeVidId = response.items[0].id.videoId;
                     var vidURL = `src="https://www.youtube.com/embed/${youTubeVidId}"`;
                     var youTubeVid = $(`<iframe width='420' height='315' ${vidURL}>`);
                     $(`#youTube-${s}`).html(youTubeVid);
                     console.log("movies");
                     console.log(showArray[s]);
-                    console.log(url);
                 });
-            };         
+            };
                 
         }); 
         
@@ -168,33 +167,87 @@ $(document).ready(function() {
     // discover tv
     $(".genre-buttons").on("click", ".tv-genre", function(event) {
         var discover = `https://api.themoviedb.org/3/discover/tv?api_key=${tmdb}&language=en-US&sort_by=popularity.desc&certification.lte=pg-13&include_adult=false&include_video=false&page=1&with_genres=${this.id}`
+        var showArray = [];
+        console.log(showArray);
 
-        $(".vidImages").empty()
+        $(".vidImages").empty();
+        $("#movie-modals").empty();
 
         $.ajax({
             url: discover,
             method: "GET"
         }).done(function(response) {
-            $(".nowPlaying").html("");
             var searchResults = response.results;
             for (var n = 0; n < searchResults.length; n++) {
-                var resultsBtn = $(`<div class="hvrbox movie-div" id="${searchResults[n].id}">`);
-                var image = $(`<img class="hvrbox-layer_bottom movie-poster">`);
-                var title = searchResults[n].name;
-                var layer = $(`<div class="hvrbox-layer_top hvrbox-layer_slideup"><div class="hvrbox-text">${title}<div class="line"/>Click to See Details</div></div>`);
-                image.attr("src", "https://image.tmdb.org/t/p/w500" + searchResults[n].poster_path);
-                resultsBtn.prepend(image);
-                resultsBtn.append(layer);
-                resultsBtn.attr("id", searchResults[n].id).attr("alt", title).attr("plot", searchResults[n].overview);
-                resultsBtn.attr("src", "https://image.tmdb.org/t/p/w500" + searchResults[n].poster_path);
-                // $(".nowPlaying").prepend(resultsBtn);
+                var movieTitle = searchResults[n].name;
+                var overview = searchResults[n].overview;
+                var poster = searchResults[n].backdrop_path;
+ 
+                var movieThumb = `
+                    <div class="col-md-4 col-sm-6 portfolio-item">
+                        <a href="#portfolioModal${n}" class="portfolio-link" data-toggle="modal">
+                            <div class="portfolio-hover">
+                                <div class="portfolio-hover-content">
+                                    <i class="fa fa-plus fa-3x"></i>
+                                </div>
+                            </div>
+                            <img src="https://image.tmdb.org/t/p/w500${poster}" onerror="this.src='assets/images/default.jpg'" class="img-responsive" alt="${movieTitle}">
+                        </a>
+                        <div class="portfolio-caption">
+                            <h4 class="thumbTitle">${movieTitle}</h4>
+                        </div>
+                    </div>`;
 
-                var vidhtml = `
-`;
-                $(".vidImages").append(vidhtml);
+                var movieModal = `
+                    <div class="portfolio-modal modal fade" id="portfolioModal${n}" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="close-modal" data-dismiss="modal">
+                                    <div class="lr">
+                                        <div class="rl">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-lg-8 col-lg-offset-2">
+                                            <div class="modal-body">
+                                                <h2>${movieTitle}<span id="heart" favorite="false" title="${movieTitle}" class="glyphicon glyphicon-heart glyphicon-heart-empty"></span></h2>
+                                                <p class="item-intro text-muted">${overview}</p>
+                                                <div id="youTube-${n}"></div>
+                                                <div id="otherPicks"></div>
+                                                <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>`;
 
+                $(".vidImages").append(movieThumb);
+                $("#movie-modals").append(movieModal);
+                JSON.stringify(movieTitle);
+                showArray.push(movieTitle);
+            };  
+            console.log(showArray);
+                
+            for (let t = 0; t < showArray.length; t++) {
+                $.ajax({
+                    url: `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=5&q=${showArray[t]}+trailer&key=AIzaSyCQfE0z-4oO65KlRi2bPQ7i2X-CyZ8C_6g`,
+                    method: "GET"               
+                }).done(function(response) {
+                    var youTubeVidId = response.items[0].id.videoId;
+                    var vidURL = `src="https://www.youtube.com/embed/${youTubeVidId}"`;
+                    var youTubeVid = $(`<iframe width='420' height='315' ${vidURL}>`);
+                    $(`#youTube-${t}`).html(youTubeVid);
+                    console.log("movies");
+                    console.log(showArray[t]);
+                });
             };
-        });
+                
+        }); 
+        
     });
 
     // additional details screen
