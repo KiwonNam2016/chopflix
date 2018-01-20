@@ -124,9 +124,12 @@ form.section-subheading {
     transform: translateY(0);
 }
 
+.thumbTitle {
+    overflow-x: hidden;
+}
 #heart {
     font-size: 20px;
-    color: rgb(134, 22, 22);
+    color: #feca30;
     vertical-align: top;
 }
 

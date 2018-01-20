@@ -13,6 +13,7 @@ $(document).ready(function() {
     var database = firebase.database();
     var tmdb = "b300de2804d6ecbfa5435065a4835711";
     var uid = JSON.parse(localStorage.getItem("cKDX9B90bvAYTGSiZq3W"));
+    var showArray = [];
 
     // setting date for IE8 and earlier
     if (!Date.now) {
@@ -50,7 +51,7 @@ $(document).ready(function() {
             var genre = response.genres;
             for (let k = 0; k < genre.length; k++) {
                 var button = $(`<button class="movie-genre">`);
-                button.attr("id", genre[k].id);
+                button.attr("id", genre[k].id).attr("name", genre[k].name);
                 button.addClass("btn btn-primary");
                 button.html(genre[k].name);
                 $("#genres").append(button);
@@ -82,44 +83,75 @@ $(document).ready(function() {
     $(".genre-buttons").on("click", ".movie-genre", function(event) {
         var discover = `https://api.themoviedb.org/3/discover/movie?api_key=${tmdb}&language=en-US&sort_by=popularity.desc&certification.lte=pg-13&include_adult=false&include_video=false&page=1&with_genres=${this.id}`
 
-        $(".vidImages").empty()
+        $(".vidImages").empty();
 
         $.ajax({
             url: discover,
             method: "GET"
         }).done(function(response) {
-            $(".nowPlaying").html("");
             var searchResults = response.results;
             for (var m = 0; m < searchResults.length; m++) {
-                var resultsBtn = $(`<div class="hvrbox movie-div" id="${searchResults[m].id}"><a href="#movieJump">`);
-                var image = $(`<img class="hvrbox-layer_bottom movie-poster">`);
-                var title = searchResults[m].title;
-                var layer = $(`<div class="hvrbox-layer_top hvrbox-layer_slideup"><div class="hvrbox-text">${title}<div class="line"/>Click to See Details</div></div>`);
-                image.attr("src", "https://image.tmdb.org/t/p/w500" + searchResults[m].poster_path);
-                resultsBtn.prepend(image);
-                resultsBtn.append(layer);
-                resultsBtn.attr("id", searchResults[m].id).attr("alt", title).attr("plot", searchResults[m].overview);
-                resultsBtn.attr("src", "https://image.tmdb.org/t/p/w500" + searchResults[m].poster_path);
-                // $(".nowPlaying").prepend(resultsBtn);
+                var movieTitle = searchResults[m].title;
+                var overview = searchResults[m].overview;
+                var poster = searchResults[m].backdrop_path;
+                showArray.push(movieTitle);
+ 
+                var movieThumb = `
+                    <div class="col-md-4 col-sm-6 portfolio-item">
+                        <a href="#portfolioModal${m}" class="portfolio-link" data-toggle="modal">
+                            <div class="portfolio-hover">
+                                <div class="portfolio-hover-content">
+                                    <i class="fa fa-plus fa-3x"></i>
+                                </div>
+                            </div>
+                            <img src="https://image.tmdb.org/t/p/w500${poster}" onerror="this.src='assets/images/default.jpg'" class="img-responsive" alt="${movieTitle}">
+                        </a>
+                        <div class="portfolio-caption">
+                            <h4 class="thumbTitle">${movieTitle}</h4>
+                        </div>
+                    </div>`;
 
-                var vidhtml = `
-                <div class="col-md-3 col-sm-6 portfolio-item">
-                    <a href="#portfolioModal${searchResults[m].id}" class="portfolio-link" data-toggle="modal">
-                        <div class="portfolio-hover">
-                            <div class="portfolio-hover-content">
-                                <i class="fa fa-plus fa-3x"></i>
+                var movieModal = `
+                    <div class="portfolio-modal modal fade" id="portfolioModal${m}" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="close-modal" data-dismiss="modal">
+                                    <div class="lr">
+                                        <div class="rl">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-lg-8 col-lg-offset-2">
+                                            <div class="modal-body">
+                                                <h2>${movieTitle}<span id="heart" favorite="false" title="${movieTitle}" class="glyphicon glyphicon-heart glyphicon-heart-empty"></span></h2>
+                                                <p class="item-intro text-muted">${overview}</p>
+                                                <div id="you-tube-${movieTitle}"></div>
+                                                <div id="otherPicks"></div>
+                                                <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <img src="https://image.tmdb.org/t/p/w500${searchResults[m].poster_path}" class="img-responsive" alt="">
-                    </a>
-                    <div class="portfolio-caption">
-                        <h4>${title}</h4>
-                        <p class="text-muted">TV Shows</p>
-                    </div>
-                </div>`;
-                $(".vidImages").append(vidhtml);
-            };
-        });
+                    </div>`;
+
+                $(".vidImages").append(movieThumb);
+                $("#movie-modals").append(movieModal);
+        //     $.ajax({
+        //         url: youTubeQueryUrl,
+        //         method: "GET"
+        //     }).done(function(response) {
+        //         var youTubeVidId = response.items[0].id.videoId;
+        //         var vidURL = `src="https://www.youtube.com/embed/${youTubeVidId}"`;
+        //         var youTubeVid = $(`<iframe width='420' height='315' ${vidURL}>`);
+        //         $(".showMeDetails").prepend(youTubeVid);
+        //     });
+            };                  
+        }); 
+        
     });
 
     // discover tv
@@ -147,20 +179,7 @@ $(document).ready(function() {
                 // $(".nowPlaying").prepend(resultsBtn);
 
                 var vidhtml = `
-                <div class="col-md-3 col-sm-6 portfolio-item">
-                    <a href="#portfolioModal${searchResults[n].id}" class="portfolio-link" data-toggle="modal">
-                        <div class="portfolio-hover">
-                            <div class="portfolio-hover-content">
-                                <i class="fa fa-plus fa-3x"></i>
-                            </div>
-                        </div>
-                        <img src="https://image.tmdb.org/t/p/w500${searchResults[n].poster_path}" class="img-responsive" alt="">
-                    </a>
-                    <div class="portfolio-caption">
-                        <h4>${title}</h4>
-                        <p class="text-muted">TV Shows</p>
-                    </div>
-                </div>`;
+`;
                 $(".vidImages").append(vidhtml);
 
             };
@@ -168,109 +187,103 @@ $(document).ready(function() {
     });
 
     // additional details screen
-    $(".nowPlaying").on("click", ".movie-div", function() {
-        var movieTitle = $(this).attr("alt");
-        var overview = $(this).attr("plot");
-        var poster = $(this).attr("poster");
-        console.log(movieTitle);
-        console.log(overview);
-        console.log(poster);
-        var youTubeQueryUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=5&q=${movieTitle}+trailer&key=AIzaSyCQfE0z-4oO65KlRi2bPQ7i2X-CyZ8C_6g`;
-        var searchRecs = `https://api.themoviedb.org/3/movie/${this.id}/recommendations?api_key=${tmdb}&language=en-US&page=1`
+    // $(".vidImages").on("click", ".portfolio-item", function() {
+    //     var movieTitle = $(this).attr("alt");
+    //     var overview = $(this).attr("plot");
+    //     var poster = $(this).attr("poster");
+    //     console.log(movieTitle);
+    //     console.log(overview);
+    //     var youTubeQueryUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=5&q=${movieTitle}+trailer&key=AIzaSyCQfE0z-4oO65KlRi2bPQ7i2X-CyZ8C_6g`;
+    //     var searchRecs = `https://api.themoviedb.org/3/movie/${this.id}/recommendations?api_key=${tmdb}&language=en-US&page=1`
+
+    //     for (var s = 0; s < showArray.length; s++) {
+    //         $.ajax({
+    //             url: `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=5&q=${s}+trailer&key=AIzaSyCQfE0z-4oO65KlRi2bPQ7i2X-CyZ8C_6g`,
+    //             method: "GET"
+    //         }).done(function(response) {
+    //             var youTubeVidId = response.items[0].id.videoId;
+    //             var vidURL = `src="https://www.youtube.com/embed/${youTubeVidId}"`;
+    //             var youTubeVid = $(`<iframe width='420' height='315' ${vidURL}>`);
+    //             $(`#you-tube-${s}`).html(youTubeVid);
+    //         });
+    //     }
 
 
-        $(".showMeDetails").empty();
-        $(".showMeDetails").append(`
-            <h1 id="fav-click" title="${movieTitle}">${movieTitle}
-                <span id="heart" class="glyphicon glyphicon-heart glyphicon-heart-empty"></span>
-            </h1>
-            `).append(overview).append(`<h3>Other Movies You Might Like:</h3>`);
-        $("#fav-click").attr("favorite", false).attr("db", this.id);
+    //     $.ajax({
+    //         url: searchRecs,
+    //         method: "GET"
+    //     }).done(function(response) {
+    //         var searchResults = response.results;
+    //         for (var o = 0; o < searchResults.length; o++) {
 
-        $.ajax({
-            url: youTubeQueryUrl,
-            method: "GET"
-        }).done(function(response) {
-            var youTubeVidId = response.items[0].id.videoId;
-            var vidURL = `src="https://www.youtube.com/embed/${youTubeVidId}"`;
-            var youTubeVid = $(`<iframe width='420' height='315' ${vidURL}>`);
-            $(".showMeDetails").prepend(youTubeVid);
-        });
-
-        $.ajax({
-            url: searchRecs,
-            method: "GET"
-        }).done(function(response) {
-            var searchResults = response.results;
-            for (var o = 0; o < searchResults.length; o++) {
-                var resultsBtn = $(`<div class="hvrbox movie-div otherRecs" id="${searchResults[o].id}">`);
-                var image = $(`<img class="hvrbox-layer_bottom movie-poster">`);
-                var title = searchResults[o].title;
-                //var layer = $(`<div class="hvrbox-layer_top hvrbox-layer_slideup"><div class="hvrbox-text">See More</div>`);           
-                image.attr("src", "https://image.tmdb.org/t/p/w500" + searchResults[o].poster_path);
-                resultsBtn.prepend(image);
-                //resultsBtn.append(layer);
-                resultsBtn.attr("id", searchResults[o].id).attr("alt", title).attr("plot", searchResults[o].overview);
-                resultsBtn.attr("src", "https://image.tmdb.org/t/p/w500" + searchResults[o].poster_path);
-                $(".showMeDetails").append(resultsBtn);
-            };
-        });
-    });
+    //             var resultsBtn = $(`<div class="hvrbox movie-div otherRecs" id="${searchResults[o].id}">`);
+    //             var image = $(`<img class="hvrbox-layer_bottom movie-poster">`);
+    //             var title = searchResults[o].title;
+    //             var layer = $(`<div class="hvrbox-layer_top hvrbox-layer_slideup"><div class="hvrbox-text">See More</div>`);           
+    //             image.attr("src", "https://image.tmdb.org/t/p/w500" + searchResults[o].backdrop_path);
+    //             resultsBtn.prepend(image);
+    //             resultsBtn.append(layer);
+    //             resultsBtn.attr("id", searchResults[o].id).attr("alt", title).attr("plot", searchResults[o].overview);
+    //             resultsBtn.attr("src", "https://image.tmdb.org/t/p/w500" + searchResults[o].backdrop_path);
+    //             $("#otherPicks").html(resultsBtn);
+    //         };
+    //     });
+    // });
 
     // nth degree details screens
-    $(".showMeDetails").on("click", ".otherRecs", function() {
-        var movieTitle = $(this).attr("alt");
-        var overview = $(this).attr("plot");
-        var poster = $(this).attr("poster");
-        var youTubeQueryUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=5&q=${movieTitle}+trailer&key=AIzaSyCQfE0z-4oO65KlRi2bPQ7i2X-CyZ8C_6g`;
-        var searchRecs = `https://api.themoviedb.org/3/movie/${this.id}/recommendations?api_key=${tmdb}&language=en-US&page=1`
+    // $(".showMeDetails").on("click", ".otherRecs", function() {
+    //     var movieTitle = $(this).attr("alt");
+    //     var overview = $(this).attr("plot");
+    //     var poster = $(this).attr("poster");
+    //     var youTubeQueryUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=5&q=${movieTitle}+trailer&key=AIzaSyCQfE0z-4oO65KlRi2bPQ7i2X-CyZ8C_6g`;
+    //     var searchRecs = `https://api.themoviedb.org/3/movie/${this.id}/recommendations?api_key=${tmdb}&language=en-US&page=1`
 
-        $(".showMeDetails").empty();
-        $(".showMeDetails").append(`
-            <h1 id="fav-click" title="${movieTitle}">${movieTitle}
-                <span id="heart" class="glyphicon glyphicon-heart glyphicon-heart-empty"></span>
-            </h1>
-            `).append(overview).append(`<h3>Other Movies You Might Like:</h3>`);
-        $("#fav-click").attr("favorite", false).attr("db", this.id);
+    //     $(".showMeDetails").empty();
+    //     $(".showMeDetails").append(`
+    //         <h1 id="fav-click" title="${movieTitle}">${movieTitle}&nbsp;
+    //             <span id="heart" class="glyphicon glyphicon-heart glyphicon-heart-empty"></span>
+    //         </h1>
+    //         `).append(overview).append(`<h3>Other Movies You Might Like:</h3>`);
+    //     $("#fav-click").attr("favorite", false).attr("db", this.id);
 
-        $.ajax({
-            url: youTubeQueryUrl,
-            method: "GET"
-        }).done(function(response) {
-            var youTubeVidId = response.items[0].id.videoId;
-            var vidURL = `src="https://www.youtube.com/embed/${youTubeVidId}"`;
-            var youTubeVid = $(`<iframe width='420' height='315' ${vidURL}>`);
-            $(".showMeDetails").prepend(youTubeVid);
-        });
+    //     $.ajax({
+    //         url: youTubeQueryUrl,
+    //         method: "GET"
+    //     }).done(function(response) {
+    //         var youTubeVidId = response.items[0].id.videoId;
+    //         var vidURL = `src="https://www.youtube.com/embed/${youTubeVidId}"`;
+    //         var youTubeVid = $(`<iframe width='420' height='315' ${vidURL}>`);
+    //         $(".showMeDetails").prepend(youTubeVid);
+    //     });
 
-        $.ajax({
-            url: searchRecs,
-            method: "GET"
-        }).done(function(response) {
-            var searchResults = response.results;
-            for (var p = 0; p < searchResults.length; p++) {
-                var resultsBtn = $(`<div class="hvrbox movie-div otherRecs" id="${searchResults[p].id}">`);
-                var image = $(`<img class="hvrbox-layer_bottom movie-poster">`);
-                var title = searchResults[p].title;
-                //var layer = $(`<div class="hvrbox-layer_top hvrbox-layer_slideup"><div class="hvrbox-text">See More</div>`);           
-                image.attr("src", "https://image.tmdb.org/t/p/w500" + searchResults[p].poster_path);
-                resultsBtn.prepend(image);
-                //resultsBtn.append(layer);
-                resultsBtn.attr("id", searchResults[p].id);
-                resultsBtn.attr("alt", title);
-                resultsBtn.attr("plot", searchResults[p].overview);
-                resultsBtn.attr("src", "https://image.tmdb.org/t/p/w500" + searchResults[p].poster_path);
-                $(".showMeDetails").append(resultsBtn);
+    //     $.ajax({
+    //         url: searchRecs,
+    //         method: "GET"
+    //     }).done(function(response) {
+    //         var searchResults = response.results;
+    //         for (var p = 0; p < searchResults.length; p++) {
+    //             var resultsBtn = $(`<div class="hvrbox movie-div otherRecs" id="${searchResults[p].id}">`);
+    //             var image = $(`<img class="hvrbox-layer_bottom movie-poster">`);
+    //             var title = searchResults[p].title;
+    //             //var layer = $(`<div class="hvrbox-layer_top hvrbox-layer_slideup"><div class="hvrbox-text">See More</div>`);           
+    //             image.attr("src", "https://image.tmdb.org/t/p/w500" + searchResults[p].poster_path);
+    //             resultsBtn.prepend(image);
+    //             //resultsBtn.append(layer);
+    //             resultsBtn.attr("id", searchResults[p].id);
+    //             resultsBtn.attr("alt", title);
+    //             resultsBtn.attr("plot", searchResults[p].overview);
+    //             resultsBtn.attr("src", "https://image.tmdb.org/t/p/w500" + searchResults[p].poster_path);
+    //             $(".showMeDetails").append(resultsBtn);
 
-            };
-        });
+    //         };
+    //     });
 
-    });
+    // });
 
-    $(".showMeDetails").on("click", "#fav-click", function(event) {
+    $("#movie-modals").on("click", "#heart", function(event) {
         var faveTitle = $(this).attr("title");
         var saved = $(this).attr("favorite");
-        var id = $(this).attr("db");
+        var id = $(this).attr("id");
         if (saved === "true") {
             database.ref("users/" + uid + "/TMDB_faves/" + id).remove();
         } else {
@@ -278,7 +291,8 @@ $(document).ready(function() {
                 [id]: faveTitle
             });
         }
-        $("#heart").toggleClass("glyphicon-heart-empty");
+        $(`#heart`).toggleClass("glyphicon-heart-empty");
+        $(this).attr("class", ($(this).attr("class") == "glyphicon glyphicon-heart glyphicon-heart-empty" ? "glyphicon glyphicon-heart" : "glyphicon glyphicon-heart glyphicon-heart-empty"));
         $(this).attr("favorite", ($(this).attr("favorite") == "false" ? true : false));
     });
 
