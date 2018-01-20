@@ -402,6 +402,18 @@ $(document).ready(function() {
         tl2.restart();
         sec=sec+0.05;
         }
-})
+    })
+
+    $(".whatchaWatching").on("click",function(){
+        var sec=0.8;
+        for (var x=0; x<25; x++){
+            var b=$(`#button${x}`);
+            var tl2=new TimelineLite();
+            tl2.from(b, 1.5,{x:-15, autoAlpha:0,ease:Power1.ease, delay:sec});
+            tl2.play();
+            tl2.restart();
+            sec=sec+0.05;
+            }
+    })
 
 });
