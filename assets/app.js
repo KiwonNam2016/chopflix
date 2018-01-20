@@ -82,9 +82,9 @@ $(document).ready(function() {
     $(".genre-buttons").on("click", ".movie-genre", function(event) {
         var discover = `https://api.themoviedb.org/3/discover/movie?api_key=${tmdb}&language=en-US&sort_by=popularity.desc&certification.lte=pg-13&include_adult=false&include_video=false&page=1&with_genres=${this.id}`
         var showArray = [];
-        console.log(showArray);
 
         $(".vidImages").empty();
+        $("#movie-modals").empty();
 
         $.ajax({
             url: discover,
@@ -95,7 +95,6 @@ $(document).ready(function() {
                 var movieTitle = searchResults[m].title;
                 var overview = searchResults[m].overview;
                 var poster = searchResults[m].backdrop_path;
-                showArray.push(movieTitle);
 
                 var movieThumb = `
                     <div class="col-md-4 col-sm-6 portfolio-item">
@@ -143,131 +142,107 @@ $(document).ready(function() {
 
                 $(".vidImages").append(movieThumb);
                 $("#movie-modals").append(movieModal);
-            };
-            console.log(showArray);
+
+                JSON.stringify(movieTitle);
+                showArray.push(movieTitle);
+            };  
 
             for (let s = 0; s < showArray.length; s++) {
-                var url = `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=5&q=${showArray[s]}+trailer&key=AIzaSyCQfE0z-4oO65KlRi2bPQ7i2X-CyZ8C_6g`;
-
                 $.ajax({
-                    url: url,
+                    url: `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=5&q=${showArray[s]}+trailer&key=AIzaSyCQfE0z-4oO65KlRi2bPQ7i2X-CyZ8C_6g`,
                     method: "GET"
                 }).done(function(response) {
-                    var youTubeVidId = response.items[s].id.videoId;
+                    var youTubeVidId = response.items[0].id.videoId;
                     var vidURL = `src="https://www.youtube.com/embed/${youTubeVidId}"`;
                     var youTubeVid = $(`<iframe width='420' height='315' ${vidURL}>`);
                     $(`#youTube-${s}`).html(youTubeVid);
-                    console.log("movies");
-                    console.log(showArray[s]);
-                    console.log(url);
                 });
             };
 
         });
-
     });
 
     // discover tv
     $(".genre-buttons").on("click", ".tv-genre", function(event) {
         var discover = `https://api.themoviedb.org/3/discover/tv?api_key=${tmdb}&language=en-US&sort_by=popularity.desc&certification.lte=pg-13&include_adult=false&include_video=false&page=1&with_genres=${this.id}`
+        var showArray = [];
 
-        $(".vidImages").empty()
+        $(".vidImages").empty();
+        $("#movie-modals").empty();
 
         $.ajax({
             url: discover,
             method: "GET"
         }).done(function(response) {
-            $(".nowPlaying").html("");
             var searchResults = response.results;
             for (var n = 0; n < searchResults.length; n++) {
-                var resultsBtn = $(`<div class="hvrbox movie-div" id="${searchResults[n].id}">`);
-                var image = $(`<img class="hvrbox-layer_bottom movie-poster">`);
-                var title = searchResults[n].name;
-                var layer = $(`<div class="hvrbox-layer_top hvrbox-layer_slideup"><div class="hvrbox-text">${title}<div class="line"/>Click to See Details</div></div>`);
-                image.attr("src", "https://image.tmdb.org/t/p/w500" + searchResults[n].poster_path);
-                resultsBtn.prepend(image);
-                resultsBtn.append(layer);
-                resultsBtn.attr("id", searchResults[n].id).attr("alt", title).attr("plot", searchResults[n].overview);
-                resultsBtn.attr("src", "https://image.tmdb.org/t/p/w500" + searchResults[n].poster_path);
-                // $(".nowPlaying").prepend(resultsBtn);
+                var movieTitle = searchResults[n].name;
+                var overview = searchResults[n].overview;
+                var poster = searchResults[n].backdrop_path;
+ 
+                var movieThumb = `
+                    <div class="col-md-4 col-sm-6 portfolio-item">
+                        <a href="#portfolioModal${n}" class="portfolio-link" data-toggle="modal">
+                            <div class="portfolio-hover">
+                                <div class="portfolio-hover-content">
+                                    <i class="fa fa-plus fa-3x"></i>
+                                </div>
+                            </div>
+                            <img src="https://image.tmdb.org/t/p/w500${poster}" onerror="this.src='assets/images/default.jpg'" class="img-responsive" alt="${movieTitle}">
+                        </a>
+                        <div class="portfolio-caption">
+                            <h4 class="thumbTitle">${movieTitle}</h4>
+                        </div>
+                    </div>`;
 
-                var vidhtml = `
-`;
-                $(".vidImages").append(vidhtml);
+                var movieModal = `
+                    <div class="portfolio-modal modal fade" id="portfolioModal${n}" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="close-modal" data-dismiss="modal">
+                                    <div class="lr">
+                                        <div class="rl">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-lg-8 col-lg-offset-2">
+                                            <div class="modal-body">
+                                                <h2>${movieTitle}<span id="heart" favorite="false" title="${movieTitle}" class="glyphicon glyphicon-heart glyphicon-heart-empty"></span></h2>
+                                                <p class="item-intro text-muted">${overview}</p>
+                                                <div id="youTube-${n}"></div>
+                                                <div id="otherPicks"></div>
+                                                <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>`;
 
+                $(".vidImages").append(movieThumb);
+                $("#movie-modals").append(movieModal);
+                JSON.stringify(movieTitle);
+                showArray.push(movieTitle);
+            };  
+                
+            for (let t = 0; t < showArray.length; t++) {
+                $.ajax({
+                    url: `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=5&q=${showArray[t]}+trailer&key=AIzaSyCQfE0z-4oO65KlRi2bPQ7i2X-CyZ8C_6g`,
+                    method: "GET"               
+                }).done(function(response) {
+                    var youTubeVidId = response.items[0].id.videoId;
+                    var vidURL = `src="https://www.youtube.com/embed/${youTubeVidId}"`;
+                    var youTubeVid = $(`<iframe width='420' height='315' ${vidURL}>`);
+                    $(`#youTube-${t}`).html(youTubeVid);
+                });
             };
-        });
+                
+        }); 
+        
     });
-
-    // additional details screen
-    // $(".vidImages").on("click", ".portfolio-item", function() {
-    //     var movieTitle = $(this).attr("alt");
-    //     var overview = $(this).attr("plot");
-    //     var poster = $(this).attr("poster");
-    //     console.log(movieTitle);
-    //     console.log(overview);
-    //     var youTubeQueryUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=5&q=${movieTitle}+trailer&key=AIzaSyCQfE0z-4oO65KlRi2bPQ7i2X-CyZ8C_6g`;
-    //     var searchRecs = `https://api.themoviedb.org/3/movie/${this.id}/recommendations?api_key=${tmdb}&language=en-US&page=1`
-
-    //     for (var s = 0; s < showArray.length; s++) {
-    //         $.ajax({
-    //             url: `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=5&q=${s}+trailer&key=AIzaSyCQfE0z-4oO65KlRi2bPQ7i2X-CyZ8C_6g`,
-    //             method: "GET"
-    //         }).done(function(response) {
-    //             var youTubeVidId = response.items[0].id.videoId;
-    //             var vidURL = `src="https://www.youtube.com/embed/${youTubeVidId}"`;
-    //             var youTubeVid = $(`<iframe width='420' height='315' ${vidURL}>`);
-    //             $(`#you-tube-${s}`).html(youTubeVid);
-    //         });
-    //     }
-
-
-    //     $.ajax({
-    //         url: searchRecs,
-    //         method: "GET"
-    //     }).done(function(response) {
-    //         var searchResults = response.results;
-    //         for (var o = 0; o < searchResults.length; o++) {
-
-    //             var resultsBtn = $(`<div class="hvrbox movie-div otherRecs" id="${searchResults[o].id}">`);
-    //             var image = $(`<img class="hvrbox-layer_bottom movie-poster">`);
-    //             var title = searchResults[o].title;
-    //             var layer = $(`<div class="hvrbox-layer_top hvrbox-layer_slideup"><div class="hvrbox-text">See More</div>`);           
-    //             image.attr("src", "https://image.tmdb.org/t/p/w500" + searchResults[o].backdrop_path);
-    //             resultsBtn.prepend(image);
-    //             resultsBtn.append(layer);
-    //             resultsBtn.attr("id", searchResults[o].id).attr("alt", title).attr("plot", searchResults[o].overview);
-    //             resultsBtn.attr("src", "https://image.tmdb.org/t/p/w500" + searchResults[o].backdrop_path);
-    //             $("#otherPicks").html(resultsBtn);
-    //         };
-    //     });
-    // });
-
-    // nth degree details screens
-    // $(".showMeDetails").on("click", ".otherRecs", function() {
-    //     var movieTitle = $(this).attr("alt");
-    //     var overview = $(this).attr("plot");
-    //     var poster = $(this).attr("poster");
-    //     var youTubeQueryUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=5&q=${movieTitle}+trailer&key=AIzaSyCQfE0z-4oO65KlRi2bPQ7i2X-CyZ8C_6g`;
-    //     var searchRecs = `https://api.themoviedb.org/3/movie/${this.id}/recommendations?api_key=${tmdb}&language=en-US&page=1`
-
-    //     $(".showMeDetails").empty();
-    //     $(".showMeDetails").append(`
-    //         <h1 id="fav-click" title="${movieTitle}">${movieTitle}&nbsp;
-    //             <span id="heart" class="glyphicon glyphicon-heart glyphicon-heart-empty"></span>
-    //         </h1>
-    //         `).append(overview).append(`<h3>Other Movies You Might Like:</h3>`);
-    //     $("#fav-click").attr("favorite", false).attr("db", this.id);
-
-    //     $.ajax({
-    //         url: youTubeQueryUrl,
-    //         method: "GET"
-    //     }).done(function(response) {
-    //         var youTubeVidId = response.items[0].id.videoId;
-    //         var vidURL = `src="https://www.youtube.com/embed/${youTubeVidId}"`;
-    //         var youTubeVid = $(`<iframe width='420' height='315' ${vidURL}>`);
-    //         $(".showMeDetails").prepend(youTubeVid);
-    //     });
 
     //     $.ajax({
     //         url: searchRecs,
@@ -298,10 +273,25 @@ $(document).ready(function() {
         var saved = $(this).attr("favorite");
         var id = $(this).attr("id");
         if (saved === "true") {
-            database.ref("users/" + uid + "/TMDB_faves/" + id).remove();
+            database.ref("users/" + uid + "/TMDB_faves/" + faveTitle).remove();
         } else {
             database.ref("users/" + uid + "/TMDB_faves/").update({
-                [id]: faveTitle
+                [faveTitle]: Date.now()
+            });
+        }
+        $(this).attr("class", ($(this).attr("class") == "glyphicon glyphicon-heart glyphicon-heart-empty" ? "glyphicon glyphicon-heart" : "glyphicon glyphicon-heart glyphicon-heart-empty"));
+        $(this).attr("favorite", ($(this).attr("favorite") == "false" ? true : false));
+    });
+
+    $("#recipe-modals").on("click", "#heart", function(event) {
+        var faveTitle = $(this).attr("title");
+        var saved = $(this).attr("favorite");
+        var id = $(this).attr("id");
+        if (saved === "true") {
+            database.ref("users/" + uid + "/Yummly_faves/" + faveTitle).remove();
+        } else {
+            database.ref("users/" + uid + "/Yummly_faves/").update({
+                [faveTitle]: Date.now()
             });
         }
         $(this).attr("class", ($(this).attr("class") == "glyphicon glyphicon-heart glyphicon-heart-empty" ? "glyphicon glyphicon-heart" : "glyphicon glyphicon-heart glyphicon-heart-empty"));
@@ -319,6 +309,7 @@ $(document).ready(function() {
     tl.pause();
     $(".go").on("click", function(event) {
         event.preventDefault();
+        // var Ing=[];
         tl.play();
         tl.restart();
         console.log(cuisineSearch);
@@ -327,6 +318,8 @@ $(document).ready(function() {
         var food = $("#food").val().trim();
         $("#food").val('');
         $("#recipe_view").empty();
+        $(".recipeImages").empty();
+        $("#recipe-modals").empty();
         var yumQuery = "http://api.yummly.com/v1/api/recipes?_app_id=74c2c130&_app_key=dbe2b1012a02ca615dbe289501e4ef92&q=" + food + cuisineSearch + "&requirePictures=true";
         console.log(food);
         console.log(yumQuery);
@@ -338,13 +331,16 @@ $(document).ready(function() {
         }).done(function(response) {
             result = response.matches;
             console.log(result);
-
+            
             for (var z = 0; z < result.length; z++) {
+
                 var id = (result[z].id)
                 console.log(id);
                 var recipeTitle = (result[z].recipeName);
                 var imgUrl = result[z].imageUrlsBySize["90"].replace("s90-c", "s200-c");
-
+                var ingredients=(result[z].ingredients);
+                var IngAsString = ingredients.join(', ');
+                console.log(ingredients);
                 var recipeURL = "https://www.yummly.com/recipe/" + id
 
                 var recipeDiv = $("<div class='recipeImgDiv'>");
@@ -361,7 +357,54 @@ $(document).ready(function() {
                 recipeDiv.append(p);
                 recipeDiv.append(recipeLink);
 
-                $("#recipe_view").append(recipeDiv);
+            
+               
+                var recipeThumb = `
+                <div class="col-md-4 col-sm-6 portfolio-item">
+                    <a href="#portfolioModal${z}" class="portfolio-link" data-toggle="modal">
+                        <div class="portfolio-hover">
+                            <div class="portfolio-hover-content">
+                                <i class="fa fa-plus fa-3x"></i>
+                            </div>
+                        </div>
+                        <img src="${imgUrl}"  class="img-responsive" style="width:100%" alt="${recipeTitle}">
+                    </a>
+                    <div class="portfolio-caption" >
+                        <h4 class="thumbTitle">${recipeTitle}</h4>
+                    </div>
+                </div>`;
+
+                
+                var recipeModal = `
+                <div class="portfolio-modal modal fade" id="portfolioModal${z}" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="close-modal" data-dismiss="modal">
+                                <div class="lr">
+                                    <div class="rl">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-lg-8 col-lg-offset-2">
+                                        <div class="modal-body">
+                                            <h2>${recipeTitle}<span id="heart" favorite="false" title="${recipeTitle}" class="glyphicon glyphicon-heart glyphicon-heart-empty"></span></h2>
+                                            <center><img src="${imgUrl}" class="img-responsive" style="width:400px;"></center>
+                                            <p class="item-intro text-muted"></p>
+                                            <p class="Ingbtn">Main Ingredients: ${IngAsString}</p>
+                                            <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>`;
+
+                
+                $(".recipeImages").append(recipeThumb);
+                $("#recipe-modals").append(recipeModal);
             }
         });
     });
@@ -387,7 +430,8 @@ $(document).ready(function() {
         // button initial state is unchecked...this status will only change on click
         // when it gets clicked, we change the state and css style
         if (state === "unchecked") {
-            $(this).css({ "background-color": "#333", "opacity": "0.9" });
+            $(this).css({"background-color": "#333", "border-color": "#333", "opacity": "0.9"});
+
             $(this).attr("data-state", "checked");
             addedCuisines.push(cuisineParameter);
             console.log(addedCuisines);
@@ -401,25 +445,25 @@ $(document).ready(function() {
     }
     createButtons();
     $(document).on("click", ".cuisines", animateBtn);
-
-    $(".startBtn").on("click", function() {
-        var sec = 0.8;
-        for (var x = 0; x < 25; x++) {
-            var b = $(`#button${x}`);
-            var tl2 = new TimelineLite();
-            tl2.from(b, 1.5, { x: -15, autoAlpha: 0, ease: Power1.ease, delay: sec });
-            tl2.play();
-            tl2.restart();
-            sec = sec + 0.05;
+   
+    $(".startBtn").on("click",function(){
+    var sec=0.8;
+    for (var x=0; x<=25; x++){
+        var b=$(`#button${x}`);
+        var tl2=new TimelineLite();
+        tl2.from(b, 1.5,{x:-15, autoAlpha:0,ease:Power1.ease, delay:sec});
+        tl2.play();
+        tl2.restart();
+        sec=sec+0.05;
         }
     })
 
-    $(".whatchaWatching").on("click", function() {
-        var sec = 0.8;
-        for (var x = 0; x < 25; x++) {
-            var b = $(`#button${x}`);
-            var tl2 = new TimelineLite();
-            tl2.from(b, 1.5, { x: -15, autoAlpha: 0, ease: Power1.ease, delay: sec });
+    $(".whatchaWatching").on("click",function(){
+        var sec=0.8;
+        for (var x=0; x<=25; x++){
+            var b=$(`#button${x}`);
+            var tl2=new TimelineLite();
+            tl2.from(b, 1.5,{x:-15, autoAlpha:0,ease:Power1.ease, delay:sec});
             tl2.play();
             tl2.restart();
             sec = sec + 0.05;
