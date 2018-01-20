@@ -103,10 +103,8 @@ $(document).ready(function() {
                                 <div class="portfolio-hover-content">
                                     <i class="fa fa-plus fa-3x"></i>
                                 </div>
-                                <div class="poster-image" style="background-image:url(https://image.tmdb.org/t/p/w500${poster}) onerror="this.src='assets/images/default.jpg'" class="img-responsive" alt="${movieTitle}">
-                                </div>
                             </div>
-                            // <img src="https://image.tmdb.org/t/p/w500${poster}" onerror="this.src='assets/images/default.jpg'" class="img-responsive" alt="${movieTitle}">
+                            <img src="https://image.tmdb.org/t/p/w500${poster}" onerror="this.src='assets/images/default.jpg'" class="img-responsive" alt="${movieTitle}">
                         </a>
                         <div class="portfolio-caption">
                             <h4 class="thumbTitle">${movieTitle}</h4>
@@ -145,7 +143,7 @@ $(document).ready(function() {
 
                 JSON.stringify(movieTitle);
                 showArray.push(movieTitle);
-            };  
+            };
 
             for (let s = 0; s < showArray.length; s++) {
                 $.ajax({
@@ -179,7 +177,7 @@ $(document).ready(function() {
                 var movieTitle = searchResults[n].name;
                 var overview = searchResults[n].overview;
                 var poster = searchResults[n].backdrop_path;
- 
+
                 var movieThumb = `
                     <div class="col-md-4 col-sm-6 portfolio-item">
                         <a href="#portfolioModal${n}" class="portfolio-link" data-toggle="modal">
@@ -226,12 +224,12 @@ $(document).ready(function() {
                 $("#movie-modals").append(movieModal);
                 JSON.stringify(movieTitle);
                 showArray.push(movieTitle);
-            };  
-                
+            };
+
             for (let t = 0; t < showArray.length; t++) {
                 $.ajax({
                     url: `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=5&q=${showArray[t]}+trailer&key=AIzaSyCQfE0z-4oO65KlRi2bPQ7i2X-CyZ8C_6g`,
-                    method: "GET"               
+                    method: "GET"
                 }).done(function(response) {
                     var youTubeVidId = response.items[0].id.videoId;
                     var vidURL = `src="https://www.youtube.com/embed/${youTubeVidId}"`;
@@ -239,9 +237,9 @@ $(document).ready(function() {
                     $(`#youTube-${t}`).html(youTubeVid);
                 });
             };
-                
-        }); 
-        
+
+        });
+
     });
 
     //     $.ajax({
@@ -331,14 +329,14 @@ $(document).ready(function() {
         }).done(function(response) {
             result = response.matches;
             console.log(result);
-            
+
             for (var z = 0; z < result.length; z++) {
 
                 var id = (result[z].id)
                 console.log(id);
                 var recipeTitle = (result[z].recipeName);
                 var imgUrl = result[z].imageUrlsBySize["90"].replace("s90-c", "s200-c");
-                var ingredients=(result[z].ingredients);
+                var ingredients = (result[z].ingredients);
                 var IngAsString = ingredients.join(', ');
                 console.log(ingredients);
                 var recipeURL = "https://www.yummly.com/recipe/" + id
@@ -357,8 +355,8 @@ $(document).ready(function() {
                 recipeDiv.append(p);
                 recipeDiv.append(recipeLink);
 
-            
-               
+
+
                 var recipeThumb = `
                 <div class="col-md-4 col-sm-6 portfolio-item">
                     <a href="#portfolioModal${z}" class="portfolio-link" data-toggle="modal">
@@ -374,7 +372,7 @@ $(document).ready(function() {
                     </div>
                 </div>`;
 
-                
+
                 var recipeModal = `
                 <div class="portfolio-modal modal fade" id="portfolioModal${z}" tabindex="-1" role="dialog" aria-hidden="true">
                     <div class="modal-dialog">
@@ -402,7 +400,7 @@ $(document).ready(function() {
                     </div>
                 </div>`;
 
-                
+
                 $(".recipeImages").append(recipeThumb);
                 $("#recipe-modals").append(recipeModal);
             }
@@ -430,7 +428,7 @@ $(document).ready(function() {
         // button initial state is unchecked...this status will only change on click
         // when it gets clicked, we change the state and css style
         if (state === "unchecked") {
-            $(this).css({"background-color": "#333", "border-color": "#333", "opacity": "0.9"});
+            $(this).css({ "background-color": "#333", "border-color": "#333", "opacity": "0.9" });
 
             $(this).attr("data-state", "checked");
             addedCuisines.push(cuisineParameter);
@@ -445,25 +443,25 @@ $(document).ready(function() {
     }
     createButtons();
     $(document).on("click", ".cuisines", animateBtn);
-   
-    $(".startBtn").on("click",function(){
-    var sec=0.8;
-    for (var x=0; x<=25; x++){
-        var b=$(`#button${x}`);
-        var tl2=new TimelineLite();
-        tl2.from(b, 1.5,{x:-15, autoAlpha:0,ease:Power1.ease, delay:sec});
-        tl2.play();
-        tl2.restart();
-        sec=sec+0.05;
+
+    $(".startBtn").on("click", function() {
+        var sec = 0.8;
+        for (var x = 0; x <= 25; x++) {
+            var b = $(`#button${x}`);
+            var tl2 = new TimelineLite();
+            tl2.from(b, 1.5, { x: -15, autoAlpha: 0, ease: Power1.ease, delay: sec });
+            tl2.play();
+            tl2.restart();
+            sec = sec + 0.05;
         }
     })
 
-    $(".whatchaWatching").on("click",function(){
-        var sec=0.8;
-        for (var x=0; x<=25; x++){
-            var b=$(`#button${x}`);
-            var tl2=new TimelineLite();
-            tl2.from(b, 1.5,{x:-15, autoAlpha:0,ease:Power1.ease, delay:sec});
+    $(".whatchaWatching").on("click", function() {
+        var sec = 0.8;
+        for (var x = 0; x <= 25; x++) {
+            var b = $(`#button${x}`);
+            var tl2 = new TimelineLite();
+            tl2.from(b, 1.5, { x: -15, autoAlpha: 0, ease: Power1.ease, delay: sec });
             tl2.play();
             tl2.restart();
             sec = sec + 0.05;
