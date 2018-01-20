@@ -170,10 +170,12 @@ form.section-subheading {
 }
 
 #food {
+    
     border-color: #87CEFA;
 }
 
 .go {
+    
     background-color: rgb(94, 180, 94);
 }
 
@@ -195,13 +197,10 @@ form.section-subheading {
 }
 
 .title {
-    display: inline-block;
-    font-family: 'Caveat', cursive;
-    margin-left: 62px;
-    color: black;
+    color: #fff;
     text-decoration: none;
     text-transform: uppercase;
-    -webkit-mask-image: linear-gradient(-75deg, rgba(0, 0, 0, 0.6) 60%, #000 80%, rgba(0, 0, 0, .6) 90%);
+    -webkit-mask-image: linear-gradient(15deg, rgba(0, 0, 0, 0.6) 60%, #000 80%, rgba(0, 0, 0, .6) 90%);
     -webkit-mask-size: 200%;
     animation: shine 2s linear infinite;
 }
@@ -215,4 +214,9 @@ form.section-subheading {
     }
 }
 
+#something{
+    margin-left:20px;
+    display:inline-block;
+    
+}
 .input-ground {}
