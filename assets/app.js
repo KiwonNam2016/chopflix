@@ -13,7 +13,6 @@ $(document).ready(function() {
     var database = firebase.database();
     var tmdb = "b300de2804d6ecbfa5435065a4835711";
     var uid = JSON.parse(localStorage.getItem("cKDX9B90bvAYTGSiZq3W"));
-    var showArray = [];
 
     // setting date for IE8 and earlier
     if (!Date.now) {
@@ -82,6 +81,8 @@ $(document).ready(function() {
     // discover movies
     $(".genre-buttons").on("click", ".movie-genre", function(event) {
         var discover = `https://api.themoviedb.org/3/discover/movie?api_key=${tmdb}&language=en-US&sort_by=popularity.desc&certification.lte=pg-13&include_adult=false&include_video=false&page=1&with_genres=${this.id}`
+        var showArray = [];
+        console.log(showArray);
 
         $(".vidImages").empty();
 
@@ -127,7 +128,7 @@ $(document).ready(function() {
                                             <div class="modal-body">
                                                 <h2>${movieTitle}<span id="heart" favorite="false" title="${movieTitle}" class="glyphicon glyphicon-heart glyphicon-heart-empty"></span></h2>
                                                 <p class="item-intro text-muted">${overview}</p>
-                                                <div id="you-tube-${movieTitle}"></div>
+                                                <div id="youTube-${m}"></div>
                                                 <div id="otherPicks"></div>
                                                 <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
                                             </div>
@@ -140,16 +141,26 @@ $(document).ready(function() {
 
                 $(".vidImages").append(movieThumb);
                 $("#movie-modals").append(movieModal);
-        //     $.ajax({
-        //         url: youTubeQueryUrl,
-        //         method: "GET"
-        //     }).done(function(response) {
-        //         var youTubeVidId = response.items[0].id.videoId;
-        //         var vidURL = `src="https://www.youtube.com/embed/${youTubeVidId}"`;
-        //         var youTubeVid = $(`<iframe width='420' height='315' ${vidURL}>`);
-        //         $(".showMeDetails").prepend(youTubeVid);
-        //     });
-            };                  
+            };  
+            console.log(showArray);
+                
+            for (let s = 0; s < showArray.length; s++) {
+                var url = `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=5&q=${showArray[s]}+trailer&key=AIzaSyCQfE0z-4oO65KlRi2bPQ7i2X-CyZ8C_6g`;
+
+                $.ajax({
+                    url: url,
+                    method: "GET"               
+                }).done(function(response) {
+                    var youTubeVidId = response.items[s].id.videoId;
+                    var vidURL = `src="https://www.youtube.com/embed/${youTubeVidId}"`;
+                    var youTubeVid = $(`<iframe width='420' height='315' ${vidURL}>`);
+                    $(`#youTube-${s}`).html(youTubeVid);
+                    console.log("movies");
+                    console.log(showArray[s]);
+                    console.log(url);
+                });
+            };         
+                
         }); 
         
     });
@@ -291,7 +302,6 @@ $(document).ready(function() {
                 [id]: faveTitle
             });
         }
-        $(`#heart`).toggleClass("glyphicon-heart-empty");
         $(this).attr("class", ($(this).attr("class") == "glyphicon glyphicon-heart glyphicon-heart-empty" ? "glyphicon glyphicon-heart" : "glyphicon glyphicon-heart glyphicon-heart-empty"));
         $(this).attr("favorite", ($(this).attr("favorite") == "false" ? true : false));
     });
@@ -315,7 +325,7 @@ $(document).ready(function() {
         var food = $("#food").val().trim();
         $("#food").val('');
         $("#recipe_view").empty();
-        var yumQuery = "http://api.yummly.com/v1/api/recipes?_app_id=74c2c130&_app_key=dbe2b1012a02ca615dbe289501e4ef92&q=" + food + cuisineSearch;
+        var yumQuery = "http://api.yummly.com/v1/api/recipes?_app_id=74c2c130&_app_key=dbe2b1012a02ca615dbe289501e4ef92&q=" + food + cuisineSearch + "&requirePictures=true";
         console.log(food);
         console.log(yumQuery);
         console.log(cuisineSearch);
@@ -355,10 +365,10 @@ $(document).ready(function() {
     });
 
     function createButtons() {
-        var cuisines = ["American", "Italian", "Asian", "Mexican", "Southern & Soul Food", "French", "Southwestern", "Barbecue", "Indian", "Chinese", "Cajun & Creole", "English", "Mediterranean", "Greek", "Spanish", "German", "Thai", "Moroccan", "Irish", "Japanese", "Cuban", "Hawaiin", "Swedish", "Hungarian", "Portugese"];
+        var cuisines = ["American", "Kid-Friendly", "Italian", "Asian", "Mexican", "Southern", "French", "Southwestern", "Barbecue-bbq", "Indian", "Chinese", "Cajun", "English", "Mediterranean", "Greek", "Spanish", "German", "Thai", "Moroccan", "Irish", "Japanese", "Cuban", "Hawaiin", "Swedish", "Hungarian", "Portugese"];
         for (var a = 0; a < cuisines.length; a++) {
             var button = $(`<button id="button${a}">`);
-            button.addClass("cuisines btn btn-primary btn-lg");
+            button.addClass("cuisines btn btn-primary");
             button.attr({ "data-name": cuisines[a], "data-state": "unchecked" });
             button.text(cuisines[a]);
 
@@ -367,30 +377,28 @@ $(document).ready(function() {
 
     };
 
-    function animateImg() {
-        //we get the data-state attribute from the image clicked
+    function animateBtn() {
+        //we get the data-state attribute from the button clicked
         state = this.getAttribute('data-state');
-        var cuisineSelected = $(this).attr("data-name");
-        var cuisineParameter = "&allowedCuisine[]=cuisine^cuisine-" + cuisineSelected
-            //if image is at still state...url and state are changed to match animated
+        var cuisineSelected = $(this).attr("data-name").toLowerCase();
+        var cuisineParameter = "&allowedCuisine=cuisine%5Ecuisine-" + cuisineSelected;
+        // button initial state is unchecked...this status will only change on click
+        // when it gets clicked, we change the state and css style
         if (state === "unchecked") {
-            // $(this).removeAttr('style').css("background-color", "red");
-            $(this).css("background-color", "#204d74");
+            $(this).css({"background-color": "#333", "opacity": "0.9"});
             $(this).attr("data-state", "checked");
             addedCuisines.push(cuisineParameter);
             console.log(addedCuisines);
-
-            //otherwise, the image is animated and needs to be switched to still...url and state are changed to match still
+            //otherwise, the button is already selected and needs to be unselected
         } else {
-            $(this).removeAttr('style').css("background-color", "#337ab7");
-            // $(this).css("background-color", "red");
+            $(this).removeAttr('style').css("background-color", "#feca30");
             $(this).attr("data-state", "unchecked");
             addedCuisines = addedCuisines.filter(a => a !== cuisineParameter);
             console.log(addedCuisines);
         }
     }
     createButtons();
-    $(document).on("click", ".cuisines", animateImg);
+    $(document).on("click", ".cuisines", animateBtn);
    
     $(".startBtn").on("click",function(){
     var sec=0.8;
@@ -402,6 +410,18 @@ $(document).ready(function() {
         tl2.restart();
         sec=sec+0.05;
         }
-})
+    })
+
+    $(".whatchaWatching").on("click",function(){
+        var sec=0.8;
+        for (var x=0; x<25; x++){
+            var b=$(`#button${x}`);
+            var tl2=new TimelineLite();
+            tl2.from(b, 1.5,{x:-15, autoAlpha:0,ease:Power1.ease, delay:sec});
+            tl2.play();
+            tl2.restart();
+            sec=sec+0.05;
+            }
+    })
 
 });

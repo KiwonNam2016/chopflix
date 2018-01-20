@@ -56,7 +56,7 @@
                         <a href="#page-top"></a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="#services">Whatcha Watchin?</a>
+                        <a class="page-scroll  whatchaWatching" href="#services">Whatcha Watchin?</a>
                     </li>
                     <li>
                         <a class="page-scroll" href="#portfolio">Search</a>
@@ -159,7 +159,7 @@
         </div>
     </section>
 
-    <!-- Portfolio Grid Section -->
+    <!-- Movie Grid Section -->
     <section id="portfolio" class="bg-light-gray">
         <div class="container">
             <div class="row">
@@ -170,63 +170,21 @@
             </div>
             <div class="row">
                 <div class="vidImages"></div>
+            </div>
+        </div>
+    </section>
 
-                <!-- <div class="col-md-4 col-sm-6 portfolio-item">
-                    <a href="#portfolioModal3" class="portfolio-link" data-toggle="modal">
-                        <div class="portfolio-hover">
-                            <div class="portfolio-hover-content">
-                                <i class="fa fa-plus fa-3x"></i>
-                            </div>
-                        </div>
-                        <img src="img/portfolio/treehouse.png" class="img-responsive" alt="">
-                    </a>
-                    <div class="portfolio-caption">
-                        <h4>Treehouse</h4>
-                        <p class="text-muted">Website Design</p>
-                    </div>
+    <!-- Recipe Grid Section -->
+    <section id="portfolio" class="bg-light-gray">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 class="section-heading">Your Movies</h2>
+                    <h3 class="section-subheading text-muted">Choose from these highly rated titles.</h3>
                 </div>
-                <div class="col-md-4 col-sm-6 portfolio-item">
-                    <a href="#portfolioModal4" class="portfolio-link" data-toggle="modal">
-                        <div class="portfolio-hover">
-                            <div class="portfolio-hover-content">
-                                <i class="fa fa-plus fa-3x"></i>
-                            </div>
-                        </div>
-                        <img src="img/portfolio/golden.png" class="img-responsive" alt="">
-                    </a>
-                    <div class="portfolio-caption">
-                        <h4>Golden</h4>
-                        <p class="text-muted">Website Design</p>
-                    </div>
-                </div>
-                <div class="col-md-4 col-sm-6 portfolio-item">
-                    <a href="#portfolioModal5" class="portfolio-link" data-toggle="modal">
-                        <div class="portfolio-hover">
-                            <div class="portfolio-hover-content">
-                                <i class="fa fa-plus fa-3x"></i>
-                            </div>
-                        </div>
-                        <img src="img/portfolio/escape.png" class="img-responsive" alt="">
-                    </a>
-                    <div class="portfolio-caption">
-                        <h4>Escape</h4>
-                        <p class="text-muted">Website Design</p>
-                    </div>
-                </div>
-                <div class="col-md-4 col-sm-6 portfolio-item">
-                    <a href="#portfolioModal6" class="portfolio-link" data-toggle="modal">
-                        <div class="portfolio-hover">
-                            <div class="portfolio-hover-content">
-                                <i class="fa fa-plus fa-3x"></i>
-                            </div>
-                        </div>
-                        <img src="img/portfolio/dreams.png" class="img-responsive" alt="">
-                    </a>
-                    <div class="portfolio-caption">
-                        <h4>Dreams</h4>
-                        <p class="text-muted">Website Design</p>
-                    </div>
-                </div> -->
+            </div>
+            <div class="row">
+                <div class="recipeImages"></div>
             </div>
         </div>
     </section>
@@ -323,7 +281,7 @@
     </section>
 
     <!-- Clients Aside -->
-    <aside class="clients">
+    <!-- <aside class="clients">
         <div class="container">
             <div class="row">
                 <div class="col-md-3 col-sm-6">
@@ -348,7 +306,7 @@
                 </div>
             </div>
         </div>
-    </aside>
+    </aside> -->
 
     <!-- Contact Section -->
     <section id="contact">
@@ -365,7 +323,7 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Your Name *" id="name" pattern="[A-Za-z]" title="Invalid input" required data-validation-required-message="Please enter your name.">
+                                    <input type="text" class="form-control" placeholder="Your Name *" id="name" required data-validation-required-message="Please enter your name.">
                                     <p class="help-block text-danger"></p>
                                 </div>
                                 <div class="form-group">
@@ -373,7 +331,9 @@
                                     <p class="help-block text-danger"></p>
                                 </div>
                                 <div class="form-group">
+                                  
                                     <input type="tel" class="form-control" placeholder="Your Phone *" id="phone" placeholder="xxx-xxx-xxxx" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required data-validation-required-message="Please enter your phone number.">
+
                                     <p class="help-block text-danger"></p>
                                 </div>
                             </div>
@@ -425,9 +385,7 @@
 
     <!-- Movie Modals -->
     <div id="movie-modals"></div>
-
-
-
+    <div id="recipe-modals"></div>
 
     <!-- firebase -->
     <script src="https://www.gstatic.com/firebasejs/4.8.1/firebase.js"></script>
@@ -441,9 +399,7 @@
     <!-- jQuery external -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <!-- bootstrap external -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-    <!-- Plugin JavaScript external -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>  
 
     <!-- jQuery local -->
     <script src="vendor/jquery/jquery.min.js"></script>
@@ -460,6 +416,8 @@
     <!-- javascript app -->
     <script src="assets/app.js"></script>
 
+    <!-- Plugin JavaScript external -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
 
 </body>
 
