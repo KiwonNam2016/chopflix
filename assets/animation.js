@@ -1,17 +1,44 @@
 function animation(){
-    var h=8000;
+    var h=960000;
     var inputBox=$("#searchEntry");
-    var jumbotron=$(".jumbotron");
+    var something=$("#something");
     var myTitle=$(".title");
+    var icon=$(".startBtn");
+    var tl1=new TimelineLite();
+    var tl3=new TimelineLite();
+    tl3.from(something,2,{opacity:100,y:50, onUpdate:onUpdate, onComplete:onComplete});
+    // var tl=new TimelinLite();
+    tl1.to(icon,1,{rotationX:-360,transformOrigin:'50% 50%', ease:Power2.easeInOut})
+    
+    tl3.pause();
+    tl1.pause();
     TweenLite.from(inputBox,1,{opacity:0,y:50});
   
-    TweenLite.to(jumbotron,2,{opacity:100,y:50, onUpdate:onUpdate});
-    TweenLite.from(myTitle,1,{autoAlpha:0,y:50,delay:1, ease:Elastic.easeOut});
-
+    
+    TweenLite.from(myTitle,1,{autoAlpha:0,y:50,delay:1, ease:Elastic.easeOut,delay:0.8});
+    
+    
+    icon.on("click",function(){
+    
+        tl3.play();
+        tl3.restart();
+    })
     function onUpdate(){
-        h=h+50;
-        $("h2").text(`You can find more than ${h} recipes here!`)
+        h=h+300;
+        $("#something").text(`You can find more than ${h} recipes here!`)
     }
+    function onComplete(){
+        h=1000000;
+        $("#something").text(`You can find more than ${h} recipes here!`)
+    }
+
+    $(".startBtn").mouseenter(function(){
+       tl1.play();
+       tl1.restart();
+       
+    })
+    
 }
+
 
 animation();

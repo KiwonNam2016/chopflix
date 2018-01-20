@@ -286,11 +286,21 @@ $(document).ready(function() {
     var addedCuisines = [];
     var cuisineSearch;
     var state;
-    $(".go").on("click", function() {
+    var go=$(".go");
+    //button animation
+    var tl=new TimelineLite();
+    tl.to(go, 0.7, {rotationX:-360,transformOrigin:'0% 50%', ease:Power2.easeInOut})
+    tl.pause();
+    $(".go").on("click", function(event) {
+        event.preventDefault();
+        tl.play();
+        tl.restart();
         console.log(cuisineSearch);
         cuisineSearch = addedCuisines.join('');
         console.log(cuisineSearch);
         var food = $("#food").val().trim();
+        $("#food").val('');
+        $("#recipe_view").empty();
         var yumQuery = "http://api.yummly.com/v1/api/recipes?_app_id=74c2c130&_app_key=dbe2b1012a02ca615dbe289501e4ef92&q=" + food + cuisineSearch;
         console.log(food);
         console.log(yumQuery);
@@ -333,7 +343,7 @@ $(document).ready(function() {
     function createButtons() {
         var cuisines = ["American", "Italian", "Asian", "Mexican", "Southern & Soul Food", "French", "Southwestern", "Barbecue", "Indian", "Chinese", "Cajun & Creole", "English", "Mediterranean", "Greek", "Spanish", "German", "Thai", "Moroccan", "Irish", "Japanese", "Cuban", "Hawaiin", "Swedish", "Hungarian", "Portugese"];
         for (var a = 0; a < cuisines.length; a++) {
-            var button = $("<button>");
+            var button = $(`<button id="button${a}">`);
             button.addClass("cuisines btn btn-primary btn-lg");
             button.attr({ "data-name": cuisines[a], "data-state": "unchecked" });
             button.text(cuisines[a]);
@@ -367,5 +377,17 @@ $(document).ready(function() {
     }
     createButtons();
     $(document).on("click", ".cuisines", animateImg);
+   
+    $(".startBtn").on("click",function(){
+    var sec=0.8;
+    for (var x=0; x<25; x++){
+        var b=$(`#button${x}`);
+        var tl2=new TimelineLite();
+        tl2.from(b, 1.5,{x:-15, autoAlpha:0,ease:Power1.ease, delay:sec});
+        tl2.play();
+        tl2.restart();
+        sec=sec+0.05;
+        }
+})
 
 });
