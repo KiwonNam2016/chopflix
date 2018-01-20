@@ -13,7 +13,6 @@ $(document).ready(function() {
     var database = firebase.database();
     var tmdb = "b300de2804d6ecbfa5435065a4835711";
     var uid = JSON.parse(localStorage.getItem("cKDX9B90bvAYTGSiZq3W"));
-    var showArray = [];
 
     // setting date for IE8 and earlier
     if (!Date.now) {
@@ -82,6 +81,8 @@ $(document).ready(function() {
     // discover movies
     $(".genre-buttons").on("click", ".movie-genre", function(event) {
         var discover = `https://api.themoviedb.org/3/discover/movie?api_key=${tmdb}&language=en-US&sort_by=popularity.desc&certification.lte=pg-13&include_adult=false&include_video=false&page=1&with_genres=${this.id}`
+        var showArray = [];
+        console.log(showArray);
 
         $(".vidImages").empty();
 
@@ -127,7 +128,7 @@ $(document).ready(function() {
                                             <div class="modal-body">
                                                 <h2>${movieTitle}<span id="heart" favorite="false" title="${movieTitle}" class="glyphicon glyphicon-heart glyphicon-heart-empty"></span></h2>
                                                 <p class="item-intro text-muted">${overview}</p>
-                                                <div id="you-tube-${movieTitle}"></div>
+                                                <div id="youTube-${m}"></div>
                                                 <div id="otherPicks"></div>
                                                 <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
                                             </div>
@@ -140,16 +141,23 @@ $(document).ready(function() {
 
                 $(".vidImages").append(movieThumb);
                 $("#movie-modals").append(movieModal);
-        //     $.ajax({
-        //         url: youTubeQueryUrl,
-        //         method: "GET"
-        //     }).done(function(response) {
-        //         var youTubeVidId = response.items[0].id.videoId;
-        //         var vidURL = `src="https://www.youtube.com/embed/${youTubeVidId}"`;
-        //         var youTubeVid = $(`<iframe width='420' height='315' ${vidURL}>`);
-        //         $(".showMeDetails").prepend(youTubeVid);
-        //     });
-            };                  
+            };  
+            console.log(showArray);
+                
+            for (let s = 0; s < showArray.length; s++) {
+                $.ajax({
+                    url: `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=5&q=${s}+trailer&key=AIzaSyCQfE0z-4oO65KlRi2bPQ7i2X-CyZ8C_6g`,
+                    method: "GET"
+                }).done(function(response) {
+                    var youTubeVidId = showArray[s];
+                    var vidURL = `src="https://www.youtube.com/embed/${youTubeVidId}"`;
+                    var youTubeVid = $(`<iframe width='420' height='315' ${vidURL}>`);
+                    $(`#youTube-${s}`).html(youTubeVid);
+                    console.log("movies");
+                    console.log(showArray[s]);
+                });   
+            };         
+                
         }); 
         
     });
@@ -291,7 +299,6 @@ $(document).ready(function() {
                 [id]: faveTitle
             });
         }
-        $(`#heart`).toggleClass("glyphicon-heart-empty");
         $(this).attr("class", ($(this).attr("class") == "glyphicon glyphicon-heart glyphicon-heart-empty" ? "glyphicon glyphicon-heart" : "glyphicon glyphicon-heart glyphicon-heart-empty"));
         $(this).attr("favorite", ($(this).attr("favorite") == "false" ? true : false));
     });
@@ -402,6 +409,18 @@ $(document).ready(function() {
         tl2.restart();
         sec=sec+0.05;
         }
-})
+    })
+
+    $(".whatchaWatching").on("click",function(){
+        var sec=0.8;
+        for (var x=0; x<25; x++){
+            var b=$(`#button${x}`);
+            var tl2=new TimelineLite();
+            tl2.from(b, 1.5,{x:-15, autoAlpha:0,ease:Power1.ease, delay:sec});
+            tl2.play();
+            tl2.restart();
+            sec=sec+0.05;
+            }
+    })
 
 });

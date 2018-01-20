@@ -125,8 +125,11 @@ form.section-subheading {
 }
 
 .thumbTitle {
-    overflow-x: hidden;
+    max-height: 19px;
+    overflow-y: hidden;
+    text-overflow: ellipsis;
 }
+
 #heart {
     font-size: 20px;
     color: #feca30;

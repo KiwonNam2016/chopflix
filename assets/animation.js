@@ -4,6 +4,7 @@ function animation(){
     var something=$("#something");
     var myTitle=$(".title");
     var icon=$(".startBtn");
+    var watching=$(".whatchaWatching");
     var tl1=new TimelineLite();
     var tl3=new TimelineLite();
     tl3.from(something,2,{opacity:100,y:50, onUpdate:onUpdate, onComplete:onComplete});
@@ -17,7 +18,11 @@ function animation(){
     
     TweenLite.from(myTitle,1,{autoAlpha:0,y:50,delay:1, ease:Elastic.easeOut,delay:0.8});
     
-    
+    watching.on("click",function(){
+        tl3.play();
+        tl3.restart();
+    })
+
     icon.on("click",function(){
     
         tl3.play();
