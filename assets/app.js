@@ -370,6 +370,7 @@ $(document).ready(function() {
     tl.pause();
     $(".go").on("click", function(event) {
         event.preventDefault();
+        // var Ing=[];
         tl.play();
         tl.restart();
         console.log(cuisineSearch);
@@ -378,6 +379,8 @@ $(document).ready(function() {
         var food = $("#food").val().trim();
         $("#food").val('');
         $("#recipe_view").empty();
+        $(".recipeImages").empty();
+        $("#recipe-modals").empty();
         var yumQuery = "http://api.yummly.com/v1/api/recipes?_app_id=74c2c130&_app_key=dbe2b1012a02ca615dbe289501e4ef92&q=" + food + cuisineSearch + "&requirePictures=true";
         console.log(food);
         console.log(yumQuery);
@@ -389,13 +392,16 @@ $(document).ready(function() {
         }).done(function(response) {
             result = response.matches;
             console.log(result);
-
+            
             for (var z = 0; z < result.length; z++) {
+
                 var id = (result[z].id)
                 console.log(id);
                 var recipeTitle = (result[z].recipeName);
                 var imgUrl = result[z].imageUrlsBySize["90"].replace("s90-c", "s200-c");
-
+                var ingredients=(result[z].ingredients);
+                var IngAsString = ingredients.join(', ');
+                console.log(ingredients);
                 var recipeURL = "https://www.yummly.com/recipe/" + id
 
                 var recipeDiv = $("<div class='recipeImgDiv'>");
@@ -412,7 +418,54 @@ $(document).ready(function() {
                 recipeDiv.append(p);
                 recipeDiv.append(recipeLink);
 
-                $("#recipe_view").append(recipeDiv);
+            
+               
+                var recipeThumb = `
+                <div class="col-md-4 col-sm-6 portfolio-item">
+                    <a href="#portfolioModal${z}" class="portfolio-link" data-toggle="modal">
+                        <div class="portfolio-hover">
+                            <div class="portfolio-hover-content">
+                                <i class="fa fa-plus fa-3x"></i>
+                            </div>
+                        </div>
+                        <img src="${imgUrl}"  class="img-responsive" style="width:100%" alt="${recipeTitle}">
+                    </a>
+                    <div class="portfolio-caption" >
+                        <h4 class="thumbTitle">${recipeTitle}</h4>
+                    </div>
+                </div>`;
+
+                
+                var recipeModal = `
+                <div class="portfolio-modal modal fade" id="portfolioModal${z}" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="close-modal" data-dismiss="modal">
+                                <div class="lr">
+                                    <div class="rl">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-lg-8 col-lg-offset-2">
+                                        <div class="modal-body">
+                                            <h2>${recipeTitle}<span id="heart" favorite="false" title="${recipeTitle}" class="glyphicon glyphicon-heart glyphicon-heart-empty"></span></h2>
+                                            <center><img src="${imgUrl}" class="img-responsive" style="width:400px;"></center>
+                                            <p class="item-intro text-muted"></p>
+                                            <p class="Ingbtn">Main Ingredients: ${IngAsString}</p>
+                                            <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>`;
+
+                
+                $(".recipeImages").append(recipeThumb);
+                $("#recipe-modals").append(recipeModal);
             }
         });
     });
@@ -455,7 +508,7 @@ $(document).ready(function() {
    
     $(".startBtn").on("click",function(){
     var sec=0.8;
-    for (var x=0; x<25; x++){
+    for (var x=0; x<=25; x++){
         var b=$(`#button${x}`);
         var tl2=new TimelineLite();
         tl2.from(b, 1.5,{x:-15, autoAlpha:0,ease:Power1.ease, delay:sec});
@@ -467,7 +520,7 @@ $(document).ready(function() {
 
     $(".whatchaWatching").on("click",function(){
         var sec=0.8;
-        for (var x=0; x<25; x++){
+        for (var x=0; x<=25; x++){
             var b=$(`#button${x}`);
             var tl2=new TimelineLite();
             tl2.from(b, 1.5,{x:-15, autoAlpha:0,ease:Power1.ease, delay:sec});
