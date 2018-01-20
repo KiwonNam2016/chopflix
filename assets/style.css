@@ -7,6 +7,11 @@
     width: 150px;
 }
 
+.poster-image {
+    padding-top: 56.25%;
+    background-size: cover;
+}
+
 #genres {
     margin-left: 50px;
     margin-right: 50px;
@@ -176,12 +181,10 @@ form.section-subheading {
 }
 
 #food {
-    
     border-color: #87CEFA;
 }
 
 .go {
-    
     background-color: rgb(94, 180, 94);
 }
 
@@ -220,11 +223,11 @@ form.section-subheading {
     }
 }
 
-#something{
-    margin-left:20px;
-    display:inline-block;
-    
+#something {
+    margin-left: 20px;
+    display: inline-block;
 }
+
 .input-ground {}
 
 .btn-primary.active.focus, .btn-primary.active:focus, .btn-primary.active:hover, .btn-primary:active.focus, .btn-primary:active:focus, .btn-primary:active:hover, .open>.dropdown-toggle.btn-primary.focus, .open>.dropdown-toggle.btn-primary:focus, .open>.dropdown-toggle.btn-primary:hover {
