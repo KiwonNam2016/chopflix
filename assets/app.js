@@ -275,32 +275,12 @@ var config = {
             } else {
                 database.ref("users/" + uid + "/TMDB_faves/").update({
                     [faveTitle]: Date.now()
-                  
-                        </div>
-                    </div>`;
-
-                $(".vidImages").append(movieThumb);
-                $("#movie-modals").append(movieModal);
-
-                JSON.stringify(movieTitle);
-                showArray.push(movieTitle);
-            };
-
-            for (let s = 0; s < showArray.length; s++) {
-                $.ajax({
-                    url: `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=5&q=${showArray[s]}+trailer&key=AIzaSyCQfE0z-4oO65KlRi2bPQ7i2X-CyZ8C_6g`,
-                    method: "GET"
-                }).done(function(response) {
-                    var youTubeVidId = response.items[0].id.videoId;
-                    var vidURL = `src="https://www.youtube.com/embed/${youTubeVidId}"`;
-                    var youTubeVid = $(`<iframe width='420' height='315' ${vidURL}>`);
-                    $(`#youTube-${s}`).html(youTubeVid);
                 });
             }
             $(this).attr("class", ($(this).attr("class") == "glyphicon glyphicon-heart glyphicon-heart-empty" ? "glyphicon glyphicon-heart" : "glyphicon glyphicon-heart glyphicon-heart-empty"));
             $(this).attr("favorite", ($(this).attr("favorite") == "false" ? true : false));
         });
-   
+    
         $("#recipe-modals").on("click", "#heart", function(event) {
             var faveTitle = $(this).attr("title");
             var saved = $(this).attr("favorite");
@@ -315,6 +295,8 @@ var config = {
             $(this).attr("class", ($(this).attr("class") == "glyphicon glyphicon-heart glyphicon-heart-empty" ? "glyphicon glyphicon-heart" : "glyphicon glyphicon-heart glyphicon-heart-empty"));
             $(this).attr("favorite", ($(this).attr("favorite") == "false" ? true : false));
         });
+    
+    
     
         //yummly search
         var addedCuisines = [];
@@ -488,4 +470,3 @@ var config = {
         })
     
     });
-    
