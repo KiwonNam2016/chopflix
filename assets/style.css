@@ -12,9 +12,9 @@
     background-size: cover;
 }
 
-#genres {
-    margin-left: 50px;
-    margin-right: 50px;
+#foodgenres {
+    /* margin-left: 50px;
+    margin-right: 50px; */
 }
 
 .movie-div:hover {

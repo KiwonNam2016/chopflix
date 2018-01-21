@@ -87,14 +87,18 @@
                     <p class=intro-lead-p>All the excitement of an extravagant night out from the comfort of your own home </p>
                 </div>
                 <div class="intro-heading">Ready for a wonderful time ...IN?!!!</div>
-                <a href="#services" class="page-scroll btn btn-xl startBtn">Start your Search</a>
+                <a href="#recipe-search-section" class="page-scroll btn btn-xl startBtn">Start your Search</a>
             </div>
         </div>
     </header>
 
     <!-- Recipe Search Section -->
     <section id="recipe-search-section" class="bg-white">
-        <div class="row" id="searchEntry">
+        <div class="row phase-one">
+            <div class="col-sm-12 dynamic-intro"></div>
+        </div>
+
+        <div class="row phase-two" id="searchEntry">
             <div class="col-lg-12 text-center">
                 <div class="genre-buttons">
                     <br>
@@ -102,15 +106,16 @@
                         <h4>Select buttons and/or keywords to search your recipe</h4>
                     </h2>
                     <br>
-                    <div id="genres"></div>
+                    <div id="foodgenres"></div>
                 </div>
                 <div class="recipeButtons recipe-format" href=".recipe-results-section"></div>
                 <div class="col-md-12 yummlySearch"></div>
                 <form action="">
                     <span class="input-group-btn">
                         <input id="food" type="text" pattern="[A-Za-z]"  class="form-control" placeholder="enter keyword(s)"> &nbsp
-                        <button class="btn btn-round btn-xl go" type="submit">Go!
-                        </button>
+                        <a href="#portfolio" class="page-scroll btn btn-round btn-xl go" type="submit">Go!
+                        </a>
+                        <!-- <a class="page-scroll" href="#portfolio"></a> -->
                         <p id="something"></p>
                     </span>
                 </form>
