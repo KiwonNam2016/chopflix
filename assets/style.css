@@ -181,6 +181,9 @@ form.section-subheading {
 
 #food {
     border-color: #87CEFA;
+    margin: auto;
+    width: 60%;
+    padding: 10px;
 }
 
 .btn-xl.go {
