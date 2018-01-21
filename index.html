@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -93,24 +92,33 @@
         </div>
     </header>
 
-    <!-- Recipe Seach Section -->
-    <section id="recipe-search-section">
+    <!-- Recipe Search Section -->
+    <section id="recipe-search-section" class="bg-white">
         <div class="row" id="searchEntry">
-            <div class="col-md-6 input-group">
+            <div class="col-lg-12 text-center">
+                <div class="genre-buttons">
+                    <br>
+                    <h2 class="section-heading">Search by Food Type:
+                        <h4>Select buttons and/or keywords to search your recipe</h4>
+                    </h2>
+                    <br>
+                    <div id="genres"></div>
+                </div>
+                <div class="recipeButtons recipe-format" href=".recipe-results-section"></div>
+                <div class="col-md-12 yummlySearch"></div>
                 <form action="">
                     <span class="input-group-btn">
-                        <input id="food" type="text" pattern="[A-Za-z]"  class="form-control" placeholder="I hate onions...">
-                        <button class="btn btn-default go" type="submit">Go!</button>
+                        <input id="food" type="text" pattern="[A-Za-z]"  class="form-control" placeholder="enter keyword(s)"> &nbsp
+                        <button class="btn btn-round btn-xl go" type="submit">Go!
+                        </button>
                         <p id="something"></p>
                     </span>
                 </form>
             </div>
-            <div class="recipeButtons"></div>
-            <div class="col-md-12 yummlySearch"></div>
         </div>
     </section>
 
-    <!-- Show Seach Section -->
+    <!-- Show Search Section -->
     <section id="show-search-section" class="bg-light-gray">
         <div class="row phase-one">
             <div class="col-sm-12 dynamic-intro"></div>
@@ -136,32 +144,32 @@
         </div>
     </section>
 
-    <!-- Show Results Section -->
-    <section id="portfolio" class="show-results-section">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12 text-center">
-                    <h2 class="section-heading">Your Movies</h2>
-                    <h3 class="section-subheading text-muted">Choose from these highly rated titles.</h3>
-                </div>
-            </div>
-            <div class="row">
-                <div class="vidImages"></div>
-            </div>
-        </div>
-    </section>
-
     <!-- Recipe Results Section -->
     <section id="portfolio" class="recipe-results-section bg-light-gray">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
-                    <h2 class="section-heading">Your Recipes</h2>
+                    <h2 class="section-heading" id="show-my-recipes">Your Recipes</h2>
                     <h3 class="section-subheading text-muted">Choose from these highly rated titles.</h3>
                 </div>
             </div>
             <div class="row">
                 <div class="recipeImages"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Show Results Section -->
+    <section id="portfolio" class="show-results-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 class="section-heading">Your Shows</h2>
+                    <h3 class="section-subheading text-muted">Choose from these highly rated titles.</h3>
+                </div>
+            </div>
+            <div class="row">
+                <div class="vidImages"></div>
             </div>
         </div>
     </section>

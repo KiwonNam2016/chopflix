@@ -163,7 +163,6 @@ form.section-subheading {
 }
 
 #searchEntry {
-    font-family: 'Bad Script', cursive;
     margin-left: 5%;
     width: 100%;
 }
@@ -185,17 +184,30 @@ form.section-subheading {
 }
 
 .go {
-    background-color: rgb(94, 180, 94);
-}
-
-.go:hover {
-    text-shadow: 2px 2px 5px green;
+    background-color: #000000;
+    color: #fed136;
+    border-radius: 35%;
+    margin: 10px;
 }
 
 .btn {
     cursor: pointer;
+    border-radius: 25px;
     margin-bottom: 5px;
     margin-left: 5px;
+}
+
+.cuisines.btn.btn-primary {
+    background-color: #fff;
+    border: solid, #fed136 2px;
+    color: #fed136;
+    margin-left: 12px;
+}
+
+.recipeButtons.recipe-format {
+    margin-left: 50px;
+    margin-right: 50px;
+    margin-bottom: 25px;
 }
 
 .recipeImgDiv {
@@ -230,7 +242,15 @@ form.section-subheading {
 
 .input-ground {}
 
-.btn-primary.active.focus, .btn-primary.active:focus, .btn-primary.active:hover, .btn-primary:active.focus, .btn-primary:active:focus, .btn-primary:active:hover, .open>.dropdown-toggle.btn-primary.focus, .open>.dropdown-toggle.btn-primary:focus, .open>.dropdown-toggle.btn-primary:hover {
+.btn-primary.active.focus,
+.btn-primary.active:focus,
+.btn-primary.active:hover,
+.btn-primary:active.focus,
+.btn-primary:active:focus,
+.btn-primary:active:hover,
+.open>.dropdown-toggle.btn-primary.focus,
+.open>.dropdown-toggle.btn-primary:focus,
+.open>.dropdown-toggle.btn-primary:hover {
     color: #fff;
     background-color: #333;
     border-color: #333;
