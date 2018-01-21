@@ -199,11 +199,16 @@ form.section-subheading {
     margin-left: 5px;
 }
 
-.cuisines.btn.btn-primary {
+.cuisines.btn.btn-primary,
+.movie-genre.btn.btn-primary {
     background-color: #fff;
     border: solid, #fed136 2px;
     color: #fed136;
     margin-left: 12px;
+}
+
+#genres {
+    margin-bottom: 20px;
 }
 
 .recipeButtons.recipe-format {

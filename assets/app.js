@@ -69,7 +69,7 @@ $(document).ready(function() {
             var genre = response.genres;
             for (let l = 0; l < genre.length; l++) {
                 var glyph = $(`<span class="glyphicon glyphicon-blackboard" aria-hidden="true">`);
-                var button = $(`<button class="tv-genre"><div>`);
+                var button = $(`<button class="tv-genre" href="#show-results-section"><div>`);
                 button.attr("id", genre[l].id);
                 button.addClass("btn btn-primary");
                 button.html(genre[l].name);
@@ -362,7 +362,7 @@ $(document).ready(function() {
                 var recipeThumb = `
 
                     <div class="col-md-4 col-sm-6 portfolio-item">
-                        <a href="#portfolioModal${z}" class="portfolio-link" data-toggle="modal" data-target="#show-search-section">
+                        <a href="#portfolioModal${z}" class="portfolio-link" data-toggle="modal" data-link="#show-search-section">
                             <div class="portfolio-hover">
                                 <div class="portfolio-hover-content">
                                     <i class="fa fa-plus fa-3x"></i>
