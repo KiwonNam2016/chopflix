@@ -91,6 +91,10 @@ a:hover {
     border-color: #fed136
 }
 
+.btn-primary.go {
+    color: #fed136;
+}
+
 .btn-primary.active,
 .btn-primary:active,
 .btn-primary:focus,
