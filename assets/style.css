@@ -12,9 +12,9 @@
     background-size: cover;
 }
 
-#genres {
-    margin-left: 50px;
-    margin-right: 50px;
+#foodgenres {
+    /* margin-left: 50px;
+    margin-right: 50px; */
 }
 
 .movie-div:hover {
@@ -183,10 +183,9 @@ form.section-subheading {
     border-color: #87CEFA;
 }
 
-.go {
+.btn-xl.go {
     background-color: #000000;
     color: #fed136;
-    border-radius: 35%;
     margin: 10px;
 }
 
