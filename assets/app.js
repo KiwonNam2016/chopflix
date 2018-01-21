@@ -211,7 +211,7 @@ $(document).ready(function() {
                                                     <p class="item-intro text-muted">${overview}</p>
                                                     <div id="youTube-${n}"></div>
                                                     <div id="otherPicks"></div>
-                                                    <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
+                                                    <button type="button" class="btn btn-primary" href="#show-search-section" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -362,7 +362,7 @@ $(document).ready(function() {
                 var recipeThumb = `
 
                     <div class="col-md-4 col-sm-6 portfolio-item">
-                        <a href="#portfolioModal${z}" class="portfolio-link" data-toggle="modal">
+                        <a href="#portfolioModal${z}" class="portfolio-link" data-toggle="modal" data-target="#show-search-section">
                             <div class="portfolio-hover">
                                 <div class="portfolio-hover-content">
                                     <i class="fa fa-plus fa-3x"></i>
@@ -394,7 +394,8 @@ $(document).ready(function() {
                                                 <center><img src="${imgUrl}" class="img-responsive" style="width:400px;"></center>
                                                 <p class="item-intro text-muted"></p>
                                                 <p class="Ingbtn">Main Ingredients: ${IngAsString}</p>
-                                                <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
+                                                <a href="#" data-toggle="modal" target="_blank"></a>
+                                                <button type="button" data-dismiss="modal" class="btn btn-primary"><i class="fa fa-video-camera"></i> Delicious, now what choose a show</button>
                                             </div>
                                         </div>
                                     </div>
@@ -405,6 +406,13 @@ $(document).ready(function() {
 
                 $(".recipeImages").append(recipeThumb);
                 $("#recipe-modals").append(recipeModal);
+
+                // modal close and forward to search section
+                // $('#closemodal').click(function() {
+                //     console.log($(this).data('link'));
+
+                //     $('#closemodal').attr('href', "#show-search-section");
+                // });
             }
         });
     });
