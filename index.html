@@ -56,7 +56,7 @@
                         <a href="#page-top"></a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="#recipe-search-section">Search Recipes</a>
+                        <a class="page-scroll whatchaWatching" href="#recipe-search-section">Search Recipes</a>
                     </li>
                     <li>
                         <a class="page-scroll" href="#show-search-section">Search Shows</a>
@@ -111,8 +111,9 @@
                         <input id="food" type="text" pattern="[A-Za-z]"  align="middle" class="form-control" placeholder="enter keyword(s)"> &nbsp
                         <a href="#portfolio" class="page-scroll btn btn-round btn-xl go" type="submit">Go!
                         </a>
-                        <p id="something"></p>
+                        
                     </span>
+                    <p id="something"></p>
                 </form>
             </div>
         </div>
@@ -276,18 +277,19 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Your Name *" id="name" required data-validation-required-message="Please enter your name.">
+                                    <input type="text" class="form-control"  placeholder="Your Name *" id="name" required data-validation-required-message="Please enter your name.">
                                     <p class="help-block text-danger"></p>
+                                    <p id="danger" class="help-block text-danger "></p>
                                 </div>
                                 <div class="form-group">
                                     <input type="email" class="form-control" placeholder="Your Email *" id="email" required data-validation-required-message="Please enter your email address.">
-                                    <p class="help-block text-danger"></p>
+                                    <p class="help-block text-danger "></p>
                                 </div>
                                 <div class="form-group">
 
                                     <input type="tel" class="form-control" id="phone" placeholder="xxx-xxx-xxxx" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required data-validation-required-message="Please enter your phone number.">
 
-                                    <p class="help-block text-danger">US number only please</p>
+                                    <p class="help-block text-danger"></p>
                                 </div>
                             </div>
                             <div class="col-md-6">
