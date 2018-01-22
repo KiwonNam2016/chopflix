@@ -10,6 +10,7 @@ $(function() {
         submitSuccess: function($form, event) {
             event.preventDefault(); // prevent default submit behaviour
             // get values from FORM
+            inputVal();
             var name = $("input#name").val();
             var email = $("input#email").val();
             var phone = $("input#phone").val();
@@ -65,6 +66,23 @@ $(function() {
     });
 });
 
+function inputVal(){
+    var contactName=$("#name").val().trim()
+     var letters = /^[A-Za-z]+$/;
+    if(contactName.match(letters))
+    {
+        var a=1;
+    }
+    else
+    {
+        
+    }
+
+
+    if(a===1){
+    $(".danger").text("Letters only please")
+    }
+}
 
 /*When clicking on Full hide fail/success boxes */
 $('#name').focus(function() {

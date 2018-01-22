@@ -1,5 +1,5 @@
 function animation(){
-    var h=960000;
+    var h=1000000;
     var inputBox=$("#searchEntry");
     var something=$("#something");
     var myTitle=$(".title");
@@ -33,22 +33,26 @@ function animation(){
     TweenLite.from(myTitle,1,{autoAlpha:0,y:50,delay:1, ease:Elastic.easeOut,delay:0.8});
     
     watching.on("click",function(){
+       
         tl3.play();
         tl3.restart();
     })
 
     icon.on("click",function(){
-    
+        
         tl3.play();
         tl3.restart();
     })
     function onUpdate(){
+        
         h=h+300;
         $("#something").text(`You can find more than ${h} recipes here!`)
+        
     }
     function onComplete(){
-        h=1000000;
+        h=1048767;
         $("#something").text(`You can find more than ${h} recipes here!`)
+        h=1000000
     }
 
     $(".startBtn").mouseenter(function(){

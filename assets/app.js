@@ -450,6 +450,28 @@ $(document).ready(function() {
             console.log(addedCuisines);
         }
     }
+   
+    $("#name").keyup( function (){
+        $("#danger").html("")
+        var contactName=$("#name").val().trim();
+        var letters = /^[A-Za-z]+$/;
+        
+        if(contactName.match(letters) || contactName==="" )
+        {
+            $("#danger").html("")
+        }
+        else if(!contactName.match(letters))
+        {
+            
+            $("#danger").html(`<ul role="alert"><li>Letters only please</li></ul>`);
+            
+        }
+       
+    
+
+    })
+   
+   
     createButtons();
     $(document).on("click", ".cuisines", animateBtn);
 
