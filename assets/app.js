@@ -125,7 +125,7 @@ $(document).ready(function() {
                                         <div class="row">
                                             <div class="col-lg-8 col-lg-offset-2">
                                                 <div class="modal-body">
-                                                    <h2>${movieTitle}<span id="heart" favorite="false" title="${movieTitle}" class="glyphicon glyphicon-heart glyphicon-heart-empty"></span></h2>
+                                                    <h2>${movieTitle}&nbsp;<span id="heart" favorite="false" title="${movieTitle}" class="glyphicon glyphicon-heart glyphicon-heart-empty"></span></h2>
                                                     <p class="item-intro text-muted">${overview}</p>
                                                     <div id="youTube-${m}"></div>
                                                     <div id="otherPicks"></div>
@@ -207,7 +207,7 @@ $(document).ready(function() {
                                         <div class="row">
                                             <div class="col-lg-8 col-lg-offset-2">
                                                 <div class="modal-body">
-                                                    <h2>${movieTitle}<span id="heart" favorite="false" title="${movieTitle}" class="glyphicon glyphicon-heart glyphicon-heart-empty"></span></h2>
+                                                    <h2>${movieTitle}&nbsp;<span id="heart" favorite="false" title="${movieTitle}" class="glyphicon glyphicon-heart glyphicon-heart-empty"></span></h2>
                                                     <p class="item-intro text-muted">${overview}</p>
                                                     <div id="youTube-${n}"></div>
                                                     <div id="otherPicks"></div>
@@ -390,7 +390,7 @@ $(document).ready(function() {
                                     <div class="row">
                                         <div class="col-lg-8 col-lg-offset-2">
                                             <div class="modal-body">
-                                                <h2>${recipeTitle}<span id="heart" favorite="false" title="${recipeTitle}" class="glyphicon glyphicon-heart glyphicon-heart-empty"></span></h2>
+                                                <h2>${recipeTitle}&nbsp;<span id="heart" favorite="false" title="${recipeTitle}" class="glyphicon glyphicon-heart glyphicon-heart-empty"></span></h2>
                                                 <center><img src="${imgUrl}" class="img-responsive" style="width:400px;"></center>
                                                 <p class="item-intro text-muted"></p>
                                                 <p class="Ingbtn">Main Ingredients: ${IngAsString}</p>
