@@ -27,12 +27,16 @@
     margin-right: 7px;
 }
 
+.modal-title {
+    word-wrap: break-word;
+}
+
 .youtubeVid {
     margin: 25px auto;
 }
 
 .middleBtn {
-    margin: 0px 5px;
+    margin: 10px 5px;
 }
 
 .genre-buttons, .recipeButtons {
@@ -274,8 +278,6 @@ form.section-subheading {
     display: inline-block;
 }
 
-.input-ground {}
-
 .btn-primary.active.focus,
 .btn-primary.active:focus,
 .btn-primary.active:hover,
@@ -289,4 +291,11 @@ form.section-subheading {
     background-color: #333;
     border-color: #333;
     opacity: 0.9;
+}
+
+@media only screen and (max-width: 768px) {
+    /* For mobile phones: */
+    .modal-content {
+        width: 100%;
+    }
 }
