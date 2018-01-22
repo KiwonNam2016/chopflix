@@ -107,7 +107,7 @@
                 <form action="">
                     <span class="input-group-btn text-center">
                         <input id="food" type="text" pattern="[A-Za-z]"  align="middle" class="form-control" placeholder="enter keyword(s)"> &nbsp
-                        <a href="#portfolio" class="page-scroll btn btn-round btn-xl go" type="submit">Go!
+                        <a href="#recipe-results-section" class="page-scroll btn btn-round btn-xl go" type="submit">Go!
                         </a>
                         
                     </span>
@@ -130,14 +130,16 @@
                     <input type="radio" name="show-type" id="movie" value="Movies">Movies
                 </form>
                 <!-- genre buttons -->
-                <div id="genres" class="genre-buttons"></div>
+                <a class="page-scroll" href="#show-results-section">
+                    <div id="genres" class="genre-buttons" href=""></div>
+                </a>   
             </div>
         </div>
     </section>
 
     <!-- Recipe Results Section -->
-    <section id="portfolio" class="recipe-results-section bg-white">
-        <div class="container">
+    <section id="recipe-results-section" class="bg-white">
+        <div class="container" id="portfolio">
             <div class="row">
                 <div class="col-lg-12 text-center">
                     <h2 class="section-heading" id="show-my-recipes">Your Recipes</h2>
@@ -151,8 +153,8 @@
     </section>
 
     <!-- Show Results Section -->
-    <section id="portfolio" class="show-results-section bg-light-gray">
-        <div class="container">
+    <section id="show-results-section" class="bg-light-gray">
+        <div class="container" id="portfolio" >
             <div class="row">
                 <div class="col-lg-12 text-center">
                     <h2 class="section-heading">Your Shows</h2>

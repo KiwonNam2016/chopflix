@@ -14,7 +14,11 @@
 
 .genre-buttons, .recipeButtons {
     width: 60%;
-    margin: 15px auto;
+    margin: 25px auto;
+}
+
+.recipeButtons {
+    margin-top: 35px;
 }
 
 #show-search-section, #recipe-search-section,
@@ -33,7 +37,7 @@
 .about {
     line-height: 1.5;
     width: 60%;
-    margin: 15px auto;
+    margin: 25px auto;
 }
 
 #about {
@@ -200,12 +204,14 @@ form.section-subheading {
     margin: auto;
     width: 60%;
     padding: 10px;
+    margin: 15px auto;
 }
 
 .btn-xl.go {
     background-color: #000000;
     color: #fed136;
-    margin: 10px;
+    margin: 0px;
+    margin-bottom: 15px;
 }
 
 .btn {
@@ -215,13 +221,19 @@ form.section-subheading {
     margin-left: 5px;
 }
 
-.cuisines.btn.btn-primary, 
-.movie-genre.btn.btn-primary, 
-.tv-genre.btn.btn-primary {
+.cuisines.btn.btn-primary {
     background-color: #fff;
     border: solid, #fed136 2px;
     color: #fed136;
-    margin-left: 12px;
+    margin: 5px;
+}
+
+.movie-genre.btn.btn-primary, 
+.tv-genre.btn.btn-primary {
+    background-color: #fed136;
+    border: solid #fff 2px;
+    color: #fff;
+    margin: 5px;
 }
 
 #genres {
