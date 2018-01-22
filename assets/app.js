@@ -143,7 +143,7 @@ $(document).ready(function() {
                                         <div class="row">
                                             <div class="col-lg-8 col-lg-offset-2">
                                                 <div class="modal-body">
-                                                    <h2>${movieTitle}&nbsp;<span id="heart" favorite="false" title="${movieTitle}" class="glyphicon glyphicon-heart glyphicon-heart-empty"></span></h2>
+                                                    <h2 class="modal-title">${movieTitle}&nbsp;<span id="heart" favorite="false" title="${movieTitle}" class="glyphicon glyphicon-heart glyphicon-heart-empty"></span></h2>
                                                     <p class="item-intro text-muted">${overview}</p>
                                                     <div id="youTube-${m}" class="youtubeVid"></div>
                                                     <div id="otherPicks"></div>
@@ -228,7 +228,7 @@ $(document).ready(function() {
                                         <div class="row">
                                             <div class="col-lg-8 col-lg-offset-2">
                                                 <div class="modal-body">
-                                                    <h2>${tvTitle}&nbsp;<span id="heart" favorite="false" title="${tvTitle}" class="glyphicon glyphicon-heart glyphicon-heart-empty"></span></h2>
+                                                    <h2 class="modal-title">${tvTitle}&nbsp;<span id="heart" favorite="false" title="${tvTitle}" class="glyphicon glyphicon-heart glyphicon-heart-empty"></span></h2>
                                                     <p class="item-intro text-muted">${overview}</p>
                                                     <div id="youTube-${n}" class="youtubeVid"></div>
                                                     <div id="otherPicks"></div>
@@ -354,6 +354,7 @@ $(document).ready(function() {
                 var imgUrl = result[z].imageUrlsBySize["90"].replace("s90-c", "s200-c");
                 var ingredients = (result[z].ingredients);
                 var IngAsString = ingredients.join(', ');
+                var ingSearch = ingredients.join("&ingredients%5B%5D=");
                 var recipeURL = "https://www.yummly.com/recipe/" + id
                 var recipeDiv = $("<div class='recipeImgDiv'>");
                 var p = $("<p>").text(recipeTitle);
@@ -400,11 +401,11 @@ $(document).ready(function() {
                                     <div class="row">
                                         <div class="col-lg-8 col-lg-offset-2">
                                             <div class="modal-body">
-                                                <h2>${recipeTitle}&nbsp;<span id="heart" favorite="false" title="${recipeTitle}" class="glyphicon glyphicon-heart glyphicon-heart-empty"></span></h2>
+                                                <h2 class="modal-title">${recipeTitle}&nbsp;<span id="heart" favorite="false" title="${recipeTitle}" class="glyphicon glyphicon-heart glyphicon-heart-empty"></span></h2>
                                                 <p class="item-intro text-muted">Ingredients: ${IngAsString}</p>
                                                 <img src="${imgUrl}" class="img-responsive recipe-pic" style="width:400px;">                    
                                                 <a href="${recipeURL}" target="_blank" type="button" class="btn btn-primary" ><i class="fa fa-cutlery"></i>See More Details</a>
-                                                <a href="https://www.instacart.com" target="_blank" type="button" class="btn btn-primary middleBtn"><i class="fa fa-shopping-cart"></i>Add to Instacart</a>
+                                                <a href="https://www.instacart.com/store/partner_recipe?recipe_url=https%3A%2F%2Fwww.yummly.com%2F%23recipe%2F${id}&partner_name=www.yummly.com&ingredients%5B%5D=${ingSearch}&title=${recipeTitle}&description=&image_url=${imgUrl}" target="_blank" type="button" class="btn btn-primary middleBtn"><i class="fa fa-shopping-cart"></i>Add to Instacart</a>
                                                 <a id="recipe-select" data-dismiss="modal" type="button" class="btn btn-primary"><i class="fa fa-check-square"></i>Select This Recipe</a>
                                             </div>
                                         </div>
