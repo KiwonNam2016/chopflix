@@ -35,6 +35,10 @@
     margin-right: 7px;
 }
 
+.fa-github, .fa-linkedin {
+    margin-right: 0px;
+}
+
 .modal-title {
     word-wrap: break-word;
 }
