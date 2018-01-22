@@ -130,7 +130,7 @@ $(document).ready(function() {
                         </div>`;
 
                 var movieModal = `
-                        <div class="portfolio-modal modal fade" id="moviePortfolioModal${m}" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="portfolio-modal videoModal modal fade" id="moviePortfolioModal${m}" tabindex="-1" role="dialog" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="close-modal" data-dismiss="modal">
@@ -215,7 +215,7 @@ $(document).ready(function() {
                         </div>`;
 
                 var tvModal = `
-                        <div class="portfolio-modal modal fade" id="tvPortfolioModal${n}" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="portfolio-modal videoModal modal fade" id="tvPortfolioModal${n}" tabindex="-1" role="dialog" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="close-modal" data-dismiss="modal">
@@ -287,7 +287,16 @@ $(document).ready(function() {
     //         };
     //     });
 
+    // stopping video playback on modal close
+    $("#movie-modals").on('hide.bs.modal', '.videoModal', function(e) {
+        var id = e.target.id;
+        var $if = $(`#${id}`).find('iframe');
+        var src = $if.attr("src");
+        $if.attr("src", '/empty.html');
+        $if.attr("src", src);
+    });
 
+    // favoriting movies/shows (updating data on firebase)
     $("#movie-modals").on("click", "#heart", function(event) {
         var faveTitle = $(this).attr("title");
         var saved = $(this).attr("favorite");
@@ -303,6 +312,7 @@ $(document).ready(function() {
         $(this).attr("favorite", ($(this).attr("favorite") == "false" ? true : false));
     });
 
+    // favoriting recipes (updating data on firebase)
     $("#recipe-modals").on("click", "#heart", function(event) {
         var faveTitle = $(this).attr("title");
         var saved = $(this).attr("favorite");
@@ -423,7 +433,7 @@ $(document).ready(function() {
 
                 //     $('#closemodal').attr('href', "#show-search-section");
                 // });
-            }
+            };
         });
     });
 
@@ -436,7 +446,7 @@ $(document).ready(function() {
             button.text(cuisines[a]);
 
             $(".recipeButtons").append(button);
-        }
+        };
 
     };
 
@@ -456,28 +466,20 @@ $(document).ready(function() {
             $(this).removeAttr('style').css("background-color", "#fff");
             $(this).attr("data-state", "unchecked");
             addedCuisines = addedCuisines.filter(a => a !== cuisineParameter);
-        }
-    }
+        };
+    };
    
     $("#name").keyup( function (){
         $("#danger").html("")
         var contactName=$("#name").val().trim();
-        var letters = /^[A-Za-z]+$/;
-        
-        if(contactName.match(letters) || contactName==="" )
-        {
+        var letters = /^[A-Za-z]+$/;  
+        if(contactName.match(letters) || contactName==="" ) {
             $("#danger").html("")
         }
-        else if(!contactName.match(letters))
-        {
-            
-            $("#danger").html(`<ul role="alert"><li>Letters only please</li></ul>`);
-            
-        }
-       
-    
-
-    })
+        else if(!contactName.match(letters)) {
+            $("#danger").html(`<ul role="alert"><li>Letters only please</li></ul>`);    
+        };
+    });
    
    
     createButtons();
@@ -504,11 +506,7 @@ $(document).ready(function() {
             tl2.play();
             tl2.restart();
             sec = sec + 0.05;
-        }
-    })
-
-    $("#tv").on("click",function(){
-
-    })
+        };
+    });
 
 });
