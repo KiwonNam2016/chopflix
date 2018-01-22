@@ -48,12 +48,20 @@ $(document).ready(function() {
             $("#genres").html("");
             var glyph = $(`<span class="glyphicon glyphicon-film" aria-hidden="true"></span>`);
             var genre = response.genres;
+            var sec=0;
             for (let k = 0; k < genre.length; k++) {
                 var button = $(`<button class="movie-genre">`);
                 button.attr("id", genre[k].id).attr("name", genre[k].name);
                 button.addClass("btn btn-primary");
                 button.html(genre[k].name);
+                button.addClass(`button2${k}`);
                 $("#genres").append(button);
+                var o = $(`.button2${k}`);
+                var tl10 = new TimelineLite();
+                tl10.from(o, 1.5, { x: -15, autoAlpha: 0, ease: Power1.ease, delay: sec });
+                tl10.play();
+                tl10.restart();
+                sec = sec + 0.05;
             };
         });
     });
@@ -67,13 +75,22 @@ $(document).ready(function() {
         }).done(function(response) {
             $("#genres").html("");
             var genre = response.genres;
+            var sec = 0;
             for (let l = 0; l < genre.length; l++) {
                 var glyph = $(`<span class="glyphicon glyphicon-blackboard" aria-hidden="true">`);
                 var button = $(`<button class="tv-genre" href="#show-results-section"><div>`);
                 button.attr("id", genre[l].id);
                 button.addClass("btn btn-primary");
+                button.addClass(`button${l}`);
                 button.html(genre[l].name);
                 $("#genres").append(button);
+                
+                var b = $(`.button${l}`);
+                var tl9 = new TimelineLite();
+                tl9.from(b, 1.5, { x: -15, autoAlpha: 0, ease: Power1.ease, delay: sec });
+                tl9.play();
+                tl9.restart();
+                sec = sec + 0.05;
             };
         });
     });
@@ -490,13 +507,17 @@ $(document).ready(function() {
     $(".whatchaWatching").on("click", function() {
         var sec = 0.8;
         for (var x = 0; x <= 25; x++) {
-            var b = $(`#button${x}`);
+            var t = $(`.button${x}`);
             var tl2 = new TimelineLite();
-            tl2.from(b, 1.5, { x: -15, autoAlpha: 0, ease: Power1.ease, delay: sec });
+            tl2.from(t, 1.5, { x: -15, autoAlpha: 0, ease: Power1.ease, delay: sec });
             tl2.play();
             tl2.restart();
             sec = sec + 0.05;
         }
+    })
+
+    $("#tv").on("click",function(){
+
     })
 
 });
