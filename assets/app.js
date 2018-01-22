@@ -472,7 +472,7 @@ $(document).ready(function() {
     $("#name").keyup( function (){
         $("#danger").html("")
         var contactName=$("#name").val().trim();
-        var letters = /^[A-Za-z]+$/;  
+        var letters = /^[A-Za-z\s]+$/;  
         if(contactName.match(letters) || contactName==="" ) {
             $("#danger").html("")
         }
