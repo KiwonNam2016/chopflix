@@ -231,7 +231,7 @@ $(document).ready(function() {
                                                     <h2 class="modal-title">${tvTitle}&nbsp;<span id="heart" favorite="false" title="${tvTitle}" class="glyphicon glyphicon-heart glyphicon-heart-empty"></span></h2>
                                                     <p class="item-intro text-muted">${overview}</p>
                                                     <div id="youTube-${n}" class="youtubeVid"></div>
-                                                    <div id="otherPicks"></div>
+                                                    <div id="otherPicks-${n}"></div>
                                                     <a href="https://www.themoviedb.org/tv/${tvID}" target="_blank" type="button" class="btn btn-primary" ><i class="fa fa-film"></i>See More Details</a>
                                                     <a href="https://www.netflix.com/search?q=${tvTitle}" target="_blank" type="button" class="btn btn-primary middleBtn"><i class="fa fa-search"></i>Find on Netflix</a>
                                                     <a id="show-select" data-dismiss="modal" type="button" class="btn btn-primary"><i class="fa fa-check-square"></i>Select This TV Show</a> 
@@ -265,8 +265,9 @@ $(document).ready(function() {
 
     });
 
+    //     recommended movies search - maybe
     //     $.ajax({
-    //         url: searchRecs,
+    //         url: `https://api.themoviedb.org/3/tv/${showArray[u]}/recommendations?api_key=${tmdb}&language=en-US&page=1`,
     //         method: "GET"
     //     }).done(function(response) {
     //         var searchResults = response.results;
@@ -283,11 +284,9 @@ $(document).ready(function() {
     //             resultsBtn.attr("plot", searchResults[p].overview);
     //             resultsBtn.attr("src", "https://image.tmdb.org/t/p/w500" + searchResults[p].poster_path);
     //             $(".showMeDetails").append(resultsBtn);
-
     //         };
     //     });
 
-    // });
 
     $("#movie-modals").on("click", "#heart", function(event) {
         var faveTitle = $(this).attr("title");

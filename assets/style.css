@@ -7,6 +7,14 @@
     width: 150px;
 }
 
+.otherRecs {
+	width: 50px;
+}
+
+.otherRecs:hover {
+	transform: scale(1.5);
+}
+
 .poster-image {
     padding-top: 56.25%;
     background-size: cover;
