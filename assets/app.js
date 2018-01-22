@@ -69,8 +69,8 @@ $(document).ready(function() {
             var genre = response.genres;
             for (let l = 0; l < genre.length; l++) {
                 var glyph = $(`<span class="glyphicon glyphicon-blackboard" aria-hidden="true">`);
-                var button = $(`<button class="tv-genre" href="#show-results-section"><div>`);
-                button.attr("id", genre[l].id);
+                var button = $(`<button class="tv-genre">`);
+                button.attr("id", genre[l].id).attr("name", genre[l].name);
                 button.addClass("btn btn-primary");
                 button.html(genre[l].name);
                 $("#genres").append(button);
@@ -98,7 +98,7 @@ $(document).ready(function() {
 
                 var movieThumb = `
                         <div class="col-md-4 col-sm-6 portfolio-item">
-                            <a href="#portfolioModal${m}" class="portfolio-link" data-toggle="modal">
+                            <a href="#moviePortfolioModal${m}" class="portfolio-link" data-toggle="modal">
                                 <div class="portfolio-hover">
                                     <div class="portfolio-hover-content">
                                         <i class="fa fa-plus fa-3x"></i>
@@ -112,7 +112,7 @@ $(document).ready(function() {
                         </div>`;
 
                 var movieModal = `
-                        <div class="portfolio-modal modal fade" id="portfolioModal${m}" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="portfolio-modal modal fade" id="moviePortfolioModal${m}" tabindex="-1" role="dialog" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="close-modal" data-dismiss="modal">
@@ -180,7 +180,7 @@ $(document).ready(function() {
 
                 var movieThumb = `
                         <div class="col-md-4 col-sm-6 portfolio-item">
-                            <a href="#portfolioModal${n}" class="portfolio-link" data-toggle="modal">
+                            <a href="#tvPortfolioModal${n}" class="portfolio-link" data-toggle="modal">
                                 <div class="portfolio-hover">
                                     <div class="portfolio-hover-content">
                                         <i class="fa fa-plus fa-3x"></i>
@@ -194,7 +194,7 @@ $(document).ready(function() {
                         </div>`;
 
                 var movieModal = `
-                        <div class="portfolio-modal modal fade" id="portfolioModal${n}" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="portfolio-modal modal fade" id="tvPortfolioModal${n}" tabindex="-1" role="dialog" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="close-modal" data-dismiss="modal">
@@ -312,37 +312,27 @@ $(document).ready(function() {
         // var Ing=[];
         tl.play();
         tl.restart();
-        console.log(cuisineSearch);
         cuisineSearch = addedCuisines.join('');
-        console.log(cuisineSearch);
         var food = $("#food").val().trim();
         $("#food").val('');
         $("#recipe_view").empty();
         $(".recipeImages").empty();
         $("#recipe-modals").empty();
         var yumQuery = "http://api.yummly.com/v1/api/recipes?_app_id=74c2c130&_app_key=dbe2b1012a02ca615dbe289501e4ef92&q=" + food + cuisineSearch + "&requirePictures=true";
-        console.log(food);
-        console.log(yumQuery);
-        console.log(cuisineSearch);
 
         $.ajax({
             url: yumQuery,
             method: "GET"
         }).done(function(response) {
             result = response.matches;
-            console.log(result);
 
             for (var z = 0; z < result.length; z++) {
-
                 var id = (result[z].id)
-                console.log(id);
                 var recipeTitle = (result[z].recipeName);
                 var imgUrl = result[z].imageUrlsBySize["90"].replace("s90-c", "s200-c");
                 var ingredients = (result[z].ingredients);
                 var IngAsString = ingredients.join(', ');
-                console.log(ingredients);
                 var recipeURL = "https://www.yummly.com/recipe/" + id
-
                 var recipeDiv = $("<div class='recipeImgDiv'>");
                 var p = $("<p>").text(recipeTitle);
                 var recipeImg = $("<img>");
@@ -357,12 +347,10 @@ $(document).ready(function() {
                 recipeDiv.append(p);
                 recipeDiv.append(recipeLink);
 
-
-
                 var recipeThumb = `
 
                     <div class="col-md-4 col-sm-6 portfolio-item">
-                        <a href="#portfolioModal${z}" class="portfolio-link" data-toggle="modal" data-link="#show-search-section">
+                        <a href="#foodPortfolioModal${z}" class="portfolio-link" data-toggle="modal" data-link="#show-search-section">
                             <div class="portfolio-hover">
                                 <div class="portfolio-hover-content">
                                     <i class="fa fa-plus fa-3x"></i>
@@ -377,7 +365,7 @@ $(document).ready(function() {
 
 
                 var recipeModal = `
-                    <div class="portfolio-modal modal fade" id="portfolioModal${z}" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="portfolio-modal modal fade" id="foodPortfolioModal${z}" tabindex="-1" role="dialog" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="close-modal" data-dismiss="modal">
@@ -393,7 +381,7 @@ $(document).ready(function() {
                                                 <h2>${recipeTitle}&nbsp;<span id="heart" favorite="false" title="${recipeTitle}" class="glyphicon glyphicon-heart glyphicon-heart-empty"></span></h2>
                                                 <center><img src="${imgUrl}" class="img-responsive" style="width:400px;"></center>
                                                 <p class="item-intro text-muted"></p>
-                                                <p class="Ingbtn">Main Ingredients: ${IngAsString}</p>
+                                                <p class="Ingbtn">Ingredients: ${IngAsString}</p>
                                                 <a href="#" data-toggle="modal" target="_blank"></a>
                                                 <button type="button" data-dismiss="modal" class="btn btn-primary"><i class="fa fa-video-camera"></i> Delicious, now what choose a show</button>
                                             </div>
