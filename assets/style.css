@@ -8,9 +8,48 @@
     width: 150px;
 }
 
+.otherRecs {
+	width: 50px;
+}
+
+.otherRecs:hover {
+	transform: scale(1.5);
+}
+
 .poster-image {
     padding-top: 56.25%;
     background-size: cover;
+}
+
+.recipe-pic {
+    margin: 30px auto;
+    border: solid 2px #feca30;
+    border-radius: 5px 60px 5px;
+}
+
+.modal-content {
+    width: 90%;
+    margin: 0px auto;
+}
+
+.fa {
+    margin-right: 7px;
+}
+
+.fa-github, .fa-linkedin {
+    margin-right: 0px;
+}
+
+.modal-title {
+    word-wrap: break-word;
+}
+
+.youtubeVid {
+    margin: 25px auto;
+}
+
+.middleBtn {
+    margin: 10px 5px;
 }
 
 .genre-buttons, .recipeButtons {
@@ -37,12 +76,23 @@
 
 .about {
     line-height: 1.5;
-    width: 60%;
+    width: 75%;
     margin: 25px auto;
 }
 
 #about {
-    padding-bottom: 50px;
+    padding-bottom: 0px;
+}
+
+.clients {
+    padding: 25px;
+    background: white;
+    opacity: 0.6;
+}
+
+.resources {
+    max-height: 90px;
+    margin-top: 0px;
 }
 
 .intro-lead-p {
@@ -58,14 +108,6 @@ form.section-subheading {
     font-family: "Droid Serif", "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-style: italic;
 }
-
-.line {
-    width: 100%;
-    height: 5px;
-    border-bottom: 1px solid black;
-    margin-bottom: 5px;
-}
-
 
 /* hoverbox styling */
 
@@ -167,27 +209,6 @@ form.section-subheading {
     vertical-align: top;
 }
 
-.otherRecs {
-    width: 50px;
-}
-
-.otherRecs:hover {
-    transform: scale(1.5);
-}
-
-#carousel-movies {
-    margin: 50px auto;
-    width: 500px;
-}
-
-.synopsis {
-    padding: 25px 15px 60px 15px;
-    margin: 0px;
-    color: white;
-    background: black;
-    opacity: 0.9;
-}
-
 .jumbotron {
     background-color: white;
 }
@@ -209,8 +230,9 @@ form.section-subheading {
 }
 
 .btn-xl.go {
-    background-color: #000000;
-    color: #fed136;
+    background-color: #333;
+    opacity: 0.9;
+    color: #feca30;
     margin: 0px;
     margin-bottom: 15px;
 }
@@ -218,20 +240,18 @@ form.section-subheading {
 .btn {
     cursor: pointer;
     border-radius: 25px;
-    margin-bottom: 5px;
-    margin-left: 5px;
 }
 
 .cuisines.btn.btn-primary {
     background-color: #fff;
-    border: solid, #fed136 2px;
-    color: #fed136;
+    border: solid, #feca30 2px;
+    color: #feca30;
     margin: 5px;
 }
 
 .movie-genre.btn.btn-primary, 
 .tv-genre.btn.btn-primary {
-    background-color: #fed136;
+    background-color: #feca30;
     border: solid #fff 2px;
     color: #fff;
     margin: 5px;
@@ -271,8 +291,6 @@ form.section-subheading {
     display: inline-block;
 }
 
-.input-ground {}
-
 .btn-primary.active.focus,
 .btn-primary.active:focus,
 .btn-primary.active:hover,
@@ -286,4 +304,11 @@ form.section-subheading {
     background-color: #333;
     border-color: #333;
     opacity: 0.9;
+}
+
+@media only screen and (max-width: 768px) {
+    /* For mobile phones: */
+    .modal-content {
+        width: 100%;
+    }
 }

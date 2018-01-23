@@ -112,6 +112,7 @@ $(document).ready(function() {
                 var movieTitle = searchResults[m].title;
                 var overview = searchResults[m].overview;
                 var poster = searchResults[m].backdrop_path;
+                var movieID = searchResults[m].id;
 
                 var movieThumb = `
                         <div class="col-md-4 col-sm-6 portfolio-item">
@@ -129,7 +130,7 @@ $(document).ready(function() {
                         </div>`;
 
                 var movieModal = `
-                        <div class="portfolio-modal modal fade" id="moviePortfolioModal${m}" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="portfolio-modal videoModal modal fade" id="moviePortfolioModal${m}" tabindex="-1" role="dialog" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="close-modal" data-dismiss="modal">
@@ -142,11 +143,13 @@ $(document).ready(function() {
                                         <div class="row">
                                             <div class="col-lg-8 col-lg-offset-2">
                                                 <div class="modal-body">
-                                                    <h2>${movieTitle}&nbsp;<span id="heart" favorite="false" title="${movieTitle}" class="glyphicon glyphicon-heart glyphicon-heart-empty"></span></h2>
+                                                    <h2 class="modal-title">${movieTitle}&nbsp;<span id="heart" favorite="false" title="${movieTitle}" class="glyphicon glyphicon-heart glyphicon-heart-empty"></span></h2>
                                                     <p class="item-intro text-muted">${overview}</p>
-                                                    <div id="youTube-${m}"></div>
+                                                    <div id="youTube-${m}" class="youtubeVid"></div>
                                                     <div id="otherPicks"></div>
-                                                    <button type="button" class="btn btn-primary " data-dismiss="modal"><i class="fa fa-times "></i> Close</button>
+                                                    <a href="https://www.themoviedb.org/movie/${movieID}" target="_blank" type="button" class="btn btn-primary" ><i class="fa fa-film"></i>See More Details</a>
+                                                    <a href="https://www.netflix.com/search?q=${movieTitle}" target="_blank" type="button" class="btn btn-primary middleBtn"><i class="fa fa-search"></i>Find on Netflix</a>
+                                                    <a id="show-select" data-dismiss="modal" type="button" class="btn btn-primary"><i class="fa fa-check-square"></i>Select This Movie</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -193,11 +196,12 @@ $(document).ready(function() {
         }).done(function(response) {
             var searchResults = response.results;
             for (var n = 0; n < searchResults.length; n++) {
-                var movieTitle = searchResults[n].name;
+                var tvTitle = searchResults[n].name;
                 var overview = searchResults[n].overview;
                 var poster = searchResults[n].backdrop_path;
+                var tvID = searchResults[n].id;
 
-                var movieThumb = `
+                var tvThumb = `
                         <div class="col-md-4 col-sm-6 portfolio-item">
                             <a href="#tvPortfolioModal${n}" class="portfolio-link" data-toggle="modal">
                                 <div class="portfolio-hover">
@@ -205,15 +209,15 @@ $(document).ready(function() {
                                         <i class="fa fa-plus fa-3x"></i>
                                     </div>
                                 </div>
-                                <img src="https://image.tmdb.org/t/p/w500${poster}" onerror="this.src='assets/images/default.jpg'" class="img-responsive" alt="${movieTitle}">
+                                <img src="https://image.tmdb.org/t/p/w500${poster}" onerror="this.src='assets/images/default.jpg'" class="img-responsive" alt="${tvTitle}">
                             </a>
                             <div class="portfolio-caption">
-                                <h4 class="thumbTitle">${movieTitle}</h4>
+                                <h4 class="thumbTitle">${tvTitle}</h4>
                             </div>
                         </div>`;
 
-                var movieModal = `
-                        <div class="portfolio-modal modal fade" id="tvPortfolioModal${n}" tabindex="-1" role="dialog" aria-hidden="true">
+                var tvModal = `
+                        <div class="portfolio-modal videoModal modal fade" id="tvPortfolioModal${n}" tabindex="-1" role="dialog" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="close-modal" data-dismiss="modal">
@@ -226,11 +230,13 @@ $(document).ready(function() {
                                         <div class="row">
                                             <div class="col-lg-8 col-lg-offset-2">
                                                 <div class="modal-body">
-                                                    <h2>${movieTitle}&nbsp;<span id="heart" favorite="false" title="${movieTitle}" class="glyphicon glyphicon-heart glyphicon-heart-empty"></span></h2>
+                                                    <h2 class="modal-title">${tvTitle}&nbsp;<span id="heart" favorite="false" title="${tvTitle}" class="glyphicon glyphicon-heart glyphicon-heart-empty"></span></h2>
                                                     <p class="item-intro text-muted">${overview}</p>
-                                                    <div id="youTube-${n}"></div>
-                                                    <div id="otherPicks"></div>
-                                                    <button type="button" class="btn btn-primary " href="#show-search-section" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
+                                                    <div id="youTube-${n}" class="youtubeVid"></div>
+                                                    <div id="otherPicks-${n}"></div>
+                                                    <a href="https://www.themoviedb.org/tv/${tvID}" target="_blank" type="button" class="btn btn-primary" ><i class="fa fa-film"></i>See More Details</a>
+                                                    <a href="https://www.netflix.com/search?q=${tvTitle}" target="_blank" type="button" class="btn btn-primary middleBtn"><i class="fa fa-search"></i>Find on Netflix</a>
+                                                    <a id="show-select" data-dismiss="modal" type="button" class="btn btn-primary"><i class="fa fa-check-square"></i>Select This TV Show</a> 
                                                 </div>
                                             </div>
                                         </div>
@@ -239,10 +245,10 @@ $(document).ready(function() {
                             </div>
                         </div>`;
 
-                $(".vidImages").append(movieThumb);
-                $("#movie-modals").append(movieModal);
-                JSON.stringify(movieTitle);
-                showArray.push(movieTitle);
+                $(".vidImages").append(tvThumb);
+                $("#movie-modals").append(tvModal);
+                JSON.stringify(tvTitle);
+                showArray.push(tvTitle);
             };
 
             for (let t = 0; t < showArray.length; t++) {
@@ -261,8 +267,9 @@ $(document).ready(function() {
 
     });
 
+    //     recommended movies search - maybe
     //     $.ajax({
-    //         url: searchRecs,
+    //         url: `https://api.themoviedb.org/3/tv/${showArray[u]}/recommendations?api_key=${tmdb}&language=en-US&page=1`,
     //         method: "GET"
     //     }).done(function(response) {
     //         var searchResults = response.results;
@@ -279,12 +286,19 @@ $(document).ready(function() {
     //             resultsBtn.attr("plot", searchResults[p].overview);
     //             resultsBtn.attr("src", "https://image.tmdb.org/t/p/w500" + searchResults[p].poster_path);
     //             $(".showMeDetails").append(resultsBtn);
-
     //         };
     //     });
 
-    // });
+    // stopping video playback on modal close
+    $("#movie-modals").on('hide.bs.modal', '.videoModal', function(e) {
+        var id = e.target.id;
+        var $if = $(`#${id}`).find('iframe');
+        var src = $if.attr("src");
+        $if.attr("src", '/empty.html');
+        $if.attr("src", src);
+    });
 
+    // favoriting movies/shows (updating data on firebase)
     $("#movie-modals").on("click", "#heart", function(event) {
         var faveTitle = $(this).attr("title");
         var saved = $(this).attr("favorite");
@@ -300,6 +314,7 @@ $(document).ready(function() {
         $(this).attr("favorite", ($(this).attr("favorite") == "false" ? true : false));
     });
 
+    // favoriting recipes (updating data on firebase)
     $("#recipe-modals").on("click", "#heart", function(event) {
         var faveTitle = $(this).attr("title");
         var saved = $(this).attr("favorite");
@@ -315,8 +330,6 @@ $(document).ready(function() {
         $(this).attr("favorite", ($(this).attr("favorite") == "false" ? true : false));
     });
 
-
-
     //yummly search
     var addedCuisines = [];
     var cuisineSearch;
@@ -326,6 +339,7 @@ $(document).ready(function() {
     var tl = new TimelineLite();
     tl.to(go, 0.7, { rotationX: -360, transformOrigin: '0% 50%', ease: Power2.easeInOut })
     tl.pause();
+
     $(".go").on("click", function(event) {
         event.preventDefault();
         // var Ing=[];
@@ -337,7 +351,7 @@ $(document).ready(function() {
         $("#recipe_view").empty();
         $(".recipeImages").empty();
         $("#recipe-modals").empty();
-        var yumQuery = "http://api.yummly.com/v1/api/recipes?_app_id=74c2c130&_app_key=dbe2b1012a02ca615dbe289501e4ef92&q=" + food + cuisineSearch + "&requirePictures=true";
+        var yumQuery = "https://api.yummly.com/v1/api/recipes?_app_id=74c2c130&_app_key=dbe2b1012a02ca615dbe289501e4ef92&q=" + food + cuisineSearch + "&requirePictures=true";
 
         $.ajax({
             url: yumQuery,
@@ -351,6 +365,7 @@ $(document).ready(function() {
                 var imgUrl = result[z].imageUrlsBySize["90"].replace("s90-c", "s200-c");
                 var ingredients = (result[z].ingredients);
                 var IngAsString = ingredients.join(', ');
+                var ingSearch = ingredients.join("&ingredients%5B%5D=");
                 var recipeURL = "https://www.yummly.com/recipe/" + id
                 var recipeDiv = $("<div class='recipeImgDiv'>");
                 var p = $("<p>").text(recipeTitle);
@@ -398,12 +413,12 @@ $(document).ready(function() {
                                         
                                         <div class="col-lg-8 col-lg-offset-2">
                                             <div class="modal-body">
-                                                <h2>${recipeTitle}&nbsp;<span id="heart" favorite="false" title="${recipeTitle}" class="glyphicon glyphicon-heart glyphicon-heart-empty"></span></h2>
-                                                <center><img src="${imgUrl}" class="img-responsive" style="width:400px;"></center>
-                                                <p class="item-intro text-muted"></p>
-                                                <p class="Ingbtn">Ingredients: ${IngAsString}</p>
-                                                <a href="#" data-toggle="modal" target="_blank"></a>
-                                                <button type="button" data-dismiss="modal" class="btn btn-primary"><i class="fa fa-video-camera"></i> Delicious, now what choose a show</button>
+                                                <h2 class="modal-title">${recipeTitle}&nbsp;<span id="heart" favorite="false" title="${recipeTitle}" class="glyphicon glyphicon-heart glyphicon-heart-empty"></span></h2>
+                                                <p class="item-intro text-muted">Ingredients: ${IngAsString}</p>
+                                                <img src="${imgUrl}" class="img-responsive recipe-pic" style="width:400px;">                    
+                                                <a href="${recipeURL}" target="_blank" type="button" class="btn btn-primary" ><i class="fa fa-cutlery"></i>See More Details</a>
+                                                <a href="https://www.instacart.com/store/partner_recipe?recipe_url=https%3A%2F%2Fwww.yummly.com%2F%23recipe%2F${id}&partner_name=www.yummly.com&ingredients%5B%5D=${ingSearch}&title=${recipeTitle}&description=&image_url=${imgUrl}" target="_blank" type="button" class="btn btn-primary middleBtn"><i class="fa fa-shopping-cart"></i>Add to Instacart</a>
+                                                <a id="recipe-select" data-dismiss="modal" type="button" class="btn btn-primary"><i class="fa fa-check-square"></i>Select This Recipe</a>
                                             </div>
                                         </div>
                                     </div>
@@ -421,7 +436,7 @@ $(document).ready(function() {
 
                 //     $('#closemodal').attr('href', "#show-search-section");
                 // });
-            }
+            };
         });
     });
 
@@ -434,7 +449,7 @@ $(document).ready(function() {
             button.text(cuisines[a]);
 
             $(".recipeButtons").append(button);
-        }
+        };
 
     };
 
@@ -449,35 +464,25 @@ $(document).ready(function() {
             $(this).css({ "background-color": "#333", "border-color": "#333", "opacity": "0.9" });
             $(this).attr("data-state", "checked");
             addedCuisines.push(cuisineParameter);
-            console.log(addedCuisines);
             //otherwise, the button is already selected and needs to be unselected
         } else {
             $(this).removeAttr('style').css("background-color", "#fff");
             $(this).attr("data-state", "unchecked");
             addedCuisines = addedCuisines.filter(a => a !== cuisineParameter);
-            console.log(addedCuisines);
-        }
-    }
+        };
+    };
    
     $("#name").keyup( function (){
         $("#danger").html("")
         var contactName=$("#name").val().trim();
-        var letters = /^[A-Za-z]+$/;
-        
-        if(contactName.match(letters) || contactName==="" )
-        {
+        var letters = /^[A-Za-z\s]+$/;  
+        if(contactName.match(letters) || contactName==="" ) {
             $("#danger").html("")
         }
-        else if(!contactName.match(letters))
-        {
-            
-            $("#danger").html(`<ul role="alert"><li>Letters only please</li></ul>`);
-            
-        }
-       
-    
-
-    })
+        else if(!contactName.match(letters)) {
+            $("#danger").html(`<ul role="alert"><li>Letters only please</li></ul>`);    
+        };
+    });
    
    
     createButtons();
@@ -504,12 +509,13 @@ $(document).ready(function() {
             tl2.play();
             tl2.restart();
             sec = sec + 0.05;
-        }
-    })
+        };
+    });
 
     $(document).on("click",".portfolio-hover",function(){
         
         $(".index").css("padding-right","0px");
-    })
+    });
+
 
 });
