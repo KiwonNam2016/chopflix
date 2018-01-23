@@ -180,6 +180,8 @@ $(document).ready(function() {
 
     });
 
+
+
     // discover tv
     $(".genre-buttons").on("click", ".tv-genre", function(event) {
         var discover = `https://api.themoviedb.org/3/discover/tv?api_key=${tmdb}&language=en-US&sort_by=popularity.desc&certification.lte=pg-13&include_adult=false&include_video=false&page=1&with_genres=${this.id}`
@@ -408,6 +410,7 @@ $(document).ready(function() {
                                 </div>
                                 <div class="container">
                                     <div class="row">
+                                        
                                         <div class="col-lg-8 col-lg-offset-2">
                                             <div class="modal-body">
                                                 <h2 class="modal-title">${recipeTitle}&nbsp;<span id="heart" favorite="false" title="${recipeTitle}" class="glyphicon glyphicon-heart glyphicon-heart-empty"></span></h2>
@@ -508,5 +511,11 @@ $(document).ready(function() {
             sec = sec + 0.05;
         };
     });
+
+    $(document).on("click",".portfolio-hover",function(){
+        
+        $(".index").css("padding-right","0px");
+    });
+
 
 });
