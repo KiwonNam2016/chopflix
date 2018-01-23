@@ -146,7 +146,7 @@ $(document).ready(function() {
                                                     <p class="item-intro text-muted">${overview}</p>
                                                     <div id="youTube-${m}"></div>
                                                     <div id="otherPicks"></div>
-                                                    <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
+                                                    <button type="button" class="btn btn-primary " data-dismiss="modal"><i class="fa fa-times "></i> Close</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -176,6 +176,8 @@ $(document).ready(function() {
         });
 
     });
+
+
 
     // discover tv
     $(".genre-buttons").on("click", ".tv-genre", function(event) {
@@ -228,7 +230,7 @@ $(document).ready(function() {
                                                     <p class="item-intro text-muted">${overview}</p>
                                                     <div id="youTube-${n}"></div>
                                                     <div id="otherPicks"></div>
-                                                    <button type="button" class="btn btn-primary" href="#show-search-section" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
+                                                    <button type="button" class="btn btn-primary " href="#show-search-section" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -393,6 +395,7 @@ $(document).ready(function() {
                                 </div>
                                 <div class="container">
                                     <div class="row">
+                                        
                                         <div class="col-lg-8 col-lg-offset-2">
                                             <div class="modal-body">
                                                 <h2>${recipeTitle}&nbsp;<span id="heart" favorite="false" title="${recipeTitle}" class="glyphicon glyphicon-heart glyphicon-heart-empty"></span></h2>
@@ -504,8 +507,9 @@ $(document).ready(function() {
         }
     })
 
-    $("#tv").on("click",function(){
-
+    $(document).on("click",".portfolio-hover",function(){
+        
+        $(".index").css("padding-right","0px");
     })
 
 });
