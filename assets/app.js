@@ -48,7 +48,7 @@ $(document).ready(function() {
             $("#genres").html("");
             var glyph = $(`<span class="glyphicon glyphicon-film" aria-hidden="true"></span>`);
             var genre = response.genres;
-            var sec=0;
+            var sec = 0;
             for (let k = 0; k < genre.length; k++) {
                 var button = $(`<button class="movie-genre">`);
                 button.attr("id", genre[k].id).attr("name", genre[k].name);
@@ -84,7 +84,7 @@ $(document).ready(function() {
                 button.addClass(`button${l}`);
                 button.html(genre[l].name);
                 $("#genres").append(button);
-                
+
                 var b = $(`.button${l}`);
                 var tl9 = new TimelineLite();
                 tl9.from(b, 1.5, { x: -15, autoAlpha: 0, ease: Power1.ease, delay: sec });
@@ -149,7 +149,7 @@ $(document).ready(function() {
                                                     <div id="otherPicks"></div>
                                                     <a href="https://www.themoviedb.org/movie/${movieID}" target="_blank" type="button" class="btn btn-primary" ><i class="fa fa-film"></i>See More Details</a>
                                                     <a href="https://www.netflix.com/search?q=${movieTitle}" target="_blank" type="button" class="btn btn-primary middleBtn"><i class="fa fa-search"></i>Find on Netflix</a>
-                                                    <a id="show-select" data-dismiss="modal" type="button" class="btn btn-primary"><i class="fa fa-check-square"></i>Select This Movie</a>
+                                                    <a id="show-select" data-dismiss="modal" data-toggle=".modal" type="button" class="btn btn-primary"><i class="fa fa-check-square"></i>Select This Movie</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -236,7 +236,7 @@ $(document).ready(function() {
                                                     <div id="otherPicks-${n}"></div>
                                                     <a href="https://www.themoviedb.org/tv/${tvID}" target="_blank" type="button" class="btn btn-primary" ><i class="fa fa-film"></i>See More Details</a>
                                                     <a href="https://www.netflix.com/search?q=${tvTitle}" target="_blank" type="button" class="btn btn-primary middleBtn"><i class="fa fa-search"></i>Find on Netflix</a>
-                                                    <a id="show-select" data-dismiss="modal" type="button" class="btn btn-primary"><i class="fa fa-check-square"></i>Select This TV Show</a> 
+                                                    <a id="show-select" data-dismiss="modal" data-toggle=".modal" type="button" class="btn btn-primary"><i class="fa fa-check-square"></i>Select This TV Show</a> 
                                                 </div>
                                             </div>
                                         </div>
@@ -471,20 +471,19 @@ $(document).ready(function() {
             addedCuisines = addedCuisines.filter(a => a !== cuisineParameter);
         };
     };
-   
-    $("#name").keyup( function (){
+
+    $("#name").keyup(function() {
         $("#danger").html("")
-        var contactName=$("#name").val().trim();
-        var letters = /^[A-Za-z\s]+$/;  
-        if(contactName.match(letters) || contactName==="" ) {
+        var contactName = $("#name").val().trim();
+        var letters = /^[A-Za-z\s]+$/;
+        if (contactName.match(letters) || contactName === "") {
             $("#danger").html("")
-        }
-        else if(!contactName.match(letters)) {
-            $("#danger").html(`<ul role="alert"><li>Letters only please</li></ul>`);    
+        } else if (!contactName.match(letters)) {
+            $("#danger").html(`<ul role="alert"><li>Letters only please</li></ul>`);
         };
     });
-   
-   
+
+
     createButtons();
     $(document).on("click", ".cuisines", animateBtn);
 
@@ -512,9 +511,43 @@ $(document).ready(function() {
         };
     });
 
-    $(document).on("click",".portfolio-hover",function(){
-        
-        $(".index").css("padding-right","0px");
+    //Final Modal display 
+    // $(document).on("click", "#show-select", function() {
+    //     event.preventDefault();
+    //     $(".portfolio-modal").on("hidden.bs.modal", function() {
+    //         var finalModal = `
+    //             <div class="portfolio-modal modal fade" id="foodPortfolioModal12" tabindex="-1" role="dialog" aria-hidden="true">
+    //                 <div class="modal-dialog">
+    //                     <div class="modal-content">
+    //                         <div class="close-modal" data-dismiss="modal">
+    //                                 <div class="lr">
+    //                                 <div class="rl">
+    //                                 </div>
+    //                             </div>
+    //                         </div>
+    //                         <div class="container">
+    //                             <div class="row">
+    //                                 <div class="col-lg-8 col-lg-offset-2">
+    //                                     <div class="modal-body">
+    //                                         <h2 class="modal-title">this title&nbsp;<span id="heart" favorite="false" title="MyTitle" class="glyphicon glyphicon-heart glyphicon-heart-empty"></span></h2>
+    //                                         <p class="item-intro text-muted">Ingredients: INgAsaString</p>
+    //                                         <img src="url" class="img-responsive recipe-pic" style="width:400px;">
+    //                                         <a id="recipe-select" data-dismiss="modal" data-toggle="modal" href="#show-search-section" type="button" class="btn btn-primary"><i class="fa fa-check-square"></i>Select This Recipe</a>
+    //                                     </div>
+    //                                 </div>
+    //                             </div>
+    //                         </div>
+    //                     </div>
+    //                 </div>
+    //             </div>`;
+    //         console.log("I should see my modal");
+    //         $("#final-modals").append(finalModal);
+    //     });
+    // });
+
+    $(document).on("click", ".portfolio-hover", function() {
+
+        $(".index").css("padding-right", "0px");
     });
 
 
