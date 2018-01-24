@@ -1,3 +1,60 @@
+#sign-in-section {
+    height: 100%;
+    display: none;
+}
+
+#sign-in, #sign-out {
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.bg-img {
+    background-image: url("images/sign_in.jpg");
+    background-position: bottom right;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.yellow {
+    border: 1px solid #fed136;
+}
+
+.white-text {
+    margin-top: 30px;
+    color: whitesmoke;
+    -webkit-text-stroke-width: 1.5px;
+    -webkit-text-stroke-color: #323232;
+}
+
+#sign-in-section, #recipe-search-section,
+#show-search-section {
+    padding-top: 100px;
+}
+
+.firebaseui-container {
+    margin: 150px auto;
+    background-color: rgba(245, 245, 245, 0.404);
+    border: 1px solid black;
+}
+
+.mdl-button--raised.mdl-button--colored {
+    background: #fed136;
+    color: #fff;
+}
+
+.mdl-button--raised.mdl-button--colored:hover,
+.mdl-button--raised.mdl-button--colored:focus,
+.mdl-button--raised.mdl-button--colored:active,
+.mdl-button--raised.mdl-button--colored:visited,
+.mdl-button--raised.mdl-button--colored:focus:not(:active) {
+    background-color:  #fec503;
+}
+
+.firebaseui-link,
+.mdl-button--primary.mdl-button--primary {
+    color:  #fec503;
+}
+
 
 .movie-div {
     display: inline-block;
@@ -340,5 +397,9 @@ form.section-subheading {
     /* For mobile phones: */
     .modal-content {
         width: 100%;
+    }
+  
+    .signInBox {
+        width: 60%;
     }
 }

@@ -5,73 +5,104 @@ var config = {
     databaseURL: "https://chopflix-65749.firebaseio.com",
     projectId: "chopflix-65749",
     storageBucket: "chopflix-65749.appspot.com",
-    messagingSenderId: "583066994313"
+    messagingSenderId: "583066994313",
+    signInSuccessUrl: '<url-to-redirect-to-on-success>',
 };
+
 firebase.initializeApp(config);
-
-      // FirebaseUI config.
-      var uiConfig = {
-        callbacks: {
-          signInSuccess: function(currentUser, credential, redirectUrl) {
-            // Do something.
-            // Return type determines whether we continue the redirect automatically
-            // or whether we leave that to developer to handle.
-            return true;
-          },
-          uiShown: function() {
-            // The widget is rendered.
-            // Hide the loader.
-            document.getElementById('loader').style.display = 'none';
-          }
-        },
-        // credentialHelper: firebaseui.auth.CredentialHelper.ACCOUNT_CHOOSER_COM,
-        // Query parameter name for mode.
-        queryParameterForWidgetMode: 'mode',
-        // Query parameter name for sign in success url.
-        queryParameterForSignInSuccessUrl: 'signInSuccessUrl',
-        // Will use popup for IDP Providers sign-in flow instead of the default, redirect.
-        signInFlow: 'popup',
-        signInSuccessUrl: 'https://chopflix-65749.firebaseapp.com/',
-        signInOptions: [
-          // Leave the lines as is for the providers you want to offer your users.
-          firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-          firebase.auth.FacebookAuthProvider.PROVIDER_ID,
-          firebase.auth.TwitterAuthProvider.PROVIDER_ID,
-          {
-            provider: firebase.auth.EmailAuthProvider.PROVIDER_ID,
-            // Whether the display name should be displayed in the Sign Up page.
-            requireDisplayName: true
-          },
-          {
-            provider: firebase.auth.PhoneAuthProvider.PROVIDER_ID,
-            // Invisible reCAPTCHA with image challenge and bottom left badge.
-            recaptchaParameters: {
-              type: 'image',
-              size: 'invisible',
-              badge: 'bottomleft'
-            }
-          }
-        ],
-        // Terms of service url.
-        // tosUrl: '<your-tos-url>'
-      };
-
-      var ui = new firebaseui.auth.AuthUI(firebase.auth());
-      // The start method will wait until the DOM is loaded.
-      ui.start('#firebaseui-auth-container', uiConfig);
 
 $(document).ready(function() {
     var database = firebase.database();
     var tmdb = "b300de2804d6ecbfa5435065a4835711";
     var uid = JSON.parse(localStorage.getItem("cKDX9B90bvAYTGSiZq3W"));
 
-    // user authentication for firebase
-    $("#userAuth").modal("show");
-
     // setting date for IE8 and earlier
     if (!Date.now) {
         Date.now = function() { return new Date().getTime(); };
     };
+
+    // FirebaseUI config.
+    var uiConfig = {
+        callbacks: {
+            signInSuccess: function(currentUser, credential, redirectUrl) {
+                window.location.href = "#page-top";
+                $("#sign-in-section").hide();
+                $("#user-auth-here").html(`<a id="sign-out" class="yellow">SIGN OUT</a>`);
+                return false;
+            }
+        },
+        signInSuccessUrl: "index.html",
+        signInOptions: [
+        firebase.auth.EmailAuthProvider.PROVIDER_ID,
+        firebaseui.auth.CredentialHelper.NONE
+        ],
+    };
+
+    // Initialize the FirebaseUI Widget using Firebase.
+    var ui = new firebaseui.auth.AuthUI(firebase.auth());
+
+    // The start method will wait until the DOM is loaded.
+    ui.start('#firebaseui-auth-container', uiConfig);
+
+    // USER AUTH FOR FIREBASE
+    // detecting user
+    firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+        // User is signed in.
+        window.user = user;
+        var displayName = user.displayName;
+        var email = user.email;
+        var emailVerified = user.emailVerified;
+        var photoURL = user.photoURL;
+        var isAnonymous = user.isAnonymous;
+        var uid = user.uid;
+        var providerData = user.providerData;
+        } // User is signed out.
+    });
+
+    $("#sign-in").on("click", function(event) {
+        event.preventDefault();
+        var email = $("#email").val();
+        var password = $("#password").val();
+        var credential = firebase.auth.EmailAuthProvider.credential(email, password);
+        var auth = firebase.auth();
+        var currentUser = auth.currentUser;
+
+        // new user
+        firebase.auth().createUserWithEmailAndPassword(email, password)
+        .catch(function(error) {
+            var errorCode = error.code;
+            var errorMessage = error.message;
+        });
+
+        // existing user
+        firebase.auth().signInWithEmailAndPassword(email, password)
+        .catch(function(error) {
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            if (errorCode === 'auth/wrong-password') {
+                alert('Wrong password.');
+            } else {
+                alert(errorMessage);
+            }
+            console.log(error);
+        });
+    });
+
+    // switch to sign-out button
+    $("#user-auth-here").on("click", "#sign-in", function(event) {
+        $("#sign-in-section").show();
+    });
+
+    // sign out
+    $("#user-auth-here").on("click", "#sign-out", function(event) {
+        event.preventDefault();
+        event.stopPropagation();
+        firebase.auth().signOut();
+        $("#user-auth-here").html(`
+            <a id="sign-in" class="yellow">SIGN IN</a>
+        `);
+    });
 
     // ADDING A NEW USER
     // detecting presence and creating a unique id
