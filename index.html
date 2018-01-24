@@ -24,6 +24,11 @@
     <link href='https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' rel='stylesheet' type='text/css'>
 
+    <!-- firebase -->
+    <script src="https://www.gstatic.com/firebasejs/4.8.1/firebase.js"></script>
+    <script src="https://cdn.firebase.com/libs/firebaseui/2.5.1/firebaseui.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/2.5.1/firebaseui.css"/>
+
     <!-- Theme CSS -->
     <link href="css/agency.min.css" rel="stylesheet">
 
@@ -88,7 +93,7 @@
                     <div class="title">ChopFlix</div>
                     <p class="intro-lead-p">The only tool that delivers dinner and a movie instantly. Pants optional.</p>
                 </div>
-                <div class="intro-heading">Ready to build the perfect night ... IN?!</div>
+                <div class="intro-heading">Ready for the perfect night ... IN?!</div>
                 <a href="#recipe-search-section" class="page-scroll btn btn-xl startBtn">Start your Search</a>
             </div>
         </div>
@@ -341,12 +346,27 @@
     </footer>
 
     <!-- Modals -->
+    <div id="userAuth" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">So close you can almost taste it</h4>
+            </div>
+            <div class="modal-body">
+                <p>ChopFlix endeavors to bring you the best experience possible. Creating an account is not only quick and easy, but it also allows you to save favorites for future reference.</p>
+                <p>If you've already created an account, simply sign in below and let's get back to the action.</p>
+            <div id="firebaseui-auth-container"></div>    
+            </div>
+            </div>
+        </div> 
+    </div>
+
     <div id="movie-modals"></div>
     <div id="recipe-modals"></div>
     <div id="final-modal"></div>
 
-    <!-- firebase -->
-    <script src="https://www.gstatic.com/firebasejs/4.8.1/firebase.js"></script>
+
 
     <!--CDN links for TweenLite, CSSPlugin, and EasePack (has to run before script) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.2/plugins/CSSPlugin.min.js"></script>
