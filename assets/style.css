@@ -1,6 +1,7 @@
 #sign-in-section {
     height: 100%;
     display: none;
+    padding-top: 100px;
 }
 
 #sign-in, #sign-out {
@@ -26,10 +27,6 @@
     -webkit-text-stroke-color: #323232;
 }
 
-#sign-in-section {
-    padding-top: 100px;
-}
-
 .firebaseui-container {
     margin: 150px auto;
     background-color: rgba(245, 245, 245, 0.404);
@@ -52,24 +49,6 @@
 .firebaseui-link,
 .mdl-button--primary.mdl-button--primary {
     color:  #fec503;
-}
-
-
-.movie-div {
-    display: inline-block;
-    position: relative;
-    margin: 10px;
-    padding: 0px;
-    background-color: white;
-    width: 150px;
-}
-
-.otherRecs {
-    width: 50px;
-}
-
-.otherRecs:hover {
-    transform: scale(1.5);
 }
 
 .poster-image {
@@ -400,5 +379,6 @@ form.section-subheading {
   
     .signInBox {
         width: 60%;
+        margin: 0px auto;
     }
 }
