@@ -24,7 +24,7 @@ firebase.initializeApp(config);
             document.getElementById('loader').style.display = 'none';
           }
         },
-        credentialHelper: firebaseui.auth.CredentialHelper.ACCOUNT_CHOOSER_COM,
+        // credentialHelper: firebaseui.auth.CredentialHelper.ACCOUNT_CHOOSER_COM,
         // Query parameter name for mode.
         queryParameterForWidgetMode: 'mode',
         // Query parameter name for sign in success url.
@@ -53,7 +53,7 @@ firebase.initializeApp(config);
           }
         ],
         // Terms of service url.
-        tosUrl: '<your-tos-url>'
+        // tosUrl: '<your-tos-url>'
       };
 
       var ui = new firebaseui.auth.AuthUI(firebase.auth());
