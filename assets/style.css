@@ -378,7 +378,8 @@ form.section-subheading {
     }
     
     .modal-body {
-        margin: 15px auto;
+        padding: 15px 0px;
+        width: 100%;
     }
   
     .signInBox {
