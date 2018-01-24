@@ -16,6 +16,12 @@ $(document).ready(function() {
     var tmdb = "b300de2804d6ecbfa5435065a4835711";
     var uid = JSON.parse(localStorage.getItem("cKDX9B90bvAYTGSiZq3W"));
 
+    // adjusting mobile menu so it closes
+    $(document).on("click", ".navbar-toggle", function() {
+        console.log(this);
+        $("#bs-example-navbar-collapse-1").toggle();
+    });
+
     // setting date for IE8 and earlier
     if (!Date.now) {
         Date.now = function() { return new Date().getTime(); };
@@ -61,7 +67,6 @@ $(document).ready(function() {
     });
 
     $("#sign-in").on("click", function(event) {
-        event.preventDefault();
         var email = $("#email").val();
         var password = $("#password").val();
         var credential = firebase.auth.EmailAuthProvider.credential(email, password);
