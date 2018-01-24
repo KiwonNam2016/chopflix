@@ -430,6 +430,11 @@ $(document).ready(function() {
                 $(".recipeImages").append(recipeThumb);
                 $("#recipe-modals").append(recipeModal);
 
+                $("#recipe-select").on("click", function() {
+                    $("#finalModalRecipe").empty();
+                    $("#finalModalRecipe").append("recipe section stuff");
+                });
+
                 // modal close and forward to search section
                 // $('#closemodal').click(function() {
                 //     console.log($(this).data('link'));
