@@ -342,17 +342,13 @@ $(document).ready(function() {
 
     $(".go").on("click", function(event) {
         event.preventDefault();
-        // var Ing=[];
         tl.play();
         tl.restart();
         cuisineSearch = addedCuisines.join('');
         var food = $("#food").val().trim();
-        $("#food").val('');
-        $("#recipe_view").empty();
-        $(".recipeImages").empty();
-        $("#recipe-modals").empty();
+        resetRecipe();
         var yumQuery = "https://api.yummly.com/v1/api/recipes?_app_id=74c2c130&_app_key=dbe2b1012a02ca615dbe289501e4ef92&q=" + food + cuisineSearch + "&requirePictures=true";
-
+        resetButtons();
         $.ajax({
             url: yumQuery,
             method: "GET"
@@ -475,6 +471,19 @@ $(document).ready(function() {
             $(this).attr("data-state", "unchecked");
             addedCuisines = addedCuisines.filter(a => a !== cuisineParameter);
         };
+    };
+
+    function resetRecipe() {
+        $("#food").val('');
+        $("#recipe_view").empty();
+        $(".recipeImages").empty();
+        $("#recipe-modals").empty();
+    };
+
+    function resetButtons() {
+        addedCuisines = [];
+        $(".cuisines.btn.btn-primary").removeAttr('style').css("background-color", "#fff");
+        $(".cuisines.btn.btn-primary").attr("data-state", "unchecked");
     };
 
     $("#name").keyup(function() {
