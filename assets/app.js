@@ -9,6 +9,25 @@ var config = {
 };
 firebase.initializeApp(config);
 
+// FirebaseUI config.
+var uiConfig = {
+    callbacks: {
+        signInSuccess: function (a, b, c) {
+            console.log("sign in successful")
+        }
+    },
+    signInSuccessUrl: "#recipe-results-section",
+    signInOptions: [
+      // Leave the lines as is for the providers you want to offer your users.
+      firebase.auth.EmailAuthProvider.PROVIDER_ID,
+    ],
+  };
+
+  // Initialize the FirebaseUI Widget using Firebase.
+  var ui = new firebaseui.auth.AuthUI(firebase.auth());
+  // The start method will wait until the DOM is loaded.
+  ui.start('#firebaseui-auth-container', uiConfig, );
+
 $(document).ready(function() {
     var database = firebase.database();
     var tmdb = "b300de2804d6ecbfa5435065a4835711";
@@ -149,7 +168,7 @@ $(document).ready(function() {
                                                     <div id="otherPicks"></div>
                                                     <a href="https://www.themoviedb.org/movie/${movieID}" target="_blank" type="button" class="btn btn-primary" ><i class="fa fa-film"></i>See More Details</a>
                                                     <a href="https://www.netflix.com/search?q=${movieTitle}" target="_blank" type="button" class="btn btn-primary middleBtn"><i class="fa fa-search"></i>Find on Netflix</a>
-                                                    <a id="show-select" data-dismiss="modal" data-toggle=".modal" type="button" class="btn btn-primary"><i class="fa fa-check-square"></i>Select This Movie</a>
+                                                    <a id="show-select" data-title="${movieTitle}" data-plot="${overview}" data-pic="${poster}" data-dismiss="modal" type="button" class="btn btn-primary"><i class="fa fa-check-square"></i>Select This Movie</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -236,7 +255,7 @@ $(document).ready(function() {
                                                     <div id="otherPicks-${n}"></div>
                                                     <a href="https://www.themoviedb.org/tv/${tvID}" target="_blank" type="button" class="btn btn-primary" ><i class="fa fa-film"></i>See More Details</a>
                                                     <a href="https://www.netflix.com/search?q=${tvTitle}" target="_blank" type="button" class="btn btn-primary middleBtn"><i class="fa fa-search"></i>Find on Netflix</a>
-                                                    <a id="show-select" data-dismiss="modal" data-toggle=".modal" type="button" class="btn btn-primary"><i class="fa fa-check-square"></i>Select This TV Show</a> 
+                                                    <a id="show-select" data-title="${tvTitle}" data-plot="${overview}" data-poster="${poster}" data-dismiss="modal" type="button" class="btn btn-primary"><i class="fa fa-check-square"></i>Select This TV Show</a> 
                                                 </div>
                                             </div>
                                         </div>
@@ -266,28 +285,6 @@ $(document).ready(function() {
         });
 
     });
-
-    //     recommended movies search - maybe
-    //     $.ajax({
-    //         url: `https://api.themoviedb.org/3/tv/${showArray[u]}/recommendations?api_key=${tmdb}&language=en-US&page=1`,
-    //         method: "GET"
-    //     }).done(function(response) {
-    //         var searchResults = response.results;
-    //         for (var p = 0; p < searchResults.length; p++) {
-    //             var resultsBtn = $(`<div class="hvrbox movie-div otherRecs" id="${searchResults[p].id}">`);
-    //             var image = $(`<img class="hvrbox-layer_bottom movie-poster">`);
-    //             var title = searchResults[p].title;
-    //             //var layer = $(`<div class="hvrbox-layer_top hvrbox-layer_slideup"><div class="hvrbox-text">See More</div>`);           
-    //             image.attr("src", "https://image.tmdb.org/t/p/w500" + searchResults[p].poster_path);
-    //             resultsBtn.prepend(image);
-    //             //resultsBtn.append(layer);
-    //             resultsBtn.attr("id", searchResults[p].id);
-    //             resultsBtn.attr("alt", title);
-    //             resultsBtn.attr("plot", searchResults[p].overview);
-    //             resultsBtn.attr("src", "https://image.tmdb.org/t/p/w500" + searchResults[p].poster_path);
-    //             $(".showMeDetails").append(resultsBtn);
-    //         };
-    //     });
 
     // stopping video playback on modal close
     $("#movie-modals").on('hide.bs.modal', '.videoModal', function(e) {
@@ -342,6 +339,10 @@ $(document).ready(function() {
 
     $(".go").on("click", function(event) {
         event.preventDefault();
+        // user authentication for firebase
+        $("#userAuth").modal("show");
+        $(".firebaseui-id-submit").attr("data-dismiss", "modal");
+        // var Ing=[];
         tl.play();
         tl.restart();
         cuisineSearch = addedCuisines.join('');
@@ -414,7 +415,7 @@ $(document).ready(function() {
                                                 <img src="${imgUrl}" class="img-responsive recipe-pic" style="width:400px;">                    
                                                 <a href="${recipeURL}" target="_blank" type="button" class="btn btn-primary" ><i class="fa fa-cutlery"></i>See More Details</a>
                                                 <a href="https://www.instacart.com/store/partner_recipe?recipe_url=https%3A%2F%2Fwww.yummly.com%2F%23recipe%2F${id}&partner_name=www.yummly.com&ingredients%5B%5D=${ingSearch}&title=${recipeTitle}&description=&image_url=${imgUrl}" target="_blank" type="button" class="btn btn-primary middleBtn"><i class="fa fa-shopping-cart"></i>Add to Instacart</a>
-                                                <a id="recipe-select" data-dismiss="modal" type="button" class="btn btn-primary"><i class="fa fa-check-square"></i>Select This Recipe</a>
+                                                <a id="recipe-select" data-title="${recipeTitle}" data-ing="${IngAsString}" data-poster="${imgUrl}" data-dismiss="modal" type="button" class="btn btn-primary"><i class="fa fa-check-square"></i>Select This Recipe</a>
                                             </div>
                                         </div>
                                     </div>
@@ -525,43 +526,38 @@ $(document).ready(function() {
         };
     });
 
-    //Final Modal display 
-    // $(document).on("click", "#show-select", function() {
-    //     event.preventDefault();
-    //     $(".portfolio-modal").on("hidden.bs.modal", function() {
-    //         var finalModal = `
-    //             <div class="portfolio-modal modal fade" id="foodPortfolioModal12" tabindex="-1" role="dialog" aria-hidden="true">
-    //                 <div class="modal-dialog">
-    //                     <div class="modal-content">
-    //                         <div class="close-modal" data-dismiss="modal">
-    //                                 <div class="lr">
-    //                                 <div class="rl">
-    //                                 </div>
-    //                             </div>
-    //                         </div>
-    //                         <div class="container">
-    //                             <div class="row">
-    //                                 <div class="col-lg-8 col-lg-offset-2">
-    //                                     <div class="modal-body">
-    //                                         <h2 class="modal-title">this title&nbsp;<span id="heart" favorite="false" title="MyTitle" class="glyphicon glyphicon-heart glyphicon-heart-empty"></span></h2>
-    //                                         <p class="item-intro text-muted">Ingredients: INgAsaString</p>
-    //                                         <img src="url" class="img-responsive recipe-pic" style="width:400px;">
-    //                                         <a id="recipe-select" data-dismiss="modal" data-toggle="modal" href="#show-search-section" type="button" class="btn btn-primary"><i class="fa fa-check-square"></i>Select This Recipe</a>
-    //                                     </div>
-    //                                 </div>
-    //                             </div>
-    //                         </div>
-    //                     </div>
-    //                 </div>
-    //             </div>`;
-    //         console.log("I should see my modal");
-    //         $("#final-modals").append(finalModal);
-    //     });
-    // });
+    $(document).on("click",".portfolio-hover",function(){
+        $(".index").css("padding-right","0px");
+    });
 
-    $(document).on("click", ".portfolio-hover", function() {
+    $(document).on("click","#recipe-select",function(){     
+        setTimeout(function(){$(document).scrollTop(1600);},800);
+        var title = $(this).attr("data-title");
+        var ing = $(this).attr("data-ing");
+        var poster = $(this).attr("data-poster");
+        $(".final-section").html(`
+            <div class="col-md-6">
+                <h1>${title}</h1>
+                <img class="recipe-pic" src="${poster}">
+                <p>Ingredients: ${ing}</p>
+            </div>
+        `);
+        $(".final-section").show();
+    });
 
-        $(".index").css("padding-right", "0px");
+    $(document).on("click","#show-select",function(){     
+        var title = $(this).attr("data-title");
+        var plot = $(this).attr("data-plot");
+        var poster = $(this).attr("data-poster");
+        setTimeout(function(){$(document).scrollTop(6350);},800);
+        $(".final-section").append(`
+            <div class="col-md-6">
+                <h1>${title}</h1>
+                <img src="https://image.tmdb.org/t/p/w500${poster}">
+                <p>${plot}</p>
+            </div>
+        `);
+        $(".final-section").show();
     });
 
 

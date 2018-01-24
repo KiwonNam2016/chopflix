@@ -32,6 +32,10 @@
     margin: 0px auto;
 }
 
+.modal-dialog {
+    margin-top: 100px;
+}
+
 .fa {
     margin-right: 7px;
 }
