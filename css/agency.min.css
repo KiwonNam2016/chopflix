@@ -82,7 +82,9 @@ a:hover {
 }
 
 .bg-darkest-gray {
-    background-color: #222
+    color: rgb(223, 213, 213);
+    background-color: #222;
+    margin: auto;
 }
 
 .btn-primary {

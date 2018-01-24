@@ -431,13 +431,6 @@ $(document).ready(function() {
                     $("#finalModalRecipe").empty();
                     $("#finalModalRecipe").append("recipe section stuff");
                 });
-
-                // modal close and forward to search section
-                // $('#closemodal').click(function() {
-                //     console.log($(this).data('link'));
-
-                //     $('#closemodal').attr('href', "#show-search-section");
-                // });
             };
         });
     });
@@ -551,6 +544,8 @@ $(document).ready(function() {
                 <h3 class="section-subheading text-muted">Ingredients: ${ing}</h3>
             </div>
         `);
+
+        $(".results-headings").show();
         $(".final-section1").show();
         $(".final-section2").show();
         $(".final-section3").show();
@@ -577,6 +572,7 @@ $(document).ready(function() {
             <h3 class="section-subheading text-muted">${plot}</h3>
         </div>
     `);
+        $(".results-headings").show();
         $(".final-section1").show();
         $(".final-section2").show();
         $(".final-section3").show();
