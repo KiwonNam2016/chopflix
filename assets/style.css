@@ -26,10 +26,24 @@
     border-radius: 5px 60px 5px;
 }
 
-#rp-final-section .recipe-pic {
+#rp-final-section1 .recipe-pic,
+#rp-final-section2 .recipe-pic,
+#rp-final-section3 .recipe-pic {
     margin: auto;
     border: solid 2px #feca30;
     border-radius: 0px;
+}
+
+#mv-final-section1 .recipe-pic,
+#mv-final-section2 .recipe-pic,
+#mv-final-section3 .recipe-pic {
+    margin: auto;
+    border: solid 2px #feca30;
+    border-radius: 0px;
+}
+
+.final-section3 {
+    text-align: justify;
 }
 
 .modal-content {
