@@ -82,7 +82,9 @@ a:hover {
 }
 
 .bg-darkest-gray {
-    background-color: #222
+    color: rgb(223, 213, 213);
+    background-color: #222;
+    margin: auto;
 }
 
 .btn-primary {
@@ -339,7 +341,7 @@ section h3.section-subheading {
     font-size: 16px;
     text-transform: none;
     font-weight: 400;
-    margin-bottom: 75px
+    /* margin-bottom: 75px */
 }
 
 @media (min-width:768px) {
