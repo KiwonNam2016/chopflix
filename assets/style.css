@@ -376,6 +376,10 @@ form.section-subheading {
     .modal-content {
         width: 100%;
     }
+    
+    .modal-body {
+        margin: 15px auto;
+    }
   
     .signInBox {
         width: 60%;
