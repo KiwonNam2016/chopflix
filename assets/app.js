@@ -168,7 +168,7 @@ $(document).ready(function() {
                                                     <div id="otherPicks"></div>
                                                     <a href="https://www.themoviedb.org/movie/${movieID}" target="_blank" type="button" class="btn btn-primary" ><i class="fa fa-film"></i>See More Details</a>
                                                     <a href="https://www.netflix.com/search?q=${movieTitle}" target="_blank" type="button" class="btn btn-primary middleBtn"><i class="fa fa-search"></i>Find on Netflix</a>
-                                                    <a id="show-select" data-dismiss="modal" type="button" class="btn btn-primary"><i class="fa fa-check-square"></i>Select This Movie</a>
+                                                    <a id="show-select" data-title="${movieTitle}" data-plot="${overview}" data-pic="${poster}" data-dismiss="modal" type="button" class="btn btn-primary"><i class="fa fa-check-square"></i>Select This Movie</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -255,7 +255,7 @@ $(document).ready(function() {
                                                     <div id="otherPicks-${n}"></div>
                                                     <a href="https://www.themoviedb.org/tv/${tvID}" target="_blank" type="button" class="btn btn-primary" ><i class="fa fa-film"></i>See More Details</a>
                                                     <a href="https://www.netflix.com/search?q=${tvTitle}" target="_blank" type="button" class="btn btn-primary middleBtn"><i class="fa fa-search"></i>Find on Netflix</a>
-                                                    <a id="show-select" data-dismiss="modal" type="button" class="btn btn-primary"><i class="fa fa-check-square"></i>Select This TV Show</a> 
+                                                    <a id="show-select" data-title="${tvTitle}" data-plot="${overview}" data-poster="${poster}" data-dismiss="modal" type="button" class="btn btn-primary"><i class="fa fa-check-square"></i>Select This TV Show</a> 
                                                 </div>
                                             </div>
                                         </div>
@@ -440,7 +440,7 @@ $(document).ready(function() {
                                                 <img src="${imgUrl}" class="img-responsive recipe-pic" style="width:400px;">                    
                                                 <a href="${recipeURL}" target="_blank" type="button" class="btn btn-primary" ><i class="fa fa-cutlery"></i>See More Details</a>
                                                 <a href="https://www.instacart.com/store/partner_recipe?recipe_url=https%3A%2F%2Fwww.yummly.com%2F%23recipe%2F${id}&partner_name=www.yummly.com&ingredients%5B%5D=${ingSearch}&title=${recipeTitle}&description=&image_url=${imgUrl}" target="_blank" type="button" class="btn btn-primary middleBtn"><i class="fa fa-shopping-cart"></i>Add to Instacart</a>
-                                                <a id="recipe-select" data-dismiss="modal" type="button" class="btn btn-primary"><i class="fa fa-check-square"></i>Select This Recipe</a>
+                                                <a id="recipe-select" data-title="${recipeTitle}" data-ing="${IngAsString}" data-poster="${imgUrl}" data-dismiss="modal" type="button" class="btn btn-primary"><i class="fa fa-check-square"></i>Select This Recipe</a>
                                             </div>
                                         </div>
                                     </div>
@@ -538,8 +538,34 @@ $(document).ready(function() {
         $(".index").css("padding-right","0px");
     });
 
-    $(document).on("click","#recipe-select",function(){       
+    $(document).on("click","#recipe-select",function(){     
         setTimeout(function(){$(document).scrollTop(1600);},800);
+        var title = $(this).attr("data-title");
+        var ing = $(this).attr("data-ing");
+        var poster = $(this).attr("data-poster");
+        $(".final-section").html(`
+            <div class="col-md-6">
+                <h1>${title}</h1>
+                <img class="recipe-pic" src="${poster}">
+                <p>Ingredients: ${ing}</p>
+            </div>
+        `);
+        $(".final-section").show();
+    });
+
+    $(document).on("click","#show-select",function(){     
+        var title = $(this).attr("data-title");
+        var plot = $(this).attr("data-plot");
+        var poster = $(this).attr("data-poster");
+        setTimeout(function(){$(document).scrollTop(6350);},800);
+        $(".final-section").append(`
+            <div class="col-md-6">
+                <h1>${title}</h1>
+                <img src="https://image.tmdb.org/t/p/w500${poster}">
+                <p>${plot}</p>
+            </div>
+        `);
+        $(".final-section").show();
     });
 
 
