@@ -12,21 +12,21 @@ firebase.initializeApp(config);
 // FirebaseUI config.
 var uiConfig = {
     callbacks: {
-        signInSuccess: function (a, b, c) {
+        signInSuccess: function(a, b, c) {
             console.log("sign in successful")
         }
     },
     signInSuccessUrl: "#recipe-results-section",
     signInOptions: [
-      // Leave the lines as is for the providers you want to offer your users.
-      firebase.auth.EmailAuthProvider.PROVIDER_ID,
+        // Leave the lines as is for the providers you want to offer your users.
+        firebase.auth.EmailAuthProvider.PROVIDER_ID,
     ],
-  };
+};
 
-  // Initialize the FirebaseUI Widget using Firebase.
-  var ui = new firebaseui.auth.AuthUI(firebase.auth());
-  // The start method will wait until the DOM is loaded.
-  ui.start('#firebaseui-auth-container', uiConfig, );
+// Initialize the FirebaseUI Widget using Firebase.
+var ui = new firebaseui.auth.AuthUI(firebase.auth());
+// The start method will wait until the DOM is loaded.
+ui.start('#firebaseui-auth-container', uiConfig, );
 
 $(document).ready(function() {
     var database = firebase.database();
@@ -168,7 +168,7 @@ $(document).ready(function() {
                                                     <div id="otherPicks"></div>
                                                     <a href="https://www.themoviedb.org/movie/${movieID}" target="_blank" type="button" class="btn btn-primary" ><i class="fa fa-film"></i>See More Details</a>
                                                     <a href="https://www.netflix.com/search?q=${movieTitle}" target="_blank" type="button" class="btn btn-primary middleBtn"><i class="fa fa-search"></i>Find on Netflix</a>
-                                                    <a id="show-select" data-title="${movieTitle}" data-plot="${overview}" data-pic="${poster}" data-dismiss="modal" type="button" class="btn btn-primary"><i class="fa fa-check-square"></i>Select This Movie</a>
+                                                    <a id="show-select" data-title="${movieTitle}" data-plot="${overview}" data-poster="${poster}" data-dismiss="modal" type="button" class="btn btn-primary"><i class="fa fa-check-square"></i>Select This Movie</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -526,35 +526,49 @@ $(document).ready(function() {
         };
     });
 
-    $(document).on("click",".portfolio-hover",function(){
-        $(".index").css("padding-right","0px");
+    $(document).on("click", ".portfolio-hover", function() {
+        $(".index").css("padding-right", "0px");
     });
 
-    $(document).on("click","#recipe-select",function(){     
-        setTimeout(function(){$(document).scrollTop(1600);},800);
+    $(document).on("click", "#recipe-select", function() {
+        setTimeout(function() { $(document).scrollTop(1600); }, 800);
+        $("#rp-final-section").empty();
         var title = $(this).attr("data-title");
         var ing = $(this).attr("data-ing");
         var poster = $(this).attr("data-poster");
         $(".final-section").html(`
-            <div class="col-md-6">
-                <h1>${title}</h1>
-                <img class="recipe-pic" src="${poster}">
-                <p>Ingredients: ${ing}</p>
+            <div class="col-md-6 col-md-offset-1" id="rp-final-section">
+                <div class=row>
+                    <h2>${title}</h2>
+                </div>
+                <div class=row>    
+                    <img class="recipe-pic" src="${poster}">
+                </div>
+                <div class=row>        
+                    <h3 class="section-subheading text-muted">Ingredients: ${ing}</h4>
+                </div>
             </div>
-        `);
+                `);
         $(".final-section").show();
     });
 
-    $(document).on("click","#show-select",function(){     
+    $(document).on("click", "#show-select", function() {
+        $("#mv-final-section").empty();
         var title = $(this).attr("data-title");
         var plot = $(this).attr("data-plot");
         var poster = $(this).attr("data-poster");
-        setTimeout(function(){$(document).scrollTop(6350);},800);
+        setTimeout(function() { $(document).scrollTop(6350); }, 800);
         $(".final-section").append(`
-            <div class="col-md-6">
-                <h1>${title}</h1>
-                <img src="https://image.tmdb.org/t/p/w500${poster}">
-                <p>${plot}</p>
+            <div class="col-md-6 col-md-offset-2" id="mv-final-section">
+                <div class=row>
+                    <h2>${title}</h2>
+                </div>
+                 <div class=row>
+                    <img src="https://image.tmdb.org/t/p/w500${poster}">
+                </div>
+                <div class=row>
+                    <h3 class="section-subheading text-muted">${plot}</h4>
+                </div>
             </div>
         `);
         $(".final-section").show();
