@@ -67,7 +67,7 @@ $(document).ready(function() {
             $("#genres").html("");
             var glyph = $(`<span class="glyphicon glyphicon-film" aria-hidden="true"></span>`);
             var genre = response.genres;
-            var sec=0;
+            var sec = 0;
             for (let k = 0; k < genre.length; k++) {
                 var button = $(`<button class="movie-genre">`);
                 button.attr("id", genre[k].id).attr("name", genre[k].name);
@@ -103,7 +103,7 @@ $(document).ready(function() {
                 button.addClass(`button${l}`);
                 button.html(genre[l].name);
                 $("#genres").append(button);
-                
+
                 var b = $(`.button${l}`);
                 var tl9 = new TimelineLite();
                 tl9.from(b, 1.5, { x: -15, autoAlpha: 0, ease: Power1.ease, delay: sec });
@@ -286,28 +286,6 @@ $(document).ready(function() {
 
     });
 
-    //     recommended movies search - maybe
-    //     $.ajax({
-    //         url: `https://api.themoviedb.org/3/tv/${showArray[u]}/recommendations?api_key=${tmdb}&language=en-US&page=1`,
-    //         method: "GET"
-    //     }).done(function(response) {
-    //         var searchResults = response.results;
-    //         for (var p = 0; p < searchResults.length; p++) {
-    //             var resultsBtn = $(`<div class="hvrbox movie-div otherRecs" id="${searchResults[p].id}">`);
-    //             var image = $(`<img class="hvrbox-layer_bottom movie-poster">`);
-    //             var title = searchResults[p].title;
-    //             //var layer = $(`<div class="hvrbox-layer_top hvrbox-layer_slideup"><div class="hvrbox-text">See More</div>`);           
-    //             image.attr("src", "https://image.tmdb.org/t/p/w500" + searchResults[p].poster_path);
-    //             resultsBtn.prepend(image);
-    //             //resultsBtn.append(layer);
-    //             resultsBtn.attr("id", searchResults[p].id);
-    //             resultsBtn.attr("alt", title);
-    //             resultsBtn.attr("plot", searchResults[p].overview);
-    //             resultsBtn.attr("src", "https://image.tmdb.org/t/p/w500" + searchResults[p].poster_path);
-    //             $(".showMeDetails").append(resultsBtn);
-    //         };
-    //     });
-
     // stopping video playback on modal close
     $("#movie-modals").on('hide.bs.modal', '.videoModal', function(e) {
         var id = e.target.id;
@@ -369,12 +347,9 @@ $(document).ready(function() {
         tl.restart();
         cuisineSearch = addedCuisines.join('');
         var food = $("#food").val().trim();
-        $("#food").val('');
-        $("#recipe_view").empty();
-        $(".recipeImages").empty();
-        $("#recipe-modals").empty();
+        resetRecipe();
         var yumQuery = "https://api.yummly.com/v1/api/recipes?_app_id=74c2c130&_app_key=dbe2b1012a02ca615dbe289501e4ef92&q=" + food + cuisineSearch + "&requirePictures=true";
-
+        resetButtons();
         $.ajax({
             url: yumQuery,
             method: "GET"
@@ -452,6 +427,11 @@ $(document).ready(function() {
                 $(".recipeImages").append(recipeThumb);
                 $("#recipe-modals").append(recipeModal);
 
+                $("#recipe-select").on("click", function() {
+                    $("#finalModalRecipe").empty();
+                    $("#finalModalRecipe").append("recipe section stuff");
+                });
+
                 // modal close and forward to search section
                 // $('#closemodal').click(function() {
                 //     console.log($(this).data('link'));
@@ -493,20 +473,32 @@ $(document).ready(function() {
             addedCuisines = addedCuisines.filter(a => a !== cuisineParameter);
         };
     };
-   
-    $("#name").keyup( function (){
+
+    function resetRecipe() {
+        $("#food").val('');
+        $("#recipe_view").empty();
+        $(".recipeImages").empty();
+        $("#recipe-modals").empty();
+    };
+
+    function resetButtons() {
+        addedCuisines = [];
+        $(".cuisines.btn.btn-primary").removeAttr('style').css("background-color", "#fff");
+        $(".cuisines.btn.btn-primary").attr("data-state", "unchecked");
+    };
+
+    $("#name").keyup(function() {
         $("#danger").html("")
-        var contactName=$("#name").val().trim();
-        var letters = /^[A-Za-z\s]+$/;  
-        if(contactName.match(letters) || contactName==="" ) {
+        var contactName = $("#name").val().trim();
+        var letters = /^[A-Za-z\s]+$/;
+        if (contactName.match(letters) || contactName === "") {
             $("#danger").html("")
-        }
-        else if(!contactName.match(letters)) {
-            $("#danger").html(`<ul role="alert"><li>Letters only please</li></ul>`);    
+        } else if (!contactName.match(letters)) {
+            $("#danger").html(`<ul role="alert"><li>Letters only please</li></ul>`);
         };
     });
-   
-   
+
+
     createButtons();
     $(document).on("click", ".cuisines", animateBtn);
 
