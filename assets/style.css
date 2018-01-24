@@ -66,11 +66,11 @@
 }
 
 .otherRecs {
-	width: 50px;
+    width: 50px;
 }
 
 .otherRecs:hover {
-	transform: scale(1.5);
+    transform: scale(1.5);
 }
 
 .poster-image {
@@ -82,6 +82,26 @@
     margin: 30px auto;
     border: solid 2px #feca30;
     border-radius: 5px 60px 5px;
+}
+
+#rp-final-section1 .recipe-pic,
+#rp-final-section2 .recipe-pic,
+#rp-final-section3 .recipe-pic {
+    margin: auto;
+    border: solid 2px #feca30;
+    border-radius: 0px;
+}
+
+#mv-final-section1 .recipe-pic,
+#mv-final-section2 .recipe-pic,
+#mv-final-section3 .recipe-pic {
+    margin: auto;
+    border: solid 2px #feca30;
+    border-radius: 0px;
+}
+
+.final-section3 {
+    text-align: justify;
 }
 
 .modal-content {
@@ -97,7 +117,8 @@
     margin-right: 7px;
 }
 
-.fa-github, .fa-linkedin {
+.fa-github,
+.fa-linkedin {
     margin-right: 0px;
 }
 
@@ -113,7 +134,8 @@
     margin: 10px 5px;
 }
 
-.genre-buttons, .recipeButtons {
+.genre-buttons,
+.recipeButtons {
     width: 60%;
     margin: 25px auto;
 }
@@ -122,12 +144,15 @@
     margin-top: 35px;
 }
 
-#show-search-section, #recipe-search-section,
-#show-results-section, #recipe-results-section {
+#show-search-section,
+#recipe-search-section,
+#show-results-section,
+#recipe-results-section {
     min-height: 700px;
 }
 
-#movie, #tv {
+#movie,
+#tv {
     margin: 35px 10px;
 }
 
@@ -169,6 +194,7 @@ form.section-subheading {
     font-family: "Droid Serif", "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-style: italic;
 }
+
 
 /* hoverbox styling */
 
@@ -310,7 +336,7 @@ form.section-subheading {
     margin: 5px;
 }
 
-.movie-genre.btn.btn-primary, 
+.movie-genre.btn.btn-primary,
 .tv-genre.btn.btn-primary {
     background-color: #feca30;
     border: solid #fff 2px;
@@ -372,6 +398,7 @@ form.section-subheading {
     .modal-content {
         width: 100%;
     }
+  
     .signInBox {
         width: 60%;
     }

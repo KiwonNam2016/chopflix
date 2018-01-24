@@ -234,7 +234,7 @@ $(document).ready(function() {
                                                     <div id="otherPicks"></div>
                                                     <a href="https://www.themoviedb.org/movie/${movieID}" target="_blank" type="button" class="btn btn-primary" ><i class="fa fa-film"></i>See More Details</a>
                                                     <a href="https://www.netflix.com/search?q=${movieTitle}" target="_blank" type="button" class="btn btn-primary middleBtn"><i class="fa fa-search"></i>Find on Netflix</a>
-                                                    <a id="show-select" data-title="${movieTitle}" data-plot="${overview}" data-pic="${poster}" data-dismiss="modal" type="button" class="btn btn-primary"><i class="fa fa-check-square"></i>Select This Movie</a>
+                                                    <a id="show-select" data-title="${movieTitle}" data-plot="${overview}" data-poster="${poster}" data-dismiss="modal" type="button" class="btn btn-primary"><i class="fa fa-check-square"></i>Select This Movie</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -580,38 +580,63 @@ $(document).ready(function() {
         };
     });
 
-    $(document).on("click",".portfolio-hover",function(){
-        $(".index").css("padding-right","0px");
+    $(document).on("click", ".portfolio-hover", function() {
+        $(".index").css("padding-right", "0px");
     });
 
-    $(document).on("click","#recipe-select",function(){     
-        setTimeout(function(){$(document).scrollTop(1600);},800);
+    $(document).on("click", "#recipe-select", function() {
+        setTimeout(function() { $(document).scrollTop(1600); }, 800);
+        $(".rp-final-section").empty();
         var title = $(this).attr("data-title");
         var ing = $(this).attr("data-ing");
         var poster = $(this).attr("data-poster");
-        $(".final-section").html(`
-            <div class="col-md-6">
-                <h1>${title}</h1>
-                <img class="recipe-pic" src="${poster}">
-                <p>Ingredients: ${ing}</p>
+        $(".final-section1").html(`
+            <div class="col-md-6" class="rp-final-section">
+                <h2>${title}</h2> 
             </div>
         `);
-        $(".final-section").show();
+        $(".final-section2").html(`
+            <div class="col-md-6" class="rp-final-section">  
+                <img src="${poster}"> 
+            </div>
+        `);
+        $(".final-section3").html(`  
+            <div class="col-md-6" class="rp-final-section">                 
+                <h3 class="section-subheading text-muted">Ingredients: ${ing}</h3>
+            </div>
+        `);
+
+        $(".results-headings").show();
+        $(".final-section1").show();
+        $(".final-section2").show();
+        $(".final-section3").show();
     });
 
-    $(document).on("click","#show-select",function(){     
+    $(document).on("click", "#show-select", function() {
+        $(".mv-final-section").empty();
         var title = $(this).attr("data-title");
         var plot = $(this).attr("data-plot");
         var poster = $(this).attr("data-poster");
-        setTimeout(function(){$(document).scrollTop(6350);},800);
-        $(".final-section").append(`
-            <div class="col-md-6">
-                <h1>${title}</h1>
-                <img src="https://image.tmdb.org/t/p/w500${poster}">
-                <p>${plot}</p>
-            </div>
-        `);
-        $(".final-section").show();
+        setTimeout(function() { $(document).scrollTop(6350); }, 800);
+        $(".final-section1").append(`
+        <div class="col-md-6" class="mv-final-section">
+            <h2>${title}</h2> 
+        </div>
+    `);
+        $(".final-section2").append(`
+        <div class="col-md-6" class="mv-final-section">  
+            <img src="https://image.tmdb.org/t/p/w500${poster}"> 
+        </div>
+    `);
+        $(".final-section3").append(`  
+        <div class="col-md-6" class="mv-final-section">                 
+            <h3 class="section-subheading text-muted">${plot}</h3>
+        </div>
+    `);
+        $(".results-headings").show();
+        $(".final-section1").show();
+        $(".final-section2").show();
+        $(".final-section3").show();
     });
 
 });
