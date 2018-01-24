@@ -26,8 +26,7 @@
     -webkit-text-stroke-color: #323232;
 }
 
-#sign-in-section, #recipe-search-section,
-#show-search-section {
+#sign-in-section {
     padding-top: 100px;
 }
 

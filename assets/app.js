@@ -585,7 +585,7 @@ $(document).ready(function() {
     });
 
     $(document).on("click", "#recipe-select", function() {
-        setTimeout(function() { $(document).scrollTop(1600); }, 800);
+        setTimeout(function() { $(document).scrollTop(1500); }, 800);
         $(".rp-final-section").empty();
         var title = $(this).attr("data-title");
         var ing = $(this).attr("data-ing");
@@ -597,7 +597,7 @@ $(document).ready(function() {
         `);
         $(".final-section2").html(`
             <div class="col-md-6" class="rp-final-section">  
-                <img src="${poster}"> 
+                <img class="recipe-pic" src="${poster}"> 
             </div>
         `);
         $(".final-section3").html(`  
@@ -625,7 +625,7 @@ $(document).ready(function() {
     `);
         $(".final-section2").append(`
         <div class="col-md-6" class="mv-final-section">  
-            <img src="https://image.tmdb.org/t/p/w500${poster}"> 
+            <img class="yellow" src="https://image.tmdb.org/t/p/w500${poster}"> 
         </div>
     `);
         $(".final-section3").append(`  
