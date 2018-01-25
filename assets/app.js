@@ -14,7 +14,7 @@ firebase.initializeApp(config);
 $(document).ready(function() {
     var database = firebase.database();
     var tmdb = "b300de2804d6ecbfa5435065a4835711";
-    var uid = JSON.parse(localStorage.getItem("cKDX9B90bvAYTGSiZq3W"));
+    var uid;
 
     // adjusting mobile menu so it closes
     $(document).on("click", ".navbar-toggle", function() {
@@ -50,48 +50,28 @@ $(document).ready(function() {
     // The start method will wait until the DOM is loaded.
     ui.start('#firebaseui-auth-container', uiConfig);
 
+
     // USER AUTH FOR FIREBASE
-    // detecting user
+    // function to store user data object
+    function writeUserData(uid, name, email, emailVerified) {
+        firebase.database().ref('users/' + uid).update({
+            username: name,
+            email: email,
+            verified_email : emailVerified,
+        });
+      }
+
+    // detecting user and writing data to firebase
     firebase.auth().onAuthStateChanged(function(user) {
-        if (user) {
-            // User is signed in.
+        if (user) { // User is signed in.
             window.user = user;
-            var displayName = user.displayName;
+            uid = user.uid; 
+            var name = user.displayName;
             var email = user.email;
             var emailVerified = user.emailVerified;
-            var photoURL = user.photoURL;
-            var isAnonymous = user.isAnonymous;
-            var uid = user.uid;
             var providerData = user.providerData;
+            writeUserData(uid, name, email, emailVerified);
         } // User is signed out.
-    });
-
-    $("#sign-in").on("click", function(event) {
-        var email = $("#email").val();
-        var password = $("#password").val();
-        var credential = firebase.auth.EmailAuthProvider.credential(email, password);
-        var auth = firebase.auth();
-        var currentUser = auth.currentUser;
-
-        // new user
-        firebase.auth().createUserWithEmailAndPassword(email, password)
-            .catch(function(error) {
-                var errorCode = error.code;
-                var errorMessage = error.message;
-            });
-
-        // existing user
-        firebase.auth().signInWithEmailAndPassword(email, password)
-            .catch(function(error) {
-                var errorCode = error.code;
-                var errorMessage = error.message;
-                if (errorCode === 'auth/wrong-password') {
-                    alert('Wrong password.');
-                } else {
-                    alert(errorMessage);
-                }
-                console.log(error);
-            });
     });
 
     // switch to sign-out button
@@ -109,24 +89,6 @@ $(document).ready(function() {
         `);
     });
 
-    // ADDING A NEW USER
-    // detecting presence and creating a unique id
-    database.ref(".info/connected").on("value", function(snapshot) {
-        if (uid === null) {
-            database.ref("users").push("");
-        };
-        // if we need anything removed
-        // database.ref().onDisconnect().remove(); 
-    });
-
-    // saving unique key for new player
-    database.ref("users").once("child_added", function(snapshot) {
-        var id = snapshot.key;
-        if (uid === null) {
-            localStorage.setItem("cKDX9B90bvAYTGSiZq3W", JSON.stringify(id));
-        }
-
-    });
 
     // genres for movies
     $("#movie").on("click", function() {
@@ -233,7 +195,7 @@ $(document).ready(function() {
                                         <div class="row">
                                             <div class="col-lg-8 col-lg-offset-2">
                                                 <div class="modal-body">
-                                                    <h2 class="modal-title">${movieTitle}&nbsp;<span id="heart" favorite="false" title="${movieTitle}" class="glyphicon glyphicon-heart glyphicon-heart-empty"></span></h2>
+                                                    <h2 class="modal-title">${movieTitle}&nbsp;<span id="heart" db-id="${movieID}" favorite="false" title="${movieTitle}" class="glyphicon glyphicon-heart glyphicon-heart-empty"></span></h2>
                                                     <p class="item-intro text-muted">${overview}</p>
                                                     <div id="youTube-${m}" class="youtubeVid"></div>
                                                     <div id="otherPicks"></div>
@@ -320,7 +282,7 @@ $(document).ready(function() {
                                         <div class="row">
                                             <div class="col-lg-8 col-lg-offset-2">
                                                 <div class="modal-body">
-                                                    <h2 class="modal-title">${tvTitle}&nbsp;<span id="heart" favorite="false" title="${tvTitle}" class="glyphicon glyphicon-heart glyphicon-heart-empty"></span></h2>
+                                                    <h2 class="modal-title">${tvTitle}&nbsp;<span id="heart" db-id="${tvID}" favorite="false" title="${tvTitle}" class="glyphicon glyphicon-heart glyphicon-heart-empty"></span></h2>
                                                     <p class="item-intro text-muted">${overview}</p>
                                                     <div id="youTube-${n}" class="youtubeVid"></div>
                                                     <div id="otherPicks-${n}"></div>
@@ -370,12 +332,12 @@ $(document).ready(function() {
     $("#movie-modals").on("click", "#heart", function(event) {
         var faveTitle = $(this).attr("title");
         var saved = $(this).attr("favorite");
-        var id = $(this).attr("id");
+        var id = $(this).attr("db-id");
         if (saved === "true") {
-            database.ref("users/" + uid + "/TMDB_faves/" + faveTitle).remove();
+            database.ref("users/" + uid + "/tmdb_faves/" + id).remove();
         } else {
-            database.ref("users/" + uid + "/TMDB_faves/").update({
-                [faveTitle]: Date.now()
+            database.ref("users/" + uid + "/tmdb_faves/").update({
+                [id]: faveTitle
             });
         }
         $(this).attr("class", ($(this).attr("class") == "glyphicon glyphicon-heart glyphicon-heart-empty" ? "glyphicon glyphicon-heart" : "glyphicon glyphicon-heart glyphicon-heart-empty"));
@@ -386,12 +348,12 @@ $(document).ready(function() {
     $("#recipe-modals").on("click", "#heart", function(event) {
         var faveTitle = $(this).attr("title");
         var saved = $(this).attr("favorite");
-        var id = $(this).attr("id");
+        var id = $(this).attr("db-id");
         if (saved === "true") {
-            database.ref("users/" + uid + "/Yummly_faves/" + faveTitle).remove();
+            database.ref("users/" + uid + "/yummly_faves/" + id).remove();
         } else {
-            database.ref("users/" + uid + "/Yummly_faves/").update({
-                [faveTitle]: Date.now()
+            database.ref("users/" + uid + "/yummly_faves/").update({
+                [id]: faveTitle
             });
         }
         $(this).attr("class", ($(this).attr("class") == "glyphicon glyphicon-heart glyphicon-heart-empty" ? "glyphicon glyphicon-heart" : "glyphicon glyphicon-heart glyphicon-heart-empty"));
@@ -486,7 +448,7 @@ $(document).ready(function() {
                                         
                                         <div class="col-lg-8 col-lg-offset-2">
                                             <div class="modal-body">
-                                                <h2 class="modal-title">${recipeTitle}&nbsp;<span id="heart" favorite="false" title="${recipeTitle}" class="glyphicon glyphicon-heart glyphicon-heart-empty"></span></h2>
+                                                <h2 class="modal-title">${recipeTitle}&nbsp;<span id="heart" db-id="${id}" favorite="false" title="${recipeTitle}" class="glyphicon glyphicon-heart glyphicon-heart-empty"></span></h2>
                                                 <p class="item-intro text-muted">Ingredients: ${IngAsString}</p>
                                                 <img src="${imgUrl}" class="img-responsive recipe-pic" style="width:400px;">                    
                                                 <a href="${recipeURL}" target="_blank" type="button" class="btn btn-primary" ><i class="fa fa-cutlery"></i>See More Details</a>
