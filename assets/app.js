@@ -582,7 +582,7 @@ $(document).ready(function() {
         var title = $(this).attr("data-title");
         var plot = $(this).attr("data-plot");
         var poster = $(this).attr("data-poster");
-        setTimeout(function() { $(document).scrollTop(56 / 8 * height); }, 800);
+        setTimeout(function() { $(document).scrollTop(54 / 8 * height); }, 800);
         $(".final-section").append(`
             <div class="col-md-6" id="mv-final-section">
                 <div class="row">
