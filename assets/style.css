@@ -4,7 +4,8 @@
     padding-top: 100px;
 }
 
-#sign-in, #sign-out {
+#sign-in,
+#sign-out {
     text-decoration: none;
     cursor: pointer;
 }
@@ -43,12 +44,12 @@
 .mdl-button--raised.mdl-button--colored:active,
 .mdl-button--raised.mdl-button--colored:visited,
 .mdl-button--raised.mdl-button--colored:focus:not(:active) {
-    background-color:  #fec503;
+    background-color: #fec503;
 }
 
 .firebaseui-link,
 .mdl-button--primary.mdl-button--primary {
-    color:  #fec503;
+    color: #fec503;
 }
 
 .poster-image {
@@ -127,6 +128,33 @@
 #show-results-section,
 #recipe-results-section {
     min-height: 700px;
+}
+
+#your-results {
+    display: none;
+}
+
+.col-md-6#rp-final-section,
+.col-md-6#mv-final-section {
+    width: 45%;
+    margin-right: 35px;
+    padding-left: 20px;
+}
+
+.rp-pic {
+    margin: 30px auto;
+    border: solid 2px #feca30;
+}
+
+#mv-final-section img.show-pic {
+    width: 98%;
+    border: solid 2px #feca30;
+    margin-right: -6px;
+}
+
+.rp-text,
+.mv-text {
+    text-align: justify;
 }
 
 #movie,
@@ -322,6 +350,10 @@ form.section-subheading {
     margin: 5px;
 }
 
+#appReset {
+    margin: 0 auto;
+}
+
 #genres {
     margin-bottom: 20px;
 }
@@ -376,12 +408,10 @@ form.section-subheading {
     .modal-content {
         width: 100%;
     }
-
     .modal-body {
         padding: 15px 0px;
         width: 100%;
     }
-  
     .signInBox {
         width: 60%;
         margin: 0px auto;

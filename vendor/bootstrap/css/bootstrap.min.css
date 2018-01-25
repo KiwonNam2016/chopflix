@@ -13,7 +13,6 @@ html {
     -ms-text-size-adjust: 100%
 }
 
-
 body {
     margin: 0;
 }
@@ -7060,7 +7059,6 @@ button.close {
 .modal-open .modal {
     overflow-x: hidden;
     overflow-y: auto
-    
 }
 
 .modal-dialog {
