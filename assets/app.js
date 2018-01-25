@@ -39,8 +39,8 @@ $(document).ready(function() {
         },
         signInSuccessUrl: "index.html",
         signInOptions: [
-        firebase.auth.EmailAuthProvider.PROVIDER_ID,
-        firebaseui.auth.CredentialHelper.NONE
+            firebase.auth.EmailAuthProvider.PROVIDER_ID,
+            firebaseui.auth.CredentialHelper.NONE
         ],
     };
 
@@ -54,15 +54,15 @@ $(document).ready(function() {
     // detecting user
     firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
-        // User is signed in.
-        window.user = user;
-        var displayName = user.displayName;
-        var email = user.email;
-        var emailVerified = user.emailVerified;
-        var photoURL = user.photoURL;
-        var isAnonymous = user.isAnonymous;
-        var uid = user.uid;
-        var providerData = user.providerData;
+            // User is signed in.
+            window.user = user;
+            var displayName = user.displayName;
+            var email = user.email;
+            var emailVerified = user.emailVerified;
+            var photoURL = user.photoURL;
+            var isAnonymous = user.isAnonymous;
+            var uid = user.uid;
+            var providerData = user.providerData;
         } // User is signed out.
     });
 
@@ -75,23 +75,23 @@ $(document).ready(function() {
 
         // new user
         firebase.auth().createUserWithEmailAndPassword(email, password)
-        .catch(function(error) {
-            var errorCode = error.code;
-            var errorMessage = error.message;
-        });
+            .catch(function(error) {
+                var errorCode = error.code;
+                var errorMessage = error.message;
+            });
 
         // existing user
         firebase.auth().signInWithEmailAndPassword(email, password)
-        .catch(function(error) {
-            var errorCode = error.code;
-            var errorMessage = error.message;
-            if (errorCode === 'auth/wrong-password') {
-                alert('Wrong password.');
-            } else {
-                alert(errorMessage);
-            }
-            console.log(error);
-        });
+            .catch(function(error) {
+                var errorCode = error.code;
+                var errorMessage = error.message;
+                if (errorCode === 'auth/wrong-password') {
+                    alert('Wrong password.');
+                } else {
+                    alert(errorMessage);
+                }
+                console.log(error);
+            });
     });
 
     // switch to sign-out button
@@ -417,6 +417,7 @@ $(document).ready(function() {
         resetRecipe();
         var yumQuery = "https://api.yummly.com/v1/api/recipes?_app_id=74c2c130&_app_key=dbe2b1012a02ca615dbe289501e4ef92&q=" + food + cuisineSearch + "&requirePictures=true";
         resetButtons();
+        $("#your-results").hide();
         $.ajax({
             url: yumQuery,
             method: "GET"
@@ -590,58 +591,53 @@ $(document).ready(function() {
     });
 
     $(document).on("click", "#recipe-select", function() {
-        setTimeout(function() { $(document).scrollTop(1500); }, 800);
-        $(".rp-final-section").empty();
+        setTimeout(function() { $(document).scrollTop(1600); }, 800);
+        $("#rp-final-section").empty();
         var title = $(this).attr("data-title");
         var ing = $(this).attr("data-ing");
         var poster = $(this).attr("data-poster");
-        $(".final-section1").html(`
-            <div class="col-md-6" class="rp-final-section">
-                <h2>${title}</h2> 
+        $(".final-section").html(`
+            <div class="col-md-6" id="rp-final-section">
+                <div class="row">
+                    <h2>${title}</h2>
+                </div>
+                <div class="row">    
+                    <img class="rp-pic" src="${poster}">
+                </div>
+                <div class="row">        
+                    <h3 class="section-subheading text-muted rp-text">Ingredients: ${ing}</h3>
+                </div>
             </div>
-        `);
-        $(".final-section2").html(`
-            <div class="col-md-6" class="rp-final-section">  
-                <img class="recipe-pic" src="${poster}"> 
-            </div>
-        `);
-        $(".final-section3").html(`  
-            <div class="col-md-6" class="rp-final-section">                 
-                <h3 class="section-subheading text-muted">Ingredients: ${ing}</h3>
-            </div>
-        `);
-
-        $(".results-headings").show();
-        $(".final-section1").show();
-        $(".final-section2").show();
-        $(".final-section3").show();
+                `);
+        $("#your-results").show();
     });
 
     $(document).on("click", "#show-select", function() {
-        $(".mv-final-section").empty();
+        $("#mv-final-section").empty();
         var title = $(this).attr("data-title");
         var plot = $(this).attr("data-plot");
         var poster = $(this).attr("data-poster");
-        setTimeout(function() { $(document).scrollTop(6500); }, 800);
-        $(".final-section1").append(`
-        <div class="col-md-6" class="mv-final-section">
-            <h2>${title}</h2> 
-        </div>
-    `);
-        $(".final-section2").append(`
-        <div class="col-md-6" class="mv-final-section">  
-            <img class="yellow" src="https://image.tmdb.org/t/p/w500${poster}"> 
-        </div>
-    `);
-        $(".final-section3").append(`  
-        <div class="col-md-6" class="mv-final-section">                 
-            <h3 class="section-subheading text-muted">${plot}</h3>
-        </div>
-    `);
-        $(".results-headings").show();
-        $(".final-section1").show();
-        $(".final-section2").show();
-        $(".final-section3").show();
+        setTimeout(function() { $(document).scrollTop(6350); }, 800);
+        $(".final-section").append(`
+            <div class="col-md-6" id="mv-final-section">
+                <div class="row">
+                    <h2>${title}</h2>
+                </div>
+                 <div class="row">
+                    <img class="show-pic" src="https://image.tmdb.org/t/p/w500${poster}">
+                </div>
+                <div class="row">
+                    <h3 class="section-subheading text-muted mv-text">${plot}</h3>
+                </div>
+            </div>
+        `);
+        $("#your-results").show();
+    });
+
+    $("#appReset").on("click", function(event) {
+        $("#mv-final-section").empty();
+        $("#rp-final-section").empty();
+        $("#your-results").hide();
     });
 
 });
