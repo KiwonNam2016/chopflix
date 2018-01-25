@@ -14,6 +14,7 @@ firebase.initializeApp(config);
 $(document).ready(function() {
     var database = firebase.database();
     var tmdb = "b300de2804d6ecbfa5435065a4835711";
+    var height = window.screen.height;
     var uid;
 
     // adjusting mobile navbar menu so it closes
@@ -553,7 +554,7 @@ $(document).ready(function() {
     $(document).on("click", ".portfolio-hover", function() {
         $(".index").css("padding-right", "0px");
     });
-    var height = window.screen.height;
+
     $(document).on("click", "#recipe-select", function() {
         setTimeout(function() { $(document).scrollTop(11 / 8 * height); }, 800);
         $("#rp-final-section").empty();
