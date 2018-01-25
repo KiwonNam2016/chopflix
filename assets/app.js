@@ -408,14 +408,18 @@ $(document).ready(function() {
     tl.to(go, 0.7, { rotationX: -360, transformOrigin: '0% 50%', ease: Power2.easeInOut })
     tl.pause();
 
-    $(".go").on("click", function(event) {
+    $('#foodForm').on('submit', function(event) {
         event.preventDefault();
+        $("#recipe_results").empty();
+        $("#tryAgainButton").empty();
+        window.location.href = '#recipe-results-section';
         tl.play();
         tl.restart();
         cuisineSearch = addedCuisines.join('');
         var food = $("#food").val().trim();
         resetRecipe();
         var yumQuery = "https://api.yummly.com/v1/api/recipes?_app_id=74c2c130&_app_key=dbe2b1012a02ca615dbe289501e4ef92&q=" + food + cuisineSearch + "&requirePictures=true";
+        console.log(yumQuery);
         resetButtons();
         $("#your-results").hide();
         $.ajax({
@@ -423,30 +427,35 @@ $(document).ready(function() {
             method: "GET"
         }).done(function(response) {
             result = response.matches;
+            console.log(result);
+            if (result.length === 0) {
+                $("#recipe_results").html("Your search did not match any recipes");
+                $("#tryAgainButton").html("<a href='#recipe-search-section' class='page-scroll btn btn-xl startBtn'>Search again</a>");
+            } else {
+                $("#recipe_results").html("Choose from these tasty offerings:");
+                for (var z = 0; z < result.length; z++) {
+                    var id = (result[z].id)
+                    var recipeTitle = (result[z].recipeName);
+                    var imgUrl = result[z].imageUrlsBySize["90"].replace("s90-c", "s200-c");
+                    var ingredients = (result[z].ingredients);
+                    var IngAsString = ingredients.join(', ');
+                    var ingSearch = ingredients.join("&ingredients%5B%5D=");
+                    var recipeURL = "https://www.yummly.com/recipe/" + id
+                    var recipeDiv = $("<div class='recipeImgDiv'>");
+                    var p = $("<p>").text(recipeTitle);
+                    var recipeImg = $("<img>");
+                    var recipeLink = $("<a>");
 
-            for (var z = 0; z < result.length; z++) {
-                var id = (result[z].id)
-                var recipeTitle = (result[z].recipeName);
-                var imgUrl = result[z].imageUrlsBySize["90"].replace("s90-c", "s200-c");
-                var ingredients = (result[z].ingredients);
-                var IngAsString = ingredients.join(', ');
-                var ingSearch = ingredients.join("&ingredients%5B%5D=");
-                var recipeURL = "https://www.yummly.com/recipe/" + id
-                var recipeDiv = $("<div class='recipeImgDiv'>");
-                var p = $("<p>").text(recipeTitle);
-                var recipeImg = $("<img>");
-                var recipeLink = $("<a>");
+                    recipeImg.addClass("recipeItem");
+                    recipeImg.attr("src", imgUrl);
 
-                recipeImg.addClass("recipeItem");
-                recipeImg.attr("src", imgUrl);
+                    recipeLink.attr("href", recipeURL);
+                    recipeLink.append(recipeImg);
 
-                recipeLink.attr("href", recipeURL);
-                recipeLink.append(recipeImg);
+                    recipeDiv.append(p);
+                    recipeDiv.append(recipeLink);
 
-                recipeDiv.append(p);
-                recipeDiv.append(recipeLink);
-
-                var recipeThumb = `
+                    var recipeThumb = `
 
                     <div class="col-md-4 col-sm-6 portfolio-item">
                         <a href="#foodPortfolioModal${z}" class="portfolio-link" data-toggle="modal" data-link="#show-search-section">
@@ -463,7 +472,7 @@ $(document).ready(function() {
                     </div>`;
 
 
-                var recipeModal = `
+                    var recipeModal = `
                     <div class="portfolio-modal modal fade" id="foodPortfolioModal${z}" tabindex="-1" role="dialog" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
@@ -492,14 +501,15 @@ $(document).ready(function() {
                         </div>
                     </div>`;
 
-                $(".recipeImages").append(recipeThumb);
-                $("#recipe-modals").append(recipeModal);
+                    $(".recipeImages").append(recipeThumb);
+                    $("#recipe-modals").append(recipeModal);
 
-                $("#recipe-select").on("click", function() {
-                    $("#finalModalRecipe").empty();
-                    $("#finalModalRecipe").append("recipe section stuff");
-                });
-            };
+                    $("#recipe-select").on("click", function() {
+                        $("#finalModalRecipe").empty();
+                        $("#finalModalRecipe").append("recipe section stuff");
+                    });
+                };
+            }
         });
     });
 
@@ -589,9 +599,9 @@ $(document).ready(function() {
     $(document).on("click", ".portfolio-hover", function() {
         $(".index").css("padding-right", "0px");
     });
-
+    var height = window.screen.height;
     $(document).on("click", "#recipe-select", function() {
-        setTimeout(function() { $(document).scrollTop(1600); }, 800);
+        setTimeout(function() { $(document).scrollTop(15 / 8 * height); }, 800);
         $("#rp-final-section").empty();
         var title = $(this).attr("data-title");
         var ing = $(this).attr("data-ing");
@@ -617,7 +627,7 @@ $(document).ready(function() {
         var title = $(this).attr("data-title");
         var plot = $(this).attr("data-plot");
         var poster = $(this).attr("data-poster");
-        setTimeout(function() { $(document).scrollTop(6350); }, 800);
+        setTimeout(function() { $(document).scrollTop(65 / 8 * height); }, 800);
         $(".final-section").append(`
             <div class="col-md-6" id="mv-final-section">
                 <div class="row">
