@@ -555,7 +555,7 @@ $(document).ready(function() {
     });
     var height = window.screen.height;
     $(document).on("click", "#recipe-select", function() {
-        setTimeout(function() { $(document).scrollTop(15 / 8 * height); }, 800);
+        setTimeout(function() { $(document).scrollTop(11 / 8 * height); }, 800);
         $("#rp-final-section").empty();
         var title = $(this).attr("data-title");
         var ing = $(this).attr("data-ing");
@@ -581,7 +581,7 @@ $(document).ready(function() {
         var title = $(this).attr("data-title");
         var plot = $(this).attr("data-plot");
         var poster = $(this).attr("data-poster");
-        setTimeout(function() { $(document).scrollTop(65 / 8 * height); }, 800);
+        setTimeout(function() { $(document).scrollTop(40 / 8 * height); }, 800);
         $(".final-section").append(`
             <div class="col-md-6" id="mv-final-section">
                 <div class="row">
