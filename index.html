@@ -124,12 +124,10 @@
                 <div id="foodgenres"></div>
                 <div class="recipeButtons recipe-format" href=".recipe-results-section"></div>
                 <div class="col-md-12 yummlySearch"></div>
-                <form action="">
+                <form id="foodForm" action="">
                     <span class="input-group-btn text-center">
-                        <input id="food" type="text" pattern="[A-Za-z]"  align="middle" class="form-control" placeholder="enter keyword(s)"> &nbsp
-                        <a href="#recipe-results-section" class="page-scroll btn btn-round btn-xl go" type="submit">Go!
-                        </a>
-                        
+                        <input id="food" type="search" pattern="[A-Za-z]+"  align="middle" class="form-control" placeholder="enter keyword(s)"> &nbsp
+                        <input id="searchSubmit" name="" class="page-scroll btn btn-round btn-xl go" type="submit" value="GO!">
                     </span>
                     <p id="something"></p>
                 </form>
@@ -163,7 +161,8 @@
             <div class="row">
                 <div class="col-lg-12 text-center">
                     <h2 class="section-heading" id="show-my-recipes">Your Recipes</h2>
-                    <h3 class="section-subheading text-muted">Choose from these tasty offerings.</h3>
+                    <h3 id="recipe_results" class="section-subheading text-muted"></h3>
+                    <p id="tryAgainButton"></p>
                 </div>
             </div>
             <div class="row">
