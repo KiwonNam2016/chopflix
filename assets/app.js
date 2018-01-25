@@ -16,16 +16,10 @@ $(document).ready(function() {
     var tmdb = "b300de2804d6ecbfa5435065a4835711";
     var uid;
 
-    // adjusting mobile menu so it closes
+    // adjusting mobile navbar menu so it closes
     $(document).on("click", ".navbar-toggle", function() {
-        console.log(this);
         $("#bs-example-navbar-collapse-1").toggle();
     });
-
-    // setting date for IE8 and earlier
-    if (!Date.now) {
-        Date.now = function() { return new Date().getTime(); };
-    };
 
     // FirebaseUI config.
     var uiConfig = {
@@ -381,7 +375,6 @@ $(document).ready(function() {
         var food = $("#food").val().trim();
         resetRecipe();
         var yumQuery = "https://api.yummly.com/v1/api/recipes?_app_id=74c2c130&_app_key=dbe2b1012a02ca615dbe289501e4ef92&q=" + food + cuisineSearch + "&requirePictures=true";
-        console.log(yumQuery);
         resetButtons();
         $("#your-results").hide();
         $.ajax({
@@ -389,7 +382,6 @@ $(document).ready(function() {
             method: "GET"
         }).done(function(response) {
             result = response.matches;
-            console.log(result);
             if (result.length === 0) {
                 $("#recipe_results").html("Your search did not match any recipes");
                 $("#tryAgainButton").html("<a href='#recipe-search-section' class='page-scroll btn btn-xl startBtn'>Search again</a>");
